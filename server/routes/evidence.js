@@ -11,8 +11,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const EVIDENCE_DIR = join(__dirname, '..', '..', 'data', 'evidence');
 
-// Ensure evidence dir exists
-if (!existsSync(EVIDENCE_DIR)) mkdirSync(EVIDENCE_DIR, { recursive: true });
+const IS_VERCEL = !!process.env.VERCEL;
+
+// Ensure evidence dir exists (ONLY when NOT on Vercel)
+if (!IS_VERCEL && !existsSync(EVIDENCE_DIR)) {
+  mkdirSync(EVIDENCE_DIR, { recursive: true });
+}
 
 const router = Router();
 
