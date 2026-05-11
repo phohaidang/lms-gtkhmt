@@ -16,10 +16,13 @@ const __dirname = dirname(__filename);
 const DATA_DIR = join(__dirname, '..', '..', 'data');
 const MOCK_DB_PATH = join(DATA_DIR, '_mock_db.json');
 
-// Ensure data directory exists
-if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
-
 const IS_MOCK = !process.env.GOOGLE_SHEETS_ID;
+const IS_VERCEL = !!process.env.VERCEL;
+
+// Ensure data directory exists (ONLY when NOT on Vercel)
+if (!IS_VERCEL && !existsSync(DATA_DIR)) {
+  mkdirSync(DATA_DIR, { recursive: true });
+}
 
 // ============ MOCK MODE (in-memory + file persist) ============
 let mockData = {
@@ -42,6 +45,7 @@ if (IS_MOCK && existsSync(MOCK_DB_PATH)) {
 }
 
 function saveMockDB() {
+  if (IS_VERCEL) return; // Cannot write to disk on Vercel
   writeFileSync(MOCK_DB_PATH, JSON.stringify(mockData, null, 2));
 }
 
