@@ -1,0 +1,87 @@
+{
+  "session": 1,
+  "chapter": "Ch.1",
+  "title": "Giới thiệu Khoa học máy tính & Python cơ bản",
+  "time_limit_minutes": 10,
+  "questions": [
+    {
+      "id": "s1-mc1",
+      "type": "mc",
+      "question": "Theo mô hình von Neumann, thành phần nào chịu trách nhiệm thực hiện các phép tính số học và so sánh?",
+      "options": [
+        "A. CU (Control Unit) — bộ điều khiển",
+        "B. RAM — bộ nhớ tạm thời",
+        "C. ALU (Arithmetic Logic Unit) — bộ tính toán",
+        "D. I/O — thiết bị vào/ra"
+      ],
+      "correct": "C",
+      "explanation": "Mô hình von Neumann gồm 4 phần: Bộ nhớ (lưu trữ), ALU (tính toán/so sánh), CU (điều phối luồng lệnh), và I/O (giao tiếp với người dùng). ALU xử lý mọi phép toán — không phải CU, vốn chỉ đọc và điều phối lệnh."
+    },
+    {
+      "id": "s1-mc2",
+      "type": "mc",
+      "question": "Phân biệt kết quả của `7 / 2` và `7 // 2` trong Python: cặp giá trị nào sau đây là đúng?",
+      "options": [
+        "A. 3.5 và 3.5",
+        "B. 3 và 3",
+        "C. 3.5 và 3",
+        "D. 3 và 3.5"
+      ],
+      "correct": "C",
+      "explanation": "`/` là chia thực (luôn trả về float): 7/2 = 3.5. `//` là chia nguyên (floor division — bỏ phần thập phân): 7//2 = 3. Đây là điểm khác biệt cốt lõi và hay ra đề thi nhất."
+    },
+    {
+      "id": "s1-mc3",
+      "type": "mc",
+      "question": "Đoạn code sau sẽ gây lỗi ở dòng nào, và tại sao?\ntuoi = input(\"Tuổi: \")\nprint(tuoi + 1)",
+      "options": [
+        "A. Dòng 1 — input() không cho phép nhập số",
+        "B. Dòng 2 — không thể cộng str với int vì input() luôn trả về kiểu str",
+        "C. Dòng 2 — Python không hỗ trợ phép cộng với biến",
+        "D. Không có lỗi — Python tự chuyển kiểu"
+      ],
+      "correct": "B",
+      "explanation": "Hàm `input()` LUÔN trả về kiểu `str`, dù người dùng nhập số. Do đó `tuoi` là `str`, không cộng được với `int 1`. Giải pháp: `tuoi = int(input(\"Tuổi: \"))` để ép kiểu trước khi tính toán."
+    },
+    {
+      "id": "s1-mc4",
+      "type": "mc",
+      "question": "Tên biến nào sau đây KHÔNG hợp lệ trong Python?",
+      "options": [
+        "A. so_du",
+        "B. _balance2024",
+        "C. 2024_data",
+        "D. khachHang1"
+      ],
+      "correct": "C",
+      "explanation": "Tên biến Python không được bắt đầu bằng chữ số. `2024_data` bắt đầu bằng `2` → không hợp lệ. Các tên còn lại đều hợp lệ: bắt đầu bằng chữ cái hoặc dấu gạch dưới `_`."
+    },
+    {
+      "id": "s1-tf1",
+      "type": "tf",
+      "question": "Giá trị \"25\" và 25 trong Python có cùng kiểu dữ liệu và có thể cộng trực tiếp với nhau.",
+      "correct": "B",
+      "explanation": "Sai. \"25\" là kiểu str, 25 là kiểu int — hai kiểu khác nhau. Thực hiện \"25\" + 25 sẽ gây lỗi TypeError. Cần ép kiểu: int(\"25\") + 25 = 50 hoặc \"25\" + str(25) = \"2525\"."
+    },
+    {
+      "id": "s1-tf2",
+      "type": "tf",
+      "question": "Toán tử % trong Python dùng để tính phần dư của phép chia nguyên, ví dụ 17 % 5 trả về kết quả 2.",
+      "correct": "A",
+      "explanation": "Đúng. 17 % 5 = 2 vì 17 = 5×3 + 2. Toán tử % (modulo) rất hữu ích: kiểm tra số chẵn/lẻ (n % 2 == 0), năm nhuận (năm % 4 == 0), hay chia tiền ATM chẵn 100k."
+    }
+  ],
+  "discussion_questions": [
+    {
+      "id": "s1-essay1",
+      "type": "essay",
+      "question": "Bạn đang viết chương trình tính lãi đơn cho ngân hàng. Chương trình yêu cầu người dùng nhập số tiền gửi và lãi suất, sau đó tính tiền cuối kỳ. Giải thích: (1) tại sao bạn cần dùng float(input(...)) thay vì chỉ input(...), và (2) nếu lãi suất nhập vào là \"5.5\" mà không ép kiểu, điều gì sẽ xảy ra khi tính goc * (1 + laisuat/100 * nam)?",
+      "sample_answer": "(1) input() luôn trả về str, không thể dùng trong phép tính số học. float(input(...)) ép kiểu về số thực ngay khi nhận giá trị. (2) Nếu laisuat = \"5.5\" (str), phép laisuat/100 sẽ gây TypeError vì không thể chia str cho int. Chương trình crash tại đúng dòng tính toán đó.",
+      "rubric": {
+        "excellent": "Giải thích đúng cả 2 phần + chỉ ra chính xác dòng code nào gây lỗi + dùng đúng thuật ngữ (TypeError, ép kiểu/type conversion)",
+        "acceptable": "Giải thích được lý do cần ép kiểu + biết rằng str không tính toán được, dù chưa dùng thuật ngữ chính xác",
+        "insufficient": "Chỉ nói 'dùng float vì cần số' mà không giải thích tại sao input() trả về str, hoặc không biết lỗi gì xảy ra"
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "chapter": 2,
+  "title": "Cấu trúc điều khiển & Vòng lặp",
+  "sessions": [2],
+  "scqa": {
+    "situation": "Chương trình Buổi 1 của chúng ta chạy thẳng từ trên xuống dưới: nhập tiền -> tính lãi -> in kết quả. Mọi thứ đều cố định.",
+    "complication": "Thực tế ngân hàng có hàng nghìn khách hàng. Có người gửi tiết kiệm, có người vay tiền, có người dùng thẻ tín dụng. Mỗi đối tượng có một mức lãi suất và quy trình khác nhau.",
+    "question": "Làm thế nào để chương trình biết 'tự lựa chọn' cách tính phù hợp cho từng khách? Và làm sao để nó tự động lặp lại phép tính cho 10.000 khách mà chúng ta không cần viết lại mã 10.000 lần?",
+    "answer": "Chúng ta sử dụng cấu trúc rẽ nhánh (if-else) để máy tính biết ra quyết định và vòng lặp (for, while) để nó thực hiện các tác vụ lặp đi lặp lại một cách bền bỉ."
+  },
+  "concepts": [
+    {
+      "id": "c2-logic",
+      "term": "Biểu thức logic (Boolean Logic)",
+      "definition": "Các biểu thức trả về giá trị True (Đúng) hoặc False (Sai) thông qua các toán tử so sánh (>, <, ==, !=) và toán tử logic (and, or, not).",
+      "key_points": [
+        "== là so sánh bằng, khác với = là gán giá trị",
+        "and: Chỉ đúng khi cả hai cùng đúng",
+        "or: Đúng khi ít nhất một bên đúng"
+      ],
+      "case_study": {
+        "title": "Kiểm tra số dư rút tiền",
+        "context": "Khi bạn rút tiền, máy ATM cần kiểm tra điều kiện: (số tiền rút <= số dư) AND (số tiền rút <= hạn mức ngày).",
+        "analysis": "Chỉ khi biểu thức logic này trả về True, máy mới nhả tiền.",
+        "lesson_learned": "Logic là nền tảng của mọi quy tắc nghiệp vụ (business rules) trong ngân hàng."
+      },
+      "related_concepts": ["c2-if-else"]
+    },
+    {
+      "id": "c2-if-else",
+      "term": "Cấu trúc rẽ nhánh (if-elif-else)",
+      "definition": "Cho phép chương trình thực hiện các khối mã khác nhau dựa trên các điều kiện cụ thể.",
+      "key_points": [
+        "if: Kiểm tra điều kiện đầu tiên",
+        "elif: Kiểm tra các điều kiện bổ sung nếu điều kiện trước sai",
+        "else: Trường hợp mặc định cuối cùng"
+      ],
+      "case_study": {
+        "title": "Phân hạng khách hàng",
+        "context": "Ngân hàng chia khách hàng thành: VIP (số dư > 1 tỷ), Thân thiết (> 100 triệu), và Phổ thông.",
+        "analysis": "Dùng if-elif-else để gán mức ưu đãi phí giao dịch tự động cho từng hạng khách.",
+        "lesson_learned": "Rẽ nhánh giúp chương trình trở nên 'thông minh' và linh hoạt."
+      },
+      "related_concepts": ["c2-logic"]
+    },
+    {
+      "id": "c2-loops",
+      "term": "Vòng lặp (for, while)",
+      "definition": "Cấu trúc cho phép thực hiện lặp đi lặp lại một khối mã cho đến khi thỏa mãn điều kiện dừng.",
+      "key_points": [
+        "for: Dùng khi biết trước số lần lặp (VD: duyệt qua 100 khách hàng)",
+        "while: Dùng khi lặp dựa trên một điều kiện (VD: lặp cho đến khi khách nhập đúng mã PIN)",
+        "Dùng range() trong vòng lặp for để tạo dãy số"
+      ],
+      "case_study": {
+        "title": "Tính lãi cộng dồn (Lãi kép)",
+        "context": "Bạn gửi tiền trong 10 năm và lãi mỗi năm được cộng dồn vào gốc để tính lãi cho năm sau.",
+        "analysis": "Dùng vòng lặp for i in range(10) để thực hiện phép tính lãi và cập nhật gốc 10 lần liên tục.",
+        "lesson_learned": "Vòng lặp giải phóng con người khỏi các tác vụ nhàm chán và lặp lại."
+      },
+      "related_concepts": ["c2-if-else"]
+    }
+  ],
+  "tests": {
+    "level_1": {
+      "name": "🎯 Level 1: Nhận diện logic",
+      "description": "Kiểm tra kiến thức về cú pháp và cách vận hành của cấu trúc điều khiển.",
+      "bloom_level": "Remember / Understand",
+      "questions": [
+        { "id": "L1-q1", "type": "mc", "concept_ref": "c2-logic", "question": "Toán tử nào dùng để so sánh xem hai giá trị có bằng nhau không?", "options": ["A. =", "B. ==", "C. !=", "D. <>"], "correct": "B" },
+        { "id": "L1-q2", "type": "mc", "concept_ref": "c2-if-else", "question": "Từ khóa nào dùng để kiểm tra điều kiện bổ sung khi điều kiện 'if' trước đó bị sai?", "options": ["A. else if", "B. elseif", "C. elif", "D. case"], "correct": "C" },
+        { "id": "L1-q3", "type": "mc", "concept_ref": "c2-loops", "question": "Vòng lặp nào thường được dùng khi chúng ta biết rõ số lần cần lặp lại?", "options": ["A. while", "B. if", "C. for", "D. loop"], "correct": "C" }
+      ]
+    },
+    "level_2": {
+      "name": "📝 Level 2: Phân tích kịch bản",
+      "description": "Đọc hiểu mã nguồn và dự đoán kết quả.",
+      "bloom_level": "Understand / Analyze",
+      "questions": [
+        { "id": "L2-q1", "type": "essay", "concept_ref": "c2-loops", "question": "Tại sao việc quên cập nhật biến điều kiện trong vòng lặp 'while' lại nguy hiểm?", "rubric": "Cần nêu: Gây ra vòng lặp vô tận (infinite loop), làm treo chương trình hoặc máy tính.", "max_words": 200 },
+        { "id": "L2-q2", "type": "essay", "concept_ref": "c2-if-else", "question": "Hãy vẽ sơ đồ logic (bằng lời) cho việc kiểm tra mã PIN tại ATM (tối đa 3 lần nhập).", "rubric": "Cần nêu: Lặp while < 3 lần, if đúng thì break, else sai thì cộng dồn số lần nhập lỗi.", "max_words": 300 }
+      ]
+    },
+    "level_3": {
+      "name": "🚀 Level 3: Thiết kế giải thuật",
+      "description": "Thiết kế cấu trúc điều khiển cho bài toán nghiệp vụ.",
+      "bloom_level": "Apply / Create",
+      "questions": [
+        { "id": "L3-q1", "type": "essay", "question": "Hãy mô tả cách bạn sử dụng vòng lặp for và cấu trúc if-else để duyệt qua danh sách 10 khách hàng và chỉ in ra tên những người có số dư trên 500 triệu đồng.", "rubric": "Cần nêu: Duyệt list khách, trong mỗi lần lặp dùng if so_du > 500, nếu True thì print(ten).", "max_words": 400 }
+      ]
+    }
+  }
+}

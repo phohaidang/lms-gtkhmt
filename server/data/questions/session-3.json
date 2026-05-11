@@ -1,0 +1,87 @@
+{
+  "session": 3,
+  "chapter": "Ch.3",
+  "title": "Hàm, Phân rã & Trừu tượng",
+  "time_limit_minutes": 15,
+  "questions": [
+    {
+      "id": "s3-mc1",
+      "type": "mc",
+      "question": "Sự khác biệt cốt lõi giữa lệnh `return` và lệnh `print` bên trong một hàm là gì?",
+      "options": [
+        "A. `print` trả giá trị về cho nơi gọi, còn `return` chỉ hiển thị lên màn hình",
+        "B. `return` kết thúc hàm và trao giá trị lại cho nơi gọi, còn `print` chỉ hiển thị thông tin mà không trao giá trị để tính toán tiếp",
+        "C. Cả hai đều có tác dụng như nhau, có thể dùng thay thế hoàn toàn",
+        "D. `return` chỉ dùng được cho số, còn `print` dùng được cho mọi kiểu dữ liệu"
+      ],
+      "correct": "B",
+      "explanation": "Đây là nhầm lẫn phổ biến nhất. `print` là đầu ra phía người dùng (hiển thị), còn `return` là đầu ra phía chương trình (trả kết quả để gán vào biến hoặc tính toán tiếp). Nếu không có `return`, hàm mặc định trả về `None`."
+    },
+    {
+      "id": "s3-mc2",
+      "type": "mc",
+      "question": "Đoạn mã sau in ra kết quả gì?\nx = 10\ndef thay_doi():\n    x = 20\n    return x\nthay_doi()\nprint(x)",
+      "options": [
+        "A. 10",
+        "B. 20",
+        "C. 30",
+        "D. Lỗi vì x được định nghĩa hai lần"
+      ],
+      "correct": "A",
+      "explanation": "Đây là vấn đề về Scope (Phạm vi biến). Biến `x = 20` bên trong hàm là biến cục bộ (local), nó chỉ tồn tại bên trong hàm đó. Biến `x = 10` bên ngoài là biến toàn cục (global) và không bị ảnh hưởng bởi thay đổi bên trong hàm trừ khi dùng từ khóa `global`."
+    },
+    {
+      "id": "s3-mc3",
+      "type": "mc",
+      "question": "Khi định nghĩa hàm với tham số mặc định (default parameters), quy tắc nào sau đây là đúng?",
+      "options": [
+        "A. Tham số mặc định có thể đứng ở bất kỳ vị trí nào",
+        "B. Tham số mặc định bắt buộc phải đứng trước các tham số không có giá trị mặc định",
+        "C. Tham số mặc định phải đứng sau cùng trong danh sách tham số",
+        "D. Python không hỗ trợ tham số mặc định"
+      ],
+      "correct": "C",
+      "explanation": "Trong Python, các tham số bắt buộc phải được liệt kê trước, sau đó mới đến các tham số mặc định. Ví dụ: `def f(a, b=1):` là đúng, còn `def f(a=1, b):` sẽ gây lỗi cú pháp."
+    },
+    {
+      "id": "s3-mc4",
+      "type": "mc",
+      "question": "Khái niệm 'Trừu tượng' (Abstraction) trong lập trình hàm có nghĩa là gì?",
+      "options": [
+        "A. Viết code sao cho thật ngắn gọn và khó hiểu",
+        "B. Chia bài toán lớn thành nhiều hàm nhỏ",
+        "C. Sử dụng một hàm như một 'hộp đen': chỉ quan tâm đến đầu vào/đầu ra mà không cần biết chi tiết triển khai bên trong",
+        "D. Việc xóa bỏ hoàn toàn các biến toàn cục"
+      ],
+      "correct": "C",
+      "explanation": "Trừu tượng giúp người lập trình sử dụng các công cụ (như hàm `round()` hay `math.sqrt()`) mà không cần hiểu thuật toán phức tạp bên trong. Nó giúp tập trung vào logic cấp cao của bài toán."
+    },
+    {
+      "id": "s3-tf1",
+      "type": "tf",
+      "question": "Mọi biến được tạo ra bên trong một hàm sẽ biến mất (bị hủy) ngay sau khi hàm đó kết thúc việc thực thi.",
+      "correct": "A",
+      "explanation": "Đúng. Đó là đặc tính của biến cục bộ (local scope). Khi hàm hoàn thành (gặp `return` hoặc hết code), ngăn kéo chứa các biến của nó sẽ bị xóa để giải phóng bộ nhớ."
+    },
+    {
+      "id": "s3-tf2",
+      "type": "tf",
+      "question": "Hàm `abs()` là một ví dụ về hàm tự định nghĩa (User-defined function) trong Python.",
+      "correct": "B",
+      "explanation": "Sai. `abs()` là hàm tích hợp sẵn (built-in function) của Python. Hàm tự định nghĩa là những hàm do người dùng viết ra bằng từ khóa `def`."
+    }
+  ],
+  "discussion_questions": [
+    {
+      "id": "s3-essay1",
+      "type": "essay",
+      "question": "Giả sử bạn đang xây dựng bộ công cụ tính thuế thu nhập cá nhân. Thay vì viết một đoạn code dài 100 dòng, bạn quyết định 'Phân rã' (Decomposition) bài toán này. Hãy liệt kê ít nhất 3 hàm nhỏ mà bạn sẽ tách ra và giải thích tại sao việc tách này lại giúp code của bạn tốt hơn.",
+      "sample_answer": "Có thể tách thành: (1) `nhap_du_lieu()`: kiểm tra tính hợp lệ của thu nhập nhập vào; (2) `tinh_giam_tru()`: tính các khoản giảm trừ gia cảnh; (3) `tinh_thue_bac_thang()`: áp dụng biểu thuế. Việc tách giúp code dễ đọc, dễ kiểm tra lỗi ở từng phần, và nếu biểu thuế thay đổi, ta chỉ cần sửa đúng 1 hàm duy nhất thay vì tìm kiếm trong 100 dòng code.",
+      "rubric": {
+        "excellent": "Nêu được ít nhất 3 hàm có tên và chức năng hợp lý + giải thích được 2 lợi ích cốt lõi (tái sử dụng, dễ bảo trì/sửa lỗi).",
+        "acceptable": "Nêu được 2 hàm hợp lý và có giải thích được tại sao chia nhỏ lại tốt hơn viết gộp.",
+        "insufficient": "Chỉ nêu tên các hàm mà không giải thích được lý do tại sao phải phân rã bài toán."
+      }
+    }
+  ]
+}

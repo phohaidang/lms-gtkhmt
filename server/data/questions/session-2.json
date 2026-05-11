@@ -1,0 +1,87 @@
+{
+  "session": 2,
+  "chapter": "Ch.2",
+  "title": "Cấu trúc điều khiển, Vòng lặp & Kiểm tra",
+  "time_limit_minutes": 15,
+  "questions": [
+    {
+      "id": "s2-mc1",
+      "type": "mc",
+      "question": "Trong Python, cơ chế 'short-circuit' (ngắn mạch) của toán tử `and` hoạt động như thế nào?",
+      "options": [
+        "A. Nó luôn kiểm tra cả hai vế để đảm bảo tính chính xác",
+        "B. Nếu vế trái là False, nó sẽ không kiểm tra vế phải nữa và trả về False ngay lập tức",
+        "C. Nếu vế trái là True, nó sẽ không kiểm tra vế phải nữa",
+        "D. Nó chỉ hoạt động với các biến kiểu số"
+      ],
+      "correct": "B",
+      "explanation": "Với toán tử `and`, nếu vế đầu là False thì cả biểu thức chắc chắn False. Python sẽ bỏ qua vế sau để tăng tốc độ và tránh lỗi (ví dụ lỗi chia cho 0 ở vế sau nếu vế trước đã chặn được điều kiện)."
+    },
+    {
+      "id": "s2-mc2",
+      "type": "mc",
+      "question": "Sự khác biệt cốt lõi giữa cấu trúc `if - if` (hai lệnh if rời) và `if - elif` là gì?",
+      "options": [
+        "A. `if - elif` chạy nhanh hơn vì không cần kiểm tra vế sau nếu vế trước đã đúng",
+        "B. `if - if` có thể thực hiện nhiều nhánh cùng lúc, còn `if - elif` chỉ thực hiện tối đa một nhánh duy nhất",
+        "C. `if - elif` chỉ dùng được cho kiểu số, còn `if - if` dùng được cho chuỗi",
+        "D. Cả A và B đều đúng"
+      ],
+      "correct": "D",
+      "explanation": "Trong `if - if`, mỗi lệnh if là độc lập, máy tính sẽ kiểm tra tất cả. Trong `if - elif`, các nhánh loại trừ lẫn nhau: nếu nhánh đầu đúng, các nhánh sau bị bỏ qua hoàn toàn. Điều này giúp code logic hơn và hiệu suất cao hơn."
+    },
+    {
+      "id": "s2-mc3",
+      "type": "mc",
+      "question": "Đoạn mã sau sẽ in ra giá trị cuối cùng của `tong` là bao nhiêu?\ntong = 0\nfor i in range(1, 10, 2):\n    tong = tong + i",
+      "options": [
+        "A. 45",
+        "B. 25",
+        "C. 16",
+        "D. 9"
+      ],
+      "correct": "B",
+      "explanation": "`range(1, 10, 2)` sinh ra các số: 1, 3, 5, 7, 9. Tổng là: 1 + 3 + 5 + 7 + 9 = 25. Lưu ý số cuối (10) luôn bị loại trừ."
+    },
+    {
+      "id": "s2-mc4",
+      "type": "mc",
+      "question": "Khi nào nên ưu tiên dùng vòng lặp `while` thay vì vòng lặp `for`?",
+      "options": [
+        "A. Khi cần lặp qua một danh sách đã biết trước số lượng phần tử",
+        "B. Khi muốn code ngắn gọn hơn",
+        "C. Khi số lần lặp phụ thuộc vào một điều kiện sẽ xảy ra trong tương lai (không biết trước số lần)",
+        "D. Khi làm việc với kiểu dữ liệu float"
+      ],
+      "correct": "C",
+      "explanation": "`for` dùng khi biết trước phạm vi (đếm số lần). `while` dùng khi lặp 'cho đến khi' một sự kiện xảy ra (như nhập đúng mã PIN, tìm được nghiệm gần đúng)."
+    },
+    {
+      "id": "s2-tf1",
+      "type": "tf",
+      "question": "Trong kỹ thuật Bisection (chia đôi), nếu khoảng tìm kiếm ban đầu là [0, 1000], sau 10 lần lặp, độ dài khoảng tìm kiếm sẽ giảm xuống còn khoảng 1.",
+      "correct": "A",
+      "explanation": "Đúng. Mỗi lần lặp khoảng tìm kiếm giảm đi một nửa. 2 mũ 10 = 1024, nên sau 10 lần khoảng cách sẽ giảm đi ~1000 lần, từ 1000 xuống còn ~1."
+    },
+    {
+      "id": "s2-tf2",
+      "type": "tf",
+      "question": "Cú pháp `ten[0:3]` trong Python sẽ lấy 3 ký tự đầu tiên của chuỗi `ten`, bao gồm cả ký tự tại vị trí index thứ 3.",
+      "correct": "B",
+      "explanation": "Sai. Slicing `[start:stop]` trong Python lấy từ `start` đến `stop-1`. `ten[0:3]` lấy index 0, 1, 2 (đủ 3 ký tự) nhưng KHÔNG bao gồm ký tự ở vị trí thứ 3."
+    }
+  ],
+  "discussion_questions": [
+    {
+      "id": "s2-essay1",
+      "type": "essay",
+      "question": "Hãy phân tích logic của một máy ATM khi khách hàng nhập mã PIN. Bạn sẽ dùng cấu trúc điều khiển nào (if, for, while) để cho phép khách hàng nhập sai tối đa 3 lần? Giải thích tại sao bạn chọn cấu trúc đó và điều gì xảy ra nếu khách hàng nhập đúng ở lần thứ 2?",
+      "sample_answer": "Dùng `while` kết hợp với một biến đếm số lần thử (ví dụ `count < 3`). Chọn `while` vì ta không chắc khách sẽ nhập đúng ngay lần đầu hay lần 3. Nếu nhập đúng ở lần 2, ta dùng lệnh `break` để thoát khỏi vòng lặp ngay lập tức và chuyển sang màn hình chức năng, tránh bắt khách nhập tiếp lần 3.",
+      "rubric": {
+        "excellent": "Xác định đúng `while`, giải thích được lý do 'chưa biết số lần thực tế', và nêu được vai trò của lệnh `break` khi thành công.",
+        "acceptable": "Chọn đúng `while` hoặc `for` có điều kiện, giải thích được logic cơ bản của việc đếm số lần sai.",
+        "insufficient": "Chỉ nêu `if` đơn thuần (không lặp được) hoặc không giải thích được cơ chế thoát vòng lặp."
+      }
+    }
+  ]
+}

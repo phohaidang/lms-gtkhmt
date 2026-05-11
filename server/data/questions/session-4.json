@@ -1,0 +1,87 @@
+{
+  "session": 4,
+  "chapter": "Ch.3-4",
+  "title": "Đệ quy, Chuỗi & Lập trình phòng thủ",
+  "time_limit_minutes": 15,
+  "questions": [
+    {
+      "id": "s4-mc1",
+      "type": "mc",
+      "question": "Loại lỗi nào sau đây xảy ra khi chương trình đang chạy và gặp phải một tình huống bất thường (như chia cho 0 hoặc ép kiểu chuỗi chữ thành số)?",
+      "options": [
+        "A. Syntax Error (Lỗi cú pháp)",
+        "B. Runtime Error / Exception (Lỗi ngoại lệ)",
+        "C. Logic Error (Lỗi logic)",
+        "D. Indentation Error (Lỗi thụt đầu dòng)"
+      ],
+      "correct": "B",
+      "explanation": "Syntax Error là lỗi cấu trúc (parse không được). Logic Error là code chạy được nhưng kết quả sai. Runtime Error (Exception) xảy ra khi cú pháp đúng nhưng gặp dữ liệu hoặc tình huống không thể xử lý khi đang thực thi."
+    },
+    {
+      "id": "s4-mc2",
+      "type": "mc",
+      "question": "Kết quả của biểu thức sau là gì?\n`\"  090-123-4567  \".strip().replace(\"-\", \"\")`",
+      "options": [
+        "A. \"090-123-4567\"",
+        "B. \"  0901234567  \"",
+        "C. \"0901234567\"",
+        "D. Lỗi vì không thể dùng hai phương thức liên tiếp"
+      ],
+      "correct": "C",
+      "explanation": "Python cho phép 'method chaining' (chuỗi phương thức). `.strip()` xóa khoảng trắng hai đầu thành `\"090-123-4567\"`, sau đó `.replace(\"-\", \"\")` xóa các dấu gạch nối để tạo ra chuỗi sạch."
+    },
+    {
+      "id": "s4-mc3",
+      "type": "mc",
+      "question": "Điều gì sẽ xảy ra nếu một hàm đệ quy thiếu 'Base case' (trường hợp cơ sở)?",
+      "options": [
+        "A. Chương trình sẽ tự động dừng sau 10 lần lặp",
+        "B. Hàm sẽ chạy mãi mãi cho đến khi tràn bộ nhớ (Stack Overflow)",
+        "C. Python sẽ tự động thêm điều kiện dừng cho bạn",
+        "D. Hàm sẽ trả về giá trị None"
+      ],
+      "correct": "B",
+      "explanation": "Đệ quy giống như búp bê Nga, phải có con búp bê cuối cùng không chứa gì thêm. Nếu thiếu Base case, hàm sẽ gọi chính nó vô tận, làm đầy bộ nhớ ngăn xếp (stack) và gây lỗi crash chương trình."
+    },
+    {
+      "id": "s4-mc4",
+      "type": "mc",
+      "question": "Khác biệt quan trọng nhất giữa `try/except` và `assert` trong lập trình phòng thủ là gì?",
+      "options": [
+        "A. Không có sự khác biệt, dùng cái nào cũng được",
+        "B. `assert` dùng để bắt lỗi người dùng, `try/except` dùng để kiểm tra code",
+        "C. `try/except` dùng để xử lý các ngoại lệ dự kiến (như nhập liệu sai), còn `assert` dùng để kiểm tra các giả định logic nội bộ của lập trình viên",
+        "D. `assert` chạy nhanh hơn `try/except` rất nhiều"
+      ],
+      "correct": "C",
+      "explanation": "`try/except` giúp chương trình không sập khi gặp lỗi khách quan (người dùng, mạng, file). `assert` là lời khẳng định của lập trình viên: 'Đoạn này chắc chắn phải đúng', nếu sai nghĩa là lập trình viên đã làm sai logic."
+    },
+    {
+      "id": "s4-tf1",
+      "type": "tf",
+      "question": "Phương thức `split()` dùng để tách một chuỗi thành một danh sách (list), trong khi `join()` dùng để ghép các phần tử của danh sách thành một chuỗi.",
+      "correct": "A",
+      "explanation": "Đúng. Đây là hai phương thức 'ngược' nhau và thường xuyên được dùng để chuẩn hóa dữ liệu (tách ra để xử lý từng từ rồi ghép lại)."
+    },
+    {
+      "id": "s4-tf2",
+      "type": "tf",
+      "question": "Khi đọc một thông báo lỗi (traceback) trong Python, bạn nên đọc từ dòng đầu tiên xuống dòng cuối cùng để tìm nguyên nhân chính xác nhất.",
+      "correct": "B",
+      "explanation": "Sai. Traceback của Python nên đọc từ **Dòng cuối cùng ngược lên**. Dòng cuối cùng cho biết loại lỗi (Exception type) và thông điệp lỗi cụ thể nhất."
+    }
+  ],
+  "discussion_questions": [
+    {
+      "id": "s4-essay1",
+      "type": "essay",
+      "question": "Ngân hàng của bạn yêu cầu khách hàng nhập CMND. Tuy nhiên, khách hàng thường gõ nhầm: có người gõ thừa khoảng trắng, có người gõ thêm dấu gạch ngang, có người lại gõ nhầm chữ cái. Hãy mô tả quy trình 3 bước bạn sẽ thực hiện trong Python (sử dụng các kiến thức đã học) để đảm bảo CMND thu được là một chuỗi chỉ gồm các chữ số và chương trình không bị sập nếu khách hàng nhập sai.",
+      "sample_answer": "Bước 1: Dùng vòng lặp `while True` kết hợp `try/except` để bao bọc lệnh nhập liệu. Bước 2: Dùng `.strip()` để xóa khoảng trắng và `.replace('-', '')` để xóa dấu gạch. Bước 3: Dùng hàm `.isdigit()` hoặc ép kiểu `int()` để kiểm tra xem có chứa chữ cái không, nếu lỗi `ValueError` thì thông báo khách nhập lại thay vì để chương trình sập.",
+      "rubric": {
+        "excellent": "Nêu được đủ 3 thành phần: (1) lặp/bắt lỗi ngoại lệ, (2) phương thức làm sạch chuỗi, (3) phương thức kiểm tra định dạng số.",
+        "acceptable": "Nêu được việc làm sạch chuỗi và dùng `try/except` để ngăn chương trình sập.",
+        "insufficient": "Chỉ nêu được việc dùng if/else đơn giản mà không đề cập đến các phương thức xử lý chuỗi đặc thù."
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "session": 5,
+  "chapter": "Ch.5",
+  "title": "Lớp, Đối tượng & Lập trình hướng đối tượng",
+  "time_limit_minutes": 15,
+  "questions": [
+    {
+      "id": "s5-mc1",
+      "type": "mc",
+      "question": "Trong lập trình hướng đối tượng, 'Lớp' (Class) đóng vai trò gì?",
+      "options": [
+        "A. Là một đối tượng cụ thể đang chạy trong bộ nhớ",
+        "B. Là bản thiết kế (blueprint) định nghĩa cấu trúc và hành vi cho các đối tượng sau này",
+        "C. Là một hàm dùng để tính toán các giá trị số học",
+        "D. Là một danh sách chứa dữ liệu của khách hàng"
+      ],
+      "correct": "B",
+      "explanation": "Lớp giống như khuôn bánh, còn đối tượng (object) là cái bánh được tạo ra từ khuôn đó. Lớp định nghĩa sẵn các thuộc tính và phương thức mà mọi đối tượng thuộc lớp đó sẽ có."
+    },
+    {
+      "id": "s5-mc2",
+      "type": "mc",
+      "question": "Tham số `self` trong các phương thức của lớp trong Python đại diện cho điều gì?",
+      "options": [
+        "A. Đại diện cho lớp cha của lớp hiện tại",
+        "B. Là một từ khóa bắt buộc để Python nhận diện hàm đó là hàm built-in",
+        "C. Đại diện cho chính đối tượng (instance) đang gọi phương thức đó",
+        "D. Là giá trị mặc định của mọi biến trong Python"
+      ],
+      "correct": "C",
+      "explanation": "Khi bạn gọi `tk1.nap(50)`, Python sẽ tự động truyền `tk1` vào vị trí của `self`. Nhờ đó, hàm `nap` biết được nó đang cần cộng tiền vào tài khoản của ai (tk1 chứ không phải tk2)."
+    },
+    {
+      "id": "s5-mc3",
+      "type": "mc",
+      "question": "Phương thức đặc biệt `__init__` được gọi khi nào?",
+      "options": [
+        "A. Khi chúng ta in đối tượng ra màn hình bằng lệnh print",
+        "B. Khi chúng ta xóa một đối tượng khỏi bộ nhớ",
+        "C. Khi một đối tượng mới được khởi tạo (tạo ra từ lớp)",
+        "D. Khi chúng ta gọi một phương thức bất kỳ của lớp"
+      ],
+      "correct": "C",
+      "explanation": "`__init__` là hàm khởi tạo (constructor). Nó tự động chạy ngay khi bạn viết lệnh `doi_tuong = TenLop(...)` để thiết lập các giá trị ban đầu cho đối tượng."
+    },
+    {
+      "id": "s5-mc4",
+      "type": "mc",
+      "question": "Khái niệm 'Kế thừa' (Inheritance) cho phép chúng ta làm gì?",
+      "options": [
+        "A. Cho phép một lớp con sử dụng lại các thuộc tính và phương thức của lớp cha",
+        "B. Cho phép xóa bỏ các lớp không cần thiết",
+        "C. Cho phép gộp nhiều đối tượng thành một danh sách",
+        "D. Cho phép ẩn đi các đoạn code phức tạp"
+      ],
+      "correct": "A",
+      "explanation": "Kế thừa giúp tái sử dụng code. Ví dụ: Lớp `TKTietKiem` kế thừa từ `TaiKhoan` thì sẽ có sẵn tính năng nạp/rút mà không cần viết lại, chỉ cần viết thêm tính năng riêng là 'tính lãi'."
+    },
+    {
+      "id": "s5-tf1",
+      "type": "tf",
+      "question": "Trong Python, việc đặt tên thuộc tính bắt đầu bằng dấu gạch dưới (ví dụ: `self._so_du`) là một quy ước để báo hiệu rằng thuộc tính này nên được coi là 'riêng tư' (private).",
+      "correct": "A",
+      "explanation": "Đúng. Đây là quy ước Encapsulation (đóng gói) trong Python. Python không cấm truy cập cứng, nhưng việc dùng `_` báo hiệu cho các lập trình viên khác rằng không nên can thiệp trực tiếp vào dữ liệu này."
+    },
+    {
+      "id": "s5-tf2",
+      "type": "tf",
+      "question": "Nếu lớp con định nghĩa một phương thức có tên giống hệt phương thức ở lớp cha, phương thức của lớp cha sẽ luôn được ưu tiên chạy.",
+      "correct": "B",
+      "explanation": "Sai. Đây là hiện tượng 'Ghi đè' (Overriding). Khi gọi phương thức, Python sẽ ưu tiên tìm ở lớp con trước. Nếu lớp con đã định nghĩa, nó sẽ chạy phương thức của lớp con thay vì lớp cha."
+    }
+  ],
+  "discussion_questions": [
+    {
+      "id": "s5-essay1",
+      "type": "essay",
+      "question": "Hãy so sánh sự khác biệt khi quản lý dữ liệu 100 khách hàng bằng 'Danh sách các Dictionary' (Buổi 4) và bằng 'Danh sách các Đối tượng' (Buổi 5). Tại sao khi hệ thống trở nên phức tạp (ví dụ: thêm nhiều loại tài khoản khác nhau), lập trình hướng đối tượng lại chiếm ưu thế hơn?",
+      "sample_answer": "Dùng Dictionary khiến dữ liệu và hành vi bị tách rời, code lặp lại nhiều và khó kiểm soát logic khi có nhiều loại khách hàng. Dùng Đối tượng giúp đóng gói dữ liệu và hàm xử lý vào cùng một chỗ. Khi hệ thống phức tạp, tính Kế thừa cho phép ta tạo các loại tài khoản mới rất nhanh từ lớp cha, và tính Đa hình giúp xử lý mọi loại tài khoản bằng cùng một lệnh gọi mà không cần dùng quá nhiều câu lệnh `if-else` phức tạp.",
+      "rubric": {
+        "excellent": "Nêu được sự đóng gói (dữ liệu + hành vi), lợi ích của kế thừa khi mở rộng hệ thống và sự gọn gàng của code so với dùng `if-else` trên dictionary.",
+        "acceptable": "Nêu được việc dùng đối tượng giúp code dễ quản lý hơn và tránh lặp lại code.",
+        "insufficient": "Chỉ nêu được việc dùng đối tượng 'hiện đại hơn' mà không giải thích được cơ chế kỹ thuật (kế thừa, đóng gói)."
+      }
+    }
+  ]
+}

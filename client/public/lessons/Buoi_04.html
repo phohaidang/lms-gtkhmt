@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUỔI 4 — ĐỆ QUY, XỬ LÝ CHUỖI NÂNG CAO & LẬP TRÌNH PHÒNG THỦ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#buoi-4-e-quy-xu-ly-chuoi-nang-cao-lap-trinh-phong-thu">BUỔI 4 — ĐỆ QUY, XỬ LÝ CHUỖI NÂNG CAO &amp; LẬP TRÌNH PHÒNG THỦ</a><ul>
+<li><a href="#i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</a></li>
+<li><a href="#ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</a></li>
+<li><a href="#iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</a></li>
+<li><a href="#iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</a><ul>
+<li><a href="#tiet-1-000-115-xu-ly-chuoi-nang-cao">Tiết 1 (0:00 – 1:15) — Xử lý chuỗi nâng cao</a><ul>
+<li><a href="#hoat-ong-11-10-phut-on-tap-warmup">Hoạt động 1.1 (10 phút) — Ôn tập + warmup</a></li>
+<li><a href="#hoat-ong-12-15-phut-tinh-huong-du-lieu-ban">Hoạt động 1.2 (15 phút) — Tình huống dữ liệu bẩn</a></li>
+<li><a href="#hoat-ong-13-35-phut-7-phuong-thuc-chuoi-quan-trong">Hoạt động 1.3 (35 phút) — 7 phương thức chuỗi quan trọng</a></li>
+<li><a href="#hoat-ong-14-15-phut-bai-tap-ao-sau-tach-ho-ten">Hoạt động 1.4 (15 phút) — Bài tập đào sâu: tách họ tên</a></li>
+</ul>
+</li>
+<li><a href="#tiet-2-115-230-e-quy">Tiết 2 (1:15 – 2:30) — Đệ quy</a><ul>
+<li><a href="#hoat-ong-21-15-phut-bup-be-nga-e-quy-la-gi">Hoạt động 2.1 (15 phút) — "Búp bê Nga" — đệ quy là gì?</a></li>
+<li><a href="#hoat-ong-22-30-phut-ham-e-quy-au-tien-giai-thua">Hoạt động 2.2 (30 phút) — Hàm đệ quy đầu tiên: giai thừa</a></li>
+<li><a href="#hoat-ong-23-20-phut-fibonacci-canh-bao-hieu-nang">Hoạt động 2.3 (20 phút) — Fibonacci &amp; cảnh báo hiệu năng</a></li>
+<li><a href="#hoat-ong-24-10-phut-lab-nhanh">Hoạt động 2.4 (10 phút) — Lab nhanh</a></li>
+</ul>
+</li>
+<li><a href="#giai-lao-15-phut">GIẢI LAO (15 phút)</a></li>
+<li><a href="#tiet-3-245-400-lap-trinh-phong-thu-chuong-4">Tiết 3 (2:45 – 4:00) — Lập trình phòng thủ (Chương 4)</a><ul>
+<li><a href="#hoat-ong-31-15-phut-3-loai-loi">Hoạt động 3.1 (15 phút) — 3 loại lỗi</a></li>
+<li><a href="#hoat-ong-32-10-phut-oc-traceback">Hoạt động 3.2 (10 phút) — Đọc traceback</a></li>
+<li><a href="#hoat-ong-33-25-phut-tryexcept">Hoạt động 3.3 (25 phút) — try/except</a></li>
+<li><a href="#hoat-ong-34-25-phut-assert-lap-trinh-phong-thu">Hoạt động 3.4 (25 phút) — assert &amp; lập trình phòng thủ</a></li>
+</ul>
+</li>
+<li><a href="#tiet-4-400-500-lab-tong-hop-on-giua-ky">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Ôn giữa kỳ</a><ul>
+<li><a href="#hoat-ong-41-25-phut-lab-tong-hop-he-thong-nhap-lieu-khach-hang">Hoạt động 4.1 (25 phút) — Lab tổng hợp: "Hệ thống nhập liệu khách hàng"</a></li>
+<li><a href="#hoat-ong-42-5-phut-3-cau-trac-nghiem-cuoi-buoi">Hoạt động 4.2 (5 phút) — 3 câu trắc nghiệm cuối buổi</a></li>
+<li><a href="#hoat-ong-43-25-phut-on-nhanh-giua-ky-1-chuong-1-4">Hoạt động 4.3 (25 phút) — Ôn nhanh giữa kỳ 1 (Chương 1-4)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</a></li>
+<li><a href="#vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</a></li>
+<li><a href="#vii-3-cau-trac-nghiem-cuoi-buoi-ngan-vi-con-on-thi">VII. 3 CÂU TRẮC NGHIỆM CUỐI BUỔI (ngắn vì còn ôn thi)</a></li>
+<li><a href="#viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="buoi-4-e-quy-xu-ly-chuoi-nang-cao-lap-trinh-phong-thu">BUỔI 4 — ĐỆ QUY, XỬ LÝ CHUỖI NÂNG CAO &amp; LẬP TRÌNH PHÒNG THỦ</h1>
+<blockquote>
+<p><strong>Chương 3 (phần II) + Chương 4 lồng ghép</strong> · Thời lượng 5 giờ trên lớp.
+<strong>Vai trò trong câu chuyện xuyên suốt:</strong> Buổi 3 ta đã có "bộ công cụ" hàm. Buổi này ta dạy chương trình <strong>không sập khi gặp dữ liệu xấu</strong> (input lỗi của khách hàng), <strong>xử lý chuỗi</strong> (CMND, tên, số điện thoại) và <strong>đệ quy</strong> — kỹ thuật giúp giải các bài toán "tự lặp".</p>
+<p><strong>Quan trọng:</strong> Đề cương xếp Chương 4 (Kiểm tra, Gỡ lỗi, Ngoại lệ, Xác nhận) thành 1 buổi riêng. Tôi đề xuất <strong>lồng ghép vào buổi này</strong> vì 41 slide Chương 4 nếu dạy riêng dễ trở thành "bài giảng kỹ thuật khô khan". Học <strong>tại điểm đau</strong> (khi code đã đủ phức tạp để lỗi) hiệu quả hơn nhiều.
+<strong>⚠ Sau buổi này có Kiểm tra giữa kỳ 1</strong> (theo đề cương). Phải dành 30 phút cuối ôn nhanh.</p>
+</blockquote>
+<hr />
+<h2 id="i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</h2>
+<p>Sau buổi này, sinh viên có thể:</p>
+<ol>
+<li>Sử dụng các phương thức chuỗi nâng cao: <code>split</code>, <code>join</code>, <code>find</code>, <code>replace</code>, <code>strip</code>, <code>startswith</code>, <code>endswith</code>.</li>
+<li>Viết hàm đệ quy đơn giản (giai thừa, Fibonacci) và <strong>giải thích</strong> vì sao đệ quy hoạt động.</li>
+<li>Sử dụng <code>try/except</code> để bắt lỗi runtime.</li>
+<li>Sử dụng <code>assert</code> để xác nhận điều kiện đầu vào.</li>
+<li>Đọc thông báo lỗi (traceback) Python để tự gỡ lỗi cơ bản.</li>
+<li>Phân biệt <strong>lỗi cú pháp</strong>, <strong>lỗi runtime</strong>, <strong>lỗi logic</strong>.</li>
+</ol>
+<p><strong>Kết nối CLO:</strong> CLO1, CLO2, CLO3.</p>
+<p><strong>Kết nối đề thi:</strong> Chương 3 + Chương 4 = 12/40 câu (30%) đề cuối kỳ. Sau buổi này thi giữa kỳ 1 (Chương 1-4).</p>
+<hr />
+<h2 id="ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</h2>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Situation</strong></td>
+<td>Buổi 3 ta có bộ công cụ tài chính. Khi đem chạy thật trên 100 khách hàng, chương trình <strong>sập</strong> ở khách thứ 7: anh ấy gõ "abc" thay vì số tiền. Một khách khác có CMND viết hoa thường lẫn lộn nên không tìm thấy trong hệ thống.</td>
+</tr>
+<tr>
+<td><strong>Complication</strong></td>
+<td>Thực tế dữ liệu <strong>luôn bẩn</strong>: tên có khoảng trắng thừa, số điện thoại có gạch nối, số tiền nhập dấu chấm thay vì dấu phẩy. Nếu chương trình sập, ngân hàng thiệt hại tiền thật.</td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Làm sao chương trình <strong>không sập</strong> khi gặp input bẩn? Làm sao xử lý chuỗi mềm dẻo? Và có một loại bài toán "tự gọi chính mình" — đệ quy là gì?</td>
+</tr>
+<tr>
+<td><strong>Answer</strong></td>
+<td><strong>Lập trình phòng thủ</strong>: dùng <code>try/except</code> để bắt lỗi, <code>assert</code> để xác nhận điều kiện. <strong>Phương thức chuỗi</strong>: làm sạch dữ liệu trước khi xử lý. <strong>Đệ quy</strong>: hàm gọi chính nó để giải bài toán "thu nhỏ".</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</h2>
+<p>3 tình huống đời thường:</p>
+<ol>
+<li><strong>Form online</strong>: "Em từng điền form đăng ký online chưa? Khi em quên trường nào, web nó báo gì?" → Đó là validation. Chương trình phải <strong>kiểm tra trước khi xử lý</strong>.</li>
+<li><strong>Búp bê Nga (Matryoshka)</strong>: Mở 1 con búp bê, bên trong có búp bê nhỏ hơn, lại mở tiếp... Đó là cấu trúc đệ quy.</li>
+<li><strong>Tìm kiếm trên Google</strong>: Em gõ "ngân hàng vietcombank" — Google không phân biệt hoa thường, không quan tâm em gõ thừa khoảng trắng. Đó là <strong>chuẩn hóa chuỗi</strong>.</li>
+</ol>
+<hr />
+<h2 id="iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</h2>
+<h3 id="tiet-1-000-115-xu-ly-chuoi-nang-cao">Tiết 1 (0:00 – 1:15) — Xử lý chuỗi nâng cao</h3>
+<h4 id="hoat-ong-11-10-phut-on-tap-warmup">Hoạt động 1.1 (10 phút) — Ôn tập + warmup</h4>
+<ul>
+<li>Cho 3 câu trắc nghiệm về Buổi 3 (<code>return</code>, scope, phân rã).</li>
+<li>Đặt vấn đề: "Hôm nay ta xử lý dữ liệu bẩn từ khách hàng."</li>
+</ul>
+<h4 id="hoat-ong-12-15-phut-tinh-huong-du-lieu-ban">Hoạt động 1.2 (15 phút) — Tình huống dữ liệu bẩn</h4>
+<ul>
+<li><strong>Demo ngay đầu buổi:</strong> Cho SV xem một danh sách CMND như sau:
+  <code>python
+  cmnds = ["  012345678901  ", "012345678901", "012-345-678-901", "012345678901\n"]</code></li>
+<li><strong>Hỏi:</strong> "Đây có phải là 4 CMND khác nhau không?"</li>
+<li>SV sẽ nói "không, là 1 CMND nhưng định dạng khác". → Đây là vấn đề thực tế.</li>
+</ul>
+<h4 id="hoat-ong-13-35-phut-7-phuong-thuc-chuoi-quan-trong">Hoạt động 1.3 (35 phút) — 7 phương thức chuỗi quan trọng</h4>
+<ul>
+<li><strong>Bảng nhanh</strong> (vẽ trên bảng, demo từng cái):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Phương thức</th>
+<th>Tác dụng</th>
+<th>Ví dụ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.strip()</code></td>
+<td>Xóa khoảng trắng đầu/cuối</td>
+<td><code>" Lan ".strip() → "Lan"</code></td>
+</tr>
+<tr>
+<td><code>.lower() / .upper()</code></td>
+<td>Hoa/thường</td>
+<td><code>"Lan".upper() → "LAN"</code></td>
+</tr>
+<tr>
+<td><code>.replace(a, b)</code></td>
+<td>Thay thế</td>
+<td><code>"a-b".replace("-","") → "ab"</code></td>
+</tr>
+<tr>
+<td><code>.split(s)</code></td>
+<td>Tách chuỗi</td>
+<td><code>"a,b,c".split(",") → ['a','b','c']</code></td>
+</tr>
+<tr>
+<td><code>.join([...])</code></td>
+<td>Ghép chuỗi</td>
+<td><code>",".join(['a','b']) → "a,b"</code></td>
+</tr>
+<tr>
+<td><code>.find(s)</code></td>
+<td>Tìm vị trí</td>
+<td><code>"hello".find("l") → 2</code></td>
+</tr>
+<tr>
+<td><code>.startswith(s) / .endswith(s)</code></td>
+<td>Kiểm tra đầu/cuối</td>
+<td><code>"file.png".endswith(".png") → True</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Mini-bài tập (15 phút):</strong> Viết hàm <code>chuan_hoa_cmnd(s)</code> nhận chuỗi CMND có thể có dấu cách, gạch nối, ký tự xuống dòng → trả về chuỗi sạch chỉ còn số. Áp dụng lên cả 4 chuỗi ở Hoạt động 1.2.</li>
+</ul>
+<h4 id="hoat-ong-14-15-phut-bai-tap-ao-sau-tach-ho-ten">Hoạt động 1.4 (15 phút) — Bài tập đào sâu: tách họ tên</h4>
+<ul>
+<li><strong>Đề:</strong> Cho <code>"Nguyễn Văn An"</code>, viết hàm trả về <code>("Nguyễn", "Văn", "An")</code> — họ, đệm, tên.</li>
+<li><strong>Gợi ý:</strong> dùng <code>.split(" ")</code> rồi truy cập theo index.</li>
+<li><strong>Bẫy thực tế:</strong> Nếu tên có 4 từ (<code>"Nguyễn Thị Mai Lan"</code>)? Nếu chỉ có 2 từ? → Mở đường vào <code>try/except</code> ở Tiết 3.</li>
+</ul>
+<hr />
+<h3 id="tiet-2-115-230-e-quy">Tiết 2 (1:15 – 2:30) — Đệ quy</h3>
+<h4 id="hoat-ong-21-15-phut-bup-be-nga-e-quy-la-gi">Hoạt động 2.1 (15 phút) — "Búp bê Nga" — đệ quy là gì?</h4>
+<ul>
+<li><strong>Trò chơi nhập vai:</strong> Giảng viên đọc to một câu chuyện kiểu: <em>"Có 5 người xếp hàng. Người thứ 5 hỏi: 'Trước anh là ai?' Người thứ 4 nói: 'Để tôi hỏi người trước tôi đã.' Người thứ 4 hỏi người thứ 3..."</em> → Cứ thế đến người thứ 1 (nói "Tôi đứng đầu"), rồi câu trả lời truyền ngược lại.</li>
+<li><strong>Đây chính là đệ quy.</strong> Vấn đề lớn → giảm thành vấn đề nhỏ hơn → đến trường hợp đơn giản nhất → lời giải truyền ngược.</li>
+</ul>
+<h4 id="hoat-ong-22-30-phut-ham-e-quy-au-tien-giai-thua">Hoạt động 2.2 (30 phút) — Hàm đệ quy đầu tiên: giai thừa</h4>
+<ul>
+<li><strong>Định nghĩa toán học:</strong> <code>n! = n * (n-1)!</code>, với <code>0! = 1</code>.</li>
+<li><strong>Code:</strong>
+  <code>python
+  def giai_thua(n):
+      if n == 0:
+          return 1               # base case (điều kiện dừng)
+      return n * giai_thua(n-1)  # recursive case</code></li>
+<li><strong>Quy tắc 2 phần của đệ quy:</strong></li>
+<li><strong>Base case</strong> (điều kiện dừng) — nếu thiếu → đệ quy vô hạn → tràn stack.</li>
+<li>
+<p><strong>Recursive case</strong> — phải <strong>tiến gần đến base case</strong> (n giảm về 0).</p>
+</li>
+<li>
+<p><strong>Demo "trace":</strong> Vẽ trên bảng quá trình <code>giai_thua(4)</code> → <code>4 * giai_thua(3)</code> → <code>4 * 3 * giai_thua(2)</code> → ... → kết quả 24.</p>
+</li>
+<li>
+<p><strong>Bài tập:</strong> Viết hàm đệ quy tính <code>tong(n) = 1 + 2 + ... + n</code>.</p>
+</li>
+</ul>
+<h4 id="hoat-ong-23-20-phut-fibonacci-canh-bao-hieu-nang">Hoạt động 2.3 (20 phút) — Fibonacci &amp; cảnh báo hiệu năng</h4>
+<ul>
+<li><strong>Code:</strong>
+  <code>python
+  def fib(n):
+      if n &lt;= 1:
+          return n
+      return fib(n-1) + fib(n-2)</code></li>
+<li><strong>Demo cảnh báo:</strong> Chạy <code>fib(30)</code> — vài giây. Chạy <code>fib(40)</code> — chờ rất lâu. Vì sao? <em>(Buổi 6 sẽ phân tích — cài cắm cho buổi sau.)</em></li>
+<li><strong>Khi nào dùng đệ quy?</strong> Bài toán "tự thu nhỏ" tự nhiên (xử lý cây thư mục, parsing). Khi không tự nhiên → dùng vòng lặp.</li>
+</ul>
+<h4 id="hoat-ong-24-10-phut-lab-nhanh">Hoạt động 2.4 (10 phút) — Lab nhanh</h4>
+<ul>
+<li>Viết hàm đệ quy <code>dem_chu_so(n)</code> đếm số chữ số của 1 số nguyên dương. <em>(Gợi ý: <code>1234 = chữ số cuối + dem_chu_so(123)</code>).</em></li>
+</ul>
+<hr />
+<h3 id="giai-lao-15-phut">GIẢI LAO (15 phút)</h3>
+<hr />
+<h3 id="tiet-3-245-400-lap-trinh-phong-thu-chuong-4">Tiết 3 (2:45 – 4:00) — Lập trình phòng thủ (Chương 4)</h3>
+<h4 id="hoat-ong-31-15-phut-3-loai-loi">Hoạt động 3.1 (15 phút) — 3 loại lỗi</h4>
+<ul>
+<li><strong>Bảng phân loại:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Loại lỗi</th>
+<th>Khi nào xảy ra</th>
+<th>Ví dụ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lỗi cú pháp (SyntaxError)</td>
+<td>Khi Python parse code</td>
+<td><code>if x = 5:</code></td>
+</tr>
+<tr>
+<td>Lỗi runtime (Exception)</td>
+<td>Khi chạy đến dòng đó</td>
+<td><code>int("abc")</code>, <code>1/0</code></td>
+</tr>
+<tr>
+<td>Lỗi logic</td>
+<td>Code chạy nhưng kết quả sai</td>
+<td>Tính trung bình bằng <code>(a+b)/3</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Mỗi loại lỗi cần kỹ thuật khác nhau</strong> để xử lý → mở đường vào <code>try/except</code> và <code>assert</code>.</li>
+</ul>
+<h4 id="hoat-ong-32-10-phut-oc-traceback">Hoạt động 3.2 (10 phút) — Đọc traceback</h4>
+<ul>
+<li><strong>Demo cố tình lỗi:</strong>
+  ```python
+  def chia(a, b):
+      return a / b</li>
+</ul>
+<p>print(chia(10, 0))
+  <code>``
+- **Hướng dẫn đọc traceback từ dưới lên:**
+  - Dòng cuối:</code>ZeroDivisionError: division by zero` — đây là <strong>loại lỗi</strong>.
+  - Phía trên: dòng và file gây lỗi.
+- <strong>Quy tắc cho SV:</strong> Khi gặp lỗi đỏ trên Jupyter, <strong>đừng hoảng</strong>. Đọc dòng cuối trước.</p>
+<h4 id="hoat-ong-33-25-phut-tryexcept">Hoạt động 3.3 (25 phút) — <code>try/except</code></h4>
+<ul>
+<li><strong>Tình huống dẫn:</strong> Quay lại lỗi "khách gõ 'abc' thay vì số tiền".</li>
+<li><strong>Code không phòng thủ:</strong>
+  <code>python
+  so_tien = float(input("Số tiền: "))   # nếu gõ "abc" → sập</code></li>
+<li><strong>Code phòng thủ:</strong>
+  <code>python
+  while True:
+      try:
+          so_tien = float(input("Số tiền: "))
+          break
+      except ValueError:
+          print("Vui lòng nhập số. Thử lại.")</code></li>
+<li><strong>Cú pháp đầy đủ:</strong>
+  <code>python
+  try:
+      # đoạn code có thể lỗi
+  except ValueError:
+      # xử lý cho lỗi cụ thể
+  except ZeroDivisionError:
+      # xử lý cho lỗi khác
+  except Exception as e:
+      # bắt mọi lỗi khác (dùng cẩn thận)</code></li>
+<li><strong>Quy tắc:</strong> Bắt <strong>lỗi cụ thể</strong> (ValueError, KeyError...) trước, <strong>lỗi tổng quát</strong> sau.</li>
+</ul>
+<h4 id="hoat-ong-34-25-phut-assert-lap-trinh-phong-thu">Hoạt động 3.4 (25 phút) — <code>assert</code> &amp; lập trình phòng thủ</h4>
+<ul>
+<li><strong>Tình huống:</strong> Hàm <code>tinh_lai_don</code> của Buổi 3 — có cần kiểm tra <code>goc &gt; 0</code> không?</li>
+<li><strong><code>assert</code>:</strong>
+  ```python
+  def tinh_lai_don(goc, lai_suat, nam):
+      assert goc &gt;= 0, "Số gốc không âm"
+      assert lai_suat &gt;= 0, "Lãi suất không âm"
+      assert nam &gt;= 0, "Số năm không âm"
+      return goc * (1 + lai_suat/100 * nam)</li>
+</ul>
+<p>tinh_lai_don(-100, 5, 1)   # AssertionError: Số gốc không âm
+  <code>``
+- **Khác biệt với</code>try/except<code>:**
+  -</code>assert<code>= "tôi tin chuyện này phải đúng, nếu sai thì có lỗi lập trình của tôi". Dùng để **kiểm tra giả định** trong nội bộ.
+  -</code>try/except` = "tôi biết chỗ này có thể lỗi do người dùng/hệ thống bên ngoài". Dùng để <strong>xử lý ngoại lệ</strong>.</p>
+<hr />
+<h3 id="tiet-4-400-500-lab-tong-hop-on-giua-ky">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Ôn giữa kỳ</h3>
+<h4 id="hoat-ong-41-25-phut-lab-tong-hop-he-thong-nhap-lieu-khach-hang">Hoạt động 4.1 (25 phút) — Lab tổng hợp: "Hệ thống nhập liệu khách hàng"</h4>
+<ul>
+<li><strong>Đề:</strong> Viết chương trình:</li>
+<li>Hỏi tên khách hàng → chuẩn hóa (xóa khoảng trắng thừa, viết hoa chữ cái đầu mỗi từ).</li>
+<li>Hỏi CMND → chuẩn hóa (chỉ giữ số), kiểm tra đủ 9 hoặc 12 chữ số (<code>assert</code>).</li>
+<li>Hỏi số tiền gửi → bắt lỗi nếu không phải số (<code>try/except</code>), lặp lại đến khi nhập đúng.</li>
+<li>Hỏi số tháng → tương tự.</li>
+<li>Tính lãi (dùng hàm Buổi 3) và in báo cáo.</li>
+</ul>
+<h4 id="hoat-ong-42-5-phut-3-cau-trac-nghiem-cuoi-buoi">Hoạt động 4.2 (5 phút) — 3 câu trắc nghiệm cuối buổi</h4>
+<p><em>(Xem mục VII)</em></p>
+<h4 id="hoat-ong-43-25-phut-on-nhanh-giua-ky-1-chuong-1-4">Hoạt động 4.3 (25 phút) — Ôn nhanh giữa kỳ 1 (Chương 1-4)</h4>
+<ul>
+<li><strong>Cấu trúc:</strong> 20 câu trắc nghiệm, 30 phút thi (theo đề cương).</li>
+<li><strong>Phân bổ câu hỏi đề thi giữa kỳ 1:</strong></li>
+<li>Mức Biết (40% = 8 câu): khái niệm, cú pháp.</li>
+<li>Mức Hiểu (40% = 8 câu): trace code đơn giản.</li>
+<li>Mức Áp dụng (20% = 4 câu): trace code phức tạp, viết biểu thức.</li>
+<li><strong>3 câu mẫu cho SV ngay tại lớp</strong> — chọn từ đề mẫu 03/04 sẵn có:</li>
+<li>Một câu về toán tử <code>%</code></li>
+<li>Một câu về scope hàm</li>
+<li>Một câu trace <code>if-elif-else + for</code></li>
+<li><strong>Lưu ý cho SV:</strong> Không được dùng tài liệu khi thi.</li>
+</ul>
+<hr />
+<h2 id="v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</h2>
+<table>
+<thead>
+<tr>
+<th>Thời điểm</th>
+<th>Câu hỏi</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mở đầu</td>
+<td>"4 CMND này có là 1 không?"</td>
+<td>Tạo nhu cầu chuẩn hóa</td>
+</tr>
+<tr>
+<td>Trước đệ quy</td>
+<td>"Có bao giờ em mở 1 thùng quà bên trong có thùng nhỏ hơn?"</td>
+<td>Mở khái niệm đệ quy</td>
+</tr>
+<tr>
+<td>Sau giai thừa</td>
+<td>"Nếu thiếu base case thì sao?"</td>
+<td>Khắc sâu điều kiện dừng</td>
+</tr>
+<tr>
+<td>Sau Fibonacci(40)</td>
+<td>"Vì sao chậm thế?"</td>
+<td>Cài cắm Buổi 6</td>
+</tr>
+<tr>
+<td>Trước try/except</td>
+<td>"Em đã từng thấy app crash chưa? Tại sao?"</td>
+<td>Tạo nhu cầu phòng thủ</td>
+</tr>
+<tr>
+<td>Trước assert</td>
+<td>"Khác biệt giữa lỗi 'mình lập trình sai' và lỗi 'người dùng nhập sai'?"</td>
+<td>Phân biệt 2 kỹ thuật</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</h2>
+<p><strong>Bắt buộc (cũng là ôn cho thi giữa kỳ):</strong>
+1. Hoàn thiện chương trình "nhập liệu khách hàng" có đầy đủ try/except và assert.
+2. Viết hàm <code>tong_chu_so(n)</code> đệ quy: tính tổng các chữ số của n. <em>(Vd: 1234 → 10)</em>.
+3. Viết hàm <code>dao_chuoi(s)</code> đệ quy: trả về chuỗi đảo ngược.</p>
+<p><strong>Ôn thi giữa kỳ:</strong>
+- Đọc lại slide Chương 1-4.
+- Làm đề mẫu 03 và 04 (đã được phát).
+- Trace 5 đoạn code có <code>for + if + function</code>.</p>
+<hr />
+<h2 id="vii-3-cau-trac-nghiem-cuoi-buoi-ngan-vi-con-on-thi">VII. 3 CÂU TRẮC NGHIỆM CUỐI BUỔI (ngắn vì còn ôn thi)</h2>
+<p><strong>Câu 1.</strong> Đoạn code sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>0</code>   B. <code>abc</code>   C. Lỗi   D. <code>None</code>
+<em>Đáp án: A</em></p>
+<p><strong>Câu 2.</strong> Hàm sau trả về gì với <code>n = 4</code>?</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>4</code>   B. <code>10</code>   C. <code>24</code>   D. <code>Lỗi đệ quy vô hạn</code>
+<em>Đáp án: C — 4! = 24</em></p>
+<p><strong>Câu 3.</strong> Kết quả của <code>"  Lan,An,Hoa  ".strip().split(",")</code>?
+A. <code>['Lan', 'An', 'Hoa']</code>
+B. <code>['  Lan', 'An', 'Hoa  ']</code>
+C. <code>'Lan,An,Hoa'</code>
+D. Lỗi
+<em>Đáp án: A</em></p>
+<hr />
+<h2 id="viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</h2>
+<ol>
+<li><strong>Đệ quy là điểm khó nhất</strong> của môn học cho SV không chuyên. Nếu thấy lớp đuối → giảm xuống chỉ dạy giai thừa, bỏ Fibonacci. Đề thi không đặt nặng đệ quy.</li>
+<li><strong><code>try/except</code></strong> là kỹ thuật <strong>dùng được ngay</strong> — SV thấy ích lợi tức thì. Đây là phần dễ tạo hứng thú nhất buổi.</li>
+<li><strong><code>assert</code> vs <code>try/except</code></strong> thường lẫn lộn. Nhấn mạnh: assert = lỗi của lập trình viên, except = lỗi từ bên ngoài.</li>
+<li><strong>Ôn giữa kỳ</strong>: 25 phút cuối là vàng bạc. Đừng bỏ. SV cần biết format đề thi.</li>
+<li>Sau buổi này có <strong>Kiểm tra giữa kỳ 1</strong> (theo đề cương). Giảng viên lưu ý lịch tổ chức.</li>
+<li>Nếu lab cuối quá dài → cắt phần "tách họ tên 4 từ" và ưu tiên <code>try/except</code> cho input số tiền.</li>
+</ol>
+<hr />
+<p><em>Hết kịch bản Buổi 4.</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>
