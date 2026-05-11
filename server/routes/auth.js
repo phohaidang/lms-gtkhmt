@@ -83,7 +83,32 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Vui lòng nhập email và mật khẩu' });
     }
     
-    // Find user
+    // 1. Check if it's the Admin account from ENV
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPass = process.env.ADMIN_PASSWORD;
+
+    if (email === adminEmail && password === adminPass) {
+      const adminUser = {
+        student_id: 'ADMIN',
+        email: adminEmail,
+        full_name: process.env.ADMIN_NAME || 'Administrator',
+        role: 'admin'
+      };
+
+      const token = jwt.sign(
+        adminUser,
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
+      );
+
+      return res.json({
+        message: 'Chào mừng Giảng viên quay trở lại!',
+        token,
+        user: adminUser
+      });
+    }
+
+    // 2. If not admin, find student in DB
     const user = await db.findOne('students', s => s.email === email);
     if (!user) {
       return res.status(401).json({ error: 'Email hoặc mật khẩu không đúng' });
