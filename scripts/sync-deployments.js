@@ -15,6 +15,7 @@ const TARGET_PROJECTS = [
 
 const SYNC_DIRS = [
   'client/public/lessons',
+  'client/src',
   'server/data/questions',
   'server/data/ebook',
   'server/routes',
