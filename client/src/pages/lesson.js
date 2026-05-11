@@ -167,10 +167,6 @@ export async function renderLesson(app, { id }) {
             <div id="feedback-loading" style="text-align:center; padding: 2rem"><div class="spinner"></div></div>
          </div>
       </div>
-: 2rem; border-top: 2px solid var(--border-color)">
-           <div id="feedback-loading" style="text-align:center"><div class="spinner"></div></div>
-         </div>
-      </div>
       ` : `
       <!-- Admin: Feedback Summary + Analysis + Attendance for this session -->
       <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--border-color)">
