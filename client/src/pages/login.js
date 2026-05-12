@@ -7,8 +7,6 @@ export function renderLogin(app) {
     return;
   }
 
-  const isRegister = location.hash === '#/register';
-
   app.innerHTML = `
     <div class="auth-page">
       <div class="auth-card">
@@ -21,17 +19,6 @@ export function renderLogin(app) {
         <div id="auth-error" class="alert alert-danger" style="display:none"></div>
 
         <form id="auth-form">
-          ${isRegister ? `
-            <div class="form-group">
-              <label class="form-label">MSSV</label>
-              <input type="text" class="form-input" name="student_id" placeholder="Ví dụ: 2024001234" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Họ và tên</label>
-              <input type="text" class="form-input" name="full_name" placeholder="Nguyễn Văn A" required>
-            </div>
-          ` : ''}
-          
           <div class="form-group">
             <label class="form-label">Email trường</label>
             <input type="email" class="form-input" name="email" placeholder="mssv@hub.edu.vn" required>
@@ -39,19 +26,16 @@ export function renderLogin(app) {
           
           <div class="form-group">
             <label class="form-label">Mật khẩu</label>
-            <input type="password" class="form-input" name="password" placeholder="Tối thiểu 6 ký tự" required minlength="6">
+            <input type="password" class="form-input" name="password" placeholder="Mật khẩu của bạn" required>
           </div>
 
           <button type="submit" class="btn btn-primary btn-block btn-lg" id="auth-submit">
-            ${isRegister ? '📝 Đăng ký' : '🔐 Đăng nhập'}
+            🔐 Đăng nhập
           </button>
         </form>
 
-        <div class="auth-toggle">
-          ${isRegister
-            ? 'Đã có tài khoản? <a href="#/login">Đăng nhập</a>'
-            : 'Chưa có tài khoản? <a href="#/register">Đăng ký</a>'
-          }
+        <div class="auth-toggle" style="font-size: 0.85rem; color: var(--text-secondary)">
+          Quên mật khẩu? Vui lòng liên hệ Giảng viên.
         </div>
       </div>
     </div>
@@ -71,8 +55,7 @@ export function renderLogin(app) {
     const data = Object.fromEntries(formData);
 
     try {
-      const endpoint = isRegister ? '/auth/register' : '/auth/login';
-      const result = await api.post(endpoint, data);
+      const result = await api.post('/auth/login', data);
       setToken(result.token);
       setUser(result.user);
       navigate('/dashboard');
@@ -80,7 +63,7 @@ export function renderLogin(app) {
       errorEl.textContent = err.message;
       errorEl.style.display = 'block';
       btn.disabled = false;
-      btn.textContent = isRegister ? '📝 Đăng ký' : '🔐 Đăng nhập';
+      btn.textContent = '🔐 Đăng nhập';
     }
   });
 }

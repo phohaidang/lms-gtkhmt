@@ -9,66 +9,10 @@ const router = Router();
 
 /**
  * POST /api/auth/register
- * Register a new student account
+ * Register a new student account (DISABLED)
  */
 router.post('/register', async (req, res) => {
-  try {
-    const { student_id, email, full_name, password } = req.body;
-    
-    // Validation
-    if (!student_id || !email || !full_name || !password) {
-      return res.status(400).json({ error: 'Vui lòng điền đầy đủ thông tin' });
-    }
-    
-    // Check email domain
-    const domain = process.env.ALLOWED_EMAIL_DOMAIN;
-    if (domain && !email.endsWith(`@${domain}`)) {
-      return res.status(400).json({ error: `Email phải có đuôi @${domain}` });
-    }
-    
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Mật khẩu phải có ít nhất 6 ký tự' });
-    }
-    
-    // Check duplicate
-    const existing = await db.findOne('students', s => s.email === email || s.student_id === student_id);
-    if (existing) {
-      return res.status(409).json({ error: 'Email hoặc MSSV đã được đăng ký' });
-    }
-    
-    // Hash password
-    const password_hash = await bcrypt.hash(password, 10);
-    
-    // Create user
-    const user = {
-      student_id,
-      email,
-      full_name,
-      password_hash,
-      role: 'student',
-      created_at: new Date().toISOString(),
-      last_login: new Date().toISOString()
-    };
-    
-    await db.append('students', user);
-    
-    // Generate JWT
-    const token = jwt.sign(
-      { student_id, email, full_name, role: 'student' },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
-    );
-    
-    res.status(201).json({
-      message: 'Đăng ký thành công!',
-      token,
-      user: { student_id, email, full_name, role: 'student' }
-    });
-    
-  } catch (err) {
-    console.error('Register error:', err);
-    res.status(500).json({ error: 'Lỗi hệ thống. Vui lòng thử lại.' });
-  }
+  return res.status(403).json({ error: 'Chức năng tự đăng ký đã bị vô hiệu hóa. Vui lòng liên hệ Giảng viên.' });
 });
 
 /**
