@@ -1,0 +1,118 @@
+{
+  "chapter": 1,
+  "title": "Giới thiệu Khoa học máy tính & Python cơ bản",
+  "sessions": [1],
+  "scqa": {
+    "situation": "Vietcombank xử lý khoảng 30 triệu giao dịch mỗi ngày vào năm 2026. Mỗi giao dịch cần tính số dư, kiểm tra hạn mức và ghi lại nhật ký.",
+    "complication": "Nếu một nhân viên giỏi nhất mất 5 giây để tính toán thủ công một giao dịch, thì để xử lý 30 triệu giao dịch của một ngày, chúng ta cần tới... 4.7 năm làm việc liên tục.",
+    "question": "Làm sao để ngân hàng xử lý khối lượng công việc khổng lồ đó trong tích tắc? Cỗ máy nào đang vận hành đằng sau và nó hiểu ngôn ngữ gì?",
+    "answer": "Khoa học máy tính chính là giải pháp. Chúng ta sử dụng mô hình Von Neumann để thiết kế bộ não máy tính và dùng ngôn ngữ Python để ra lệnh cho nó thực hiện các phép tính tự động."
+  },
+  "concepts": [
+    {
+      "id": "c1-cs-definition",
+      "term": "Khoa học máy tính (Computer Science)",
+      "definition": "Nghệ thuật và khoa học sử dụng máy tính để giải quyết các vấn đề thông qua các thuật toán và ngôn ngữ lập trình.",
+      "key_points": [
+        "Không chỉ là sửa máy tính hay cài Windows",
+        "Tập trung vào tư duy giải thuật (Algorithmic Thinking)",
+        "Dùng máy tính để tự động hóa các tác vụ lặp đi lặp lại"
+      ],
+      "case_study": {
+        "title": "Hệ thống Core Banking",
+        "context": "Mọi giao dịch rút tiền tại ATM đều là kết quả của một chương trình máy tính chạy 24/7.",
+        "analysis": "Hệ thống tự động trừ tiền, cập nhật số dư và in hóa đơn mà không cần sự can thiệp của con người.",
+        "lesson_learned": "Máy tính giúp loại bỏ sai sót do con người và tăng tốc độ xử lý hàng triệu lần."
+      },
+      "related_concepts": ["c1-von-neumann", "c1-python"]
+    },
+    {
+      "id": "c1-von-neumann",
+      "term": "Mô hình Von Neumann",
+      "definition": "Cấu trúc cơ bản của máy tính hiện đại gồm 4 thành phần chính: Bộ xử lý trung tâm (CPU), Bộ nhớ (Memory), Thiết bị Nhập (Input) và Thiết bị Xuất (Output).",
+      "key_points": [
+        "CPU: Bộ não thực hiện tính toán",
+        "Bộ nhớ: Nơi lưu trữ dữ liệu và chương trình",
+        "I/O: Cách máy tính giao tiếp với thế giới"
+      ],
+      "case_study": null,
+      "related_concepts": ["c1-cs-definition"]
+    },
+    {
+      "id": "c1-python",
+      "term": "Ngôn ngữ lập trình Python",
+      "definition": "Một ngôn ngữ lập trình bậc cao, dễ đọc, dễ học và cực kỳ mạnh mẽ trong lĩnh vực Tài chính (Fintech) và Phân tích dữ liệu.",
+      "key_points": [
+        "Cú pháp gần giống tiếng Anh",
+        "Cộng đồng hỗ trợ lớn nhất thế giới",
+        "Thư viện phong phú cho tính toán tài chính"
+      ],
+      "case_study": {
+        "title": "JPMorgan Chase & Python",
+        "context": "Ngân hàng lớn nhất nước Mỹ yêu cầu mọi chuyên viên phân tích tài chính mới đều phải biết lập trình Python.",
+        "analysis": "Python giúp họ xây dựng các mô hình dự báo rủi ro nhanh hơn nhiều so với Excel truyền thống.",
+        "lesson_learned": "Python không chỉ dành cho IT, nó là công cụ sống còn của ngành tài chính hiện đại."
+      },
+      "related_concepts": ["c1-variables", "c1-data-types"]
+    },
+    {
+      "id": "c1-variables",
+      "term": "Biến (Variables)",
+      "definition": "Tên định danh dùng để lưu trữ dữ liệu trong bộ nhớ máy tính, giống như một ngăn kéo có dán nhãn.",
+      "key_points": [
+        "Tên biến phải có ý nghĩa (VD: so_du, lai_suat)",
+        "Giá trị của biến có thể thay đổi trong quá trình chạy",
+        "Quy tắc đặt tên: Không bắt đầu bằng số, không có khoảng trắng"
+      ],
+      "case_study": null,
+      "related_concepts": ["c1-data-types"]
+    },
+    {
+      "id": "c1-operators",
+      "term": "Toán tử số học",
+      "definition": "Các ký hiệu dùng để thực hiện phép toán: + (cộng), - (trừ), * (nhân), / (chia), // (chia nguyên), % (chia dư), ** (lũy thừa).",
+      "key_points": [
+        "/ luôn trả về số thực (float)",
+        "// trả về phần nguyên của phép chia",
+        "% trả về phần dư (rất hữu ích để kiểm tra chẵn/lẻ)"
+      ],
+      "case_study": {
+        "title": "Chia tiền lẻ tại ATM",
+        "context": "Máy ATM cần biết phải nhả bao nhiêu tờ 500k, 200k từ số tiền bạn yêu cầu.",
+        "analysis": "Phép chia nguyên (//) được dùng để tính số tờ tiền, và phép chia dư (%) dùng để tính số tiền còn lại.",
+        "lesson_learned": "Toán tử lập trình áp dụng trực tiếp vào các logic nghiệp vụ ngân hàng."
+      },
+      "related_concepts": ["c1-variables"]
+    }
+  ],
+  "tests": {
+    "level_1": {
+      "name": "🎯 Level 1: Nhận diện khái niệm",
+      "description": "Kiểm tra khả năng nhớ và hiểu các định nghĩa cơ bản.",
+      "bloom_level": "Remember / Understand",
+      "questions": [
+        { "id": "L1-q1", "type": "mc", "concept_ref": "c1-von-neumann", "question": "Thành phần nào trong mô hình Von Neumann chịu trách nhiệm thực hiện các phép tính toán học?", "options": ["A. Bộ nhớ (Memory)", "B. Bộ xử lý trung tâm (CPU)", "C. Thiết bị nhập (Input)", "D. Thiết bị xuất (Output)"], "correct": "B" },
+        { "id": "L1-q2", "type": "mc", "concept_ref": "c1-python", "question": "Tại sao Python được ưa chuộng trong ngành tài chính?", "options": ["A. Vì nó chạy nhanh nhất thế giới", "B. Vì nó khó học, thể hiện trình độ", "C. Vì cú pháp dễ đọc và có nhiều thư viện hỗ trợ", "D. Vì nó chỉ dùng được trên máy tính của ngân hàng"], "correct": "C" },
+        { "id": "L1-q3", "type": "mc", "concept_ref": "c1-operators", "question": "Phép toán 17 % 5 trong Python trả về kết quả bao nhiêu?", "options": ["A. 3", "B. 2", "C. 3.4", "D. 1"], "correct": "B" },
+        { "id": "L1-q4", "type": "mc", "concept_ref": "c1-variables", "question": "Tên biến nào sau đây là KHÔNG hợp lệ?", "options": ["A. so_du_2024", "B. _laiSuat", "C. 2024_so_du", "D. balance"], "correct": "C" }
+      ]
+    },
+    "level_2": {
+      "name": "📝 Level 2: Giải thích & Phân tích",
+      "description": "Giải thích mối liên hệ giữa các khái niệm và thực tế.",
+      "bloom_level": "Understand / Analyze",
+      "questions": [
+        { "id": "L2-q1", "type": "essay", "concept_ref": "c1-operators", "question": "Hãy giải thích sự khác biệt giữa toán tử / và // trong Python. Cho ví dụ trong bài toán chia tiền.", "rubric": "Cần nêu: / trả về số thực có phẩy, // trả về số nguyên. Ví dụ chia kẹo hoặc chia tiền.", "max_words": 200 },
+        { "id": "L2-q2", "type": "essay", "concept_ref": "c1-cs-definition", "question": "Tại sao một sinh viên ngành Ngân hàng lại cần học Khoa học máy tính?", "rubric": "Cần nêu: Tự động hóa, xử lý dữ liệu lớn, lợi thế cạnh tranh trong Fintech.", "max_words": 300 }
+      ]
+    },
+    "level_3": {
+      "name": "🚀 Level 3: Vận dụng thực tế",
+      "description": "Áp dụng kiến thức để giải quyết một tình huống cụ thể.",
+      "bloom_level": "Apply / Create",
+      "questions": [
+        { "id": "L3-q1", "type": "essay", "question": "Bạn được yêu cầu viết một chương trình Python nhỏ để tính số dư cuối kỳ của một khách hàng gửi tiết kiệm lãi đơn. Hãy liệt kê các biến cần thiết và công thức toán tử bạn sẽ sử dụng.", "rubric": "Cần liệt kê: gốc, lãi suất, thời gian. Công thức: goc * (1 + lai * thoi_gian).", "max_words": 400 }
+      ]
+    }
+  }
+}

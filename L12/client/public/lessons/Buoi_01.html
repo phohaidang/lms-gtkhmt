@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUỔI 1 — GIỚI THIỆU KHOA HỌC MÁY TÍNH & PYTHON CƠ BẢN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#buoi-1-gioi-thieu-khoa-hoc-may-tinh-python-co-ban">BUỔI 1 — GIỚI THIỆU KHOA HỌC MÁY TÍNH &amp; PYTHON CƠ BẢN</a><ul>
+<li><a href="#i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</a></li>
+<li><a href="#ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</a></li>
+<li><a href="#iii-khoi-ong-tu-cai-biet-cua-sinh-vien">III. KHỞI ĐỘNG TỪ "CÁI BIẾT" CỦA SINH VIÊN</a></li>
+<li><a href="#iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</a><ul>
+<li><a href="#tiet-1-000-115-mo-khoa-bang-cau-chuyen">Tiết 1 (0:00 – 1:15) — Mở khoá bằng câu chuyện</a><ul>
+<li><a href="#hoat-ong-11-15-phut-co-may-khong-ngu">Hoạt động 1.1 (15 phút) — "Cỗ máy không ngủ"</a></li>
+<li><a href="#hoat-ong-12-15-phut-thao-luan-nhom-thiet-ke-co-may">Hoạt động 1.2 (15 phút) — Thảo luận nhóm "Thiết kế cỗ máy"</a></li>
+<li><a href="#hoat-ong-13-20-phut-loi-giai-lich-su">Hoạt động 1.3 (20 phút) — Lời giải lịch sử</a></li>
+<li><a href="#hoat-ong-14-25-phut-5-the-he-may-tinh-luot-nhanh-co-hinh">Hoạt động 1.4 (25 phút) — 5 thế hệ máy tính (lướt nhanh, có hình)</a></li>
+</ul>
+</li>
+<li><a href="#tiet-2-115-230-python-chuong-trinh-au-tien">Tiết 2 (1:15 – 2:30) — Python &amp; chương trình đầu tiên</a><ul>
+<li><a href="#hoat-ong-21-15-phut-tai-sao-la-python">Hoạt động 2.1 (15 phút) — "Tại sao là Python?"</a></li>
+<li><a href="#hoat-ong-22-20-phut-cai-at-moi-truong">Hoạt động 2.2 (20 phút) — Cài đặt môi trường</a></li>
+<li><a href="#hoat-ong-23-20-phut-cau-lenh-au-tien">Hoạt động 2.3 (20 phút) — "Câu lệnh" đầu tiên</a></li>
+<li><a href="#hoat-ong-24-20-phut-lab-ca-nhan-nho">Hoạt động 2.4 (20 phút) — Lab cá nhân nhỏ</a></li>
+</ul>
+</li>
+<li><a href="#giai-lao-15-phut">GIẢI LAO (15 phút)</a></li>
+<li><a href="#tiet-3-245-400-bien-kieu-du-lieu-toan-tu">Tiết 3 (2:45 – 4:00) — Biến, kiểu dữ liệu, toán tử</a><ul>
+<li><a href="#hoat-ong-31-15-phut-bien-la-gi">Hoạt động 3.1 (15 phút) — Biến là gì?</a></li>
+<li><a href="#hoat-ong-32-20-phut-4-kieu-du-lieu-cot-loi">Hoạt động 3.2 (20 phút) — 4 kiểu dữ liệu cốt lõi</a></li>
+<li><a href="#hoat-ong-33-25-phut-toan-tu-so-hoc-ac-biet-va">Hoạt động 3.3 (25 phút) — Toán tử số học, đặc biệt // và %</a></li>
+<li><a href="#hoat-ong-34-15-phut-input-va-chuyen-kieu">Hoạt động 3.4 (15 phút) — input() và chuyển kiểu</a></li>
+</ul>
+</li>
+<li><a href="#tiet-4-400-500-lab-tong-hop-anh-gia">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Đánh giá</a><ul>
+<li><a href="#hoat-ong-41-35-phut-lab-nhom-tinh-lai-cho-khach-hang-au-tien">Hoạt động 4.1 (35 phút) — Lab nhóm: "Tính lãi cho khách hàng đầu tiên"</a></li>
+<li><a href="#hoat-ong-42-10-phut-trinh-bay-rut-kinh-nghiem">Hoạt động 4.2 (10 phút) — Trình bày &amp; rút kinh nghiệm</a></li>
+<li><a href="#hoat-ong-43-10-phut-5-cau-trac-nghiem-format-e-thi">Hoạt động 4.3 (10 phút) — 5 câu trắc nghiệm format đề thi</a></li>
+<li><a href="#hoat-ong-44-5-phut-tong-ket-cau-noi">Hoạt động 4.4 (5 phút) — Tổng kết &amp; cầu nối</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#v-bang-cau-hoi-thao-luan-danh-cho-giang-vien">V. BẢNG CÂU HỎI THẢO LUẬN (dành cho giảng viên)</a></li>
+<li><a href="#vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</a></li>
+<li><a href="#vii-5-cau-trac-nghiem-cuoi-buoi-ung-format-e-mau">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI (đúng format đề mẫu)</a></li>
+<li><a href="#viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="buoi-1-gioi-thieu-khoa-hoc-may-tinh-python-co-ban">BUỔI 1 — GIỚI THIỆU KHOA HỌC MÁY TÍNH &amp; PYTHON CƠ BẢN</h1>
+<blockquote>
+<p><strong>Chương 1 của giáo trình</strong> · Thời lượng 5 giờ trên lớp (4 tiết × 75 phút + giải lao)
+<strong>Câu chuyện xuyên suốt 6 buổi:</strong> "Xây dựng một mini-fintech để phục vụ ngân hàng cộng đồng".
+<strong>Vai trò của buổi 1 trong câu chuyện:</strong> Tạo dựng "công cụ" — cài đặt Python và viết chương trình tính lãi cho 1 khách hàng đầu tiên.</p>
+</blockquote>
+<hr />
+<h2 id="i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</h2>
+<p>Sau buổi này, sinh viên có thể:</p>
+<ol>
+<li>Giải thích bằng ngôn ngữ thường ngày: KHMT là gì, máy tính "hoạt động" như thế nào theo mô hình von Neumann.</li>
+<li>Cài đặt Anaconda/Jupyter Notebook và chạy được lệnh đầu tiên.</li>
+<li>Khai báo biến, sử dụng các kiểu dữ liệu cơ bản (int, float, str, bool).</li>
+<li>Sử dụng toán tử số học <code>+ - * / // % **</code> và phân biệt được <code>/</code> với <code>//</code>, <code>%</code>.</li>
+<li>Viết một chương trình ngắn nhận input từ người dùng, chuyển kiểu, in ra kết quả.</li>
+</ol>
+<p><strong>Kết nối với CLO</strong>: CLO1 (trình bày khái niệm cơ bản KHMT), CLO2 mức nhập môn (Python cho bài toán tài chính).</p>
+<p><strong>Kết nối với đề thi</strong>: Chương 1 chiếm 4/40 câu (10%) đề cuối kỳ. Đề mẫu 03/04/05 hỏi nhiều về <code>input() + type conversion + %</code>.</p>
+<hr />
+<h2 id="ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</h2>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Situation</strong></td>
+<td>Vietcombank xử lý ~30 triệu giao dịch/ngày năm 2026. Mỗi giao dịch cần tính số dư, kiểm tra hạn mức, ghi log.</td>
+</tr>
+<tr>
+<td><strong>Complication</strong></td>
+<td>Nếu một nhân viên giỏi mất 5 giây để xử lý một giao dịch tay, riêng việc tính tay 30 triệu giao dịch sẽ mất ~4.7 năm cho <strong>một ngày</strong> dữ liệu.</td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Vậy ngân hàng thực sự dùng "thứ gì" để làm việc đó? Cỗ máy đó hiểu ngôn ngữ gì để chúng ta ra lệnh?</td>
+</tr>
+<tr>
+<td><strong>Answer</strong></td>
+<td>KHMT là nghệ thuật ra lệnh cho máy tính giải quyết vấn đề. Python là một trong những "ngôn ngữ ra lệnh" dễ học nhất, đủ mạnh để dùng trong fintech. Buổi này học những câu lệnh đầu tiên.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="iii-khoi-ong-tu-cai-biet-cua-sinh-vien">III. KHỞI ĐỘNG TỪ "CÁI BIẾT" CỦA SINH VIÊN</h2>
+<p>Trước khi nói gì về máy tính, hãy hỏi SV 3 câu (giơ tay):</p>
+<ol>
+<li><em>"Em đã từng dùng Internet Banking hoặc Momo chưa?"</em> — Hầu hết sẽ giơ tay.</li>
+<li><em>"Khi em bấm 'Chuyển khoản 100k cho mẹ', em có biết bên trong điện thoại đang xảy ra điều gì không?"</em> — Đa số sẽ lắc đầu.</li>
+<li><em>"Nếu giao cho em viết phần mềm đó, em sẽ bắt đầu từ đâu?"</em> — Tạo ra "vùng tối" mà buổi học sẽ soi sáng.</li>
+</ol>
+<blockquote>
+<p><strong>Mẹo giảng dạy:</strong> Không cần SV trả lời đúng. Mục tiêu của 3 câu này là làm họ tò mò.</p>
+</blockquote>
+<hr />
+<h2 id="iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</h2>
+<h3 id="tiet-1-000-115-mo-khoa-bang-cau-chuyen">Tiết 1 (0:00 – 1:15) — Mở khoá bằng câu chuyện</h3>
+<h4 id="hoat-ong-11-15-phut-co-may-khong-ngu">Hoạt động 1.1 (15 phút) — "Cỗ máy không ngủ"</h4>
+<ul>
+<li><strong>Hình thức:</strong> Thuyết giảng có hỏi đáp.</li>
+<li><strong>Nội dung:</strong> Trình chiếu con số 30 triệu giao dịch/ngày của một ngân hàng VN. Tính nhanh trên bảng (cùng SV): nếu mỗi giao dịch tay mất 5 giây, một người làm 8h/ngày sẽ mất bao lâu? <em>(Đáp số ~5,200 năm)</em>.</li>
+<li><strong>Câu hỏi mở:</strong> "Một thứ gì đó đang giúp ngân hàng làm việc này. Nó là gì?"</li>
+</ul>
+<h4 id="hoat-ong-12-15-phut-thao-luan-nhom-thiet-ke-co-may">Hoạt động 1.2 (15 phút) — Thảo luận nhóm "Thiết kế cỗ máy"</h4>
+<ul>
+<li><strong>Hình thức:</strong> Nhóm 3-4 SV, 8 phút thảo luận, 5 phút mỗi nhóm chia sẻ 1 câu, 2 phút giảng viên tổng kết.</li>
+<li><strong>Đề bài:</strong> "Nếu năm 1940, em được giao thiết kế một cỗ máy tự động xử lý sổ sách ngân hàng — máy đó cần có những phần gì?"</li>
+<li><strong>Mục đích sư phạm:</strong> SV sẽ tự nghĩ ra "phần nhớ", "phần tính toán", "phần nhận lệnh", "phần in kết quả" — gần đúng 4 thành phần của von Neumann.</li>
+</ul>
+<h4 id="hoat-ong-13-20-phut-loi-giai-lich-su">Hoạt động 1.3 (20 phút) — Lời giải lịch sử</h4>
+<ul>
+<li><strong>Hình thức:</strong> Thuyết giảng 12 phút + Q&amp;A 8 phút.</li>
+<li><strong>Nội dung gọn:</strong></li>
+<li><strong>Alan Turing (1936)</strong>: hình dung một "cỗ máy ý niệm" có thể giải mọi bài toán tính được — Turing machine. <em>Không đi vào chi tiết kỹ thuật, chỉ kể chuyện.</em></li>
+<li><strong>Von Neumann (1945)</strong>: 4 thành phần — Bộ nhớ, ALU (tính toán), CU (điều khiển), I/O. Vẽ sơ đồ trên bảng, đối chiếu với những gì SV vừa thảo luận.</li>
+<li><strong>Liên hệ điện thoại</strong>: Mở điện thoại của SV ra — "RAM = bộ nhớ, CPU = ALU+CU, màn hình + cảm ứng = I/O". <em>Khoảnh khắc "à ra thế".</em></li>
+</ul>
+<h4 id="hoat-ong-14-25-phut-5-the-he-may-tinh-luot-nhanh-co-hinh">Hoạt động 1.4 (25 phút) — 5 thế hệ máy tính (lướt nhanh, có hình)</h4>
+<ul>
+<li><strong>Hình thức:</strong> Slideshow trực quan 15 phút + 1 mini-quiz 10 phút.</li>
+<li><strong>Nội dung gọn:</strong> mỗi thế hệ 2 phút — đèn chân không → transistor → IC → vi xử lý → AI/lượng tử. Chiếu hình ENIAC bên cạnh iPhone.</li>
+<li><strong>Mini-quiz (5 câu trắc nghiệm trên Mentimeter/Kahoot):</strong> Lấy ngay 5 câu trong slide gốc Chương 1 để SV trả lời.</li>
+</ul>
+<blockquote>
+<p><strong>Cảnh báo cho giảng viên:</strong> Đừng dạy lịch sử quá kỹ. Đây là phần dễ làm SV không chuyên buồn ngủ nhất. <strong>Tối đa 25 phút cho toàn bộ phần lịch sử.</strong></p>
+</blockquote>
+<hr />
+<h3 id="tiet-2-115-230-python-chuong-trinh-au-tien">Tiết 2 (1:15 – 2:30) — Python &amp; chương trình đầu tiên</h3>
+<h4 id="hoat-ong-21-15-phut-tai-sao-la-python">Hoạt động 2.1 (15 phút) — "Tại sao là Python?"</h4>
+<ul>
+<li><strong>Hình thức:</strong> Demo so sánh trực quan.</li>
+<li><strong>Demo:</strong> Cho SV xem cùng một chương trình "Hello, World" và "tính 2+3" trong <strong>3 ngôn ngữ</strong> — C, Java, Python — cạnh nhau.</li>
+<li><strong>Câu hỏi cho SV:</strong> "Nếu là người mới, em chọn cái nào?" → Python ngắn nhất, dễ đọc nhất.</li>
+<li><strong>Bonus:</strong> Liệt kê các công ty fintech đang dùng Python (JPMorgan, Robinhood, Stripe).</li>
+</ul>
+<h4 id="hoat-ong-22-20-phut-cai-at-moi-truong">Hoạt động 2.2 (20 phút) — Cài đặt môi trường</h4>
+<ul>
+<li><strong>Hình thức:</strong> Demo + SV làm theo trên máy của mình.</li>
+<li><strong>Mục tiêu:</strong> Cuối hoạt động này, <strong>mọi SV mở được Jupyter Notebook</strong>.</li>
+<li><strong>Các bước:</strong></li>
+<li>Download Anaconda (đã yêu cầu SV cài trước qua email tuần trước nếu có thể).</li>
+<li>Mở Anaconda Navigator → Launch Jupyter Notebook.</li>
+<li>New → Python 3.</li>
+<li>Trong cell đầu tiên: <code>print("Xin chào, tôi là [tên]")</code> → Shift+Enter.</li>
+</ul>
+<blockquote>
+<p><strong>Phương án dự phòng:</strong> Nếu máy SV gặp sự cố, mở <strong>Google Colab</strong> (chỉ cần Gmail). Giảng viên nên có sẵn link Colab để chia sẻ.</p>
+</blockquote>
+<h4 id="hoat-ong-23-20-phut-cau-lenh-au-tien">Hoạt động 2.3 (20 phút) — "Câu lệnh" đầu tiên</h4>
+<ul>
+<li><strong>Hình thức:</strong> Code-along (giảng viên gõ, SV gõ theo).</li>
+<li><strong>Tuần tự:</strong></li>
+<li><code>print("Hello")</code></li>
+<li><code>print("Hello", "World")</code></li>
+<li><code>print(2 + 3)</code></li>
+<li><code>print(2 + 3, "là kết quả")</code></li>
+<li><strong>Câu hỏi liên tục:</strong> "Trước khi cô/thầy bấm Enter, em đoán kết quả là gì?" → Buộc SV dự đoán, không thụ động.</li>
+</ul>
+<h4 id="hoat-ong-24-20-phut-lab-ca-nhan-nho">Hoạt động 2.4 (20 phút) — Lab cá nhân nhỏ</h4>
+<ul>
+<li><strong>Đề:</strong> Trong Jupyter, viết 4 cell:</li>
+<li>In ra tên đầy đủ của em.</li>
+<li>In ra tuổi của em (không dùng dấu nháy quanh số).</li>
+<li>In ra phép tính <code>(2026 - năm sinh)</code> — số tuổi tính được.</li>
+<li>So sánh kết quả cell 2 và cell 3 — có khớp không?</li>
+<li><strong>Mục đích sư phạm:</strong> SV tự phát hiện sự khác biệt giữa "viết số" và "tính ra số" → dẫn đến khái niệm <strong>biến</strong> ở tiết sau.</li>
+</ul>
+<hr />
+<h3 id="giai-lao-15-phut">GIẢI LAO (15 phút)</h3>
+<hr />
+<h3 id="tiet-3-245-400-bien-kieu-du-lieu-toan-tu">Tiết 3 (2:45 – 4:00) — Biến, kiểu dữ liệu, toán tử</h3>
+<h4 id="hoat-ong-31-15-phut-bien-la-gi">Hoạt động 3.1 (15 phút) — Biến là gì?</h4>
+<ul>
+<li><strong>Ẩn dụ:</strong> Biến giống như "ngăn kéo có nhãn dán". Nhãn = tên biến, đồ trong ngăn = giá trị.</li>
+<li><strong>Demo:</strong>
+  <code>python
+  ten = "Lan"
+  tuoi = 22
+  print(ten, "năm nay", tuoi, "tuổi")
+  tuoi = tuoi + 1
+  print("Sang năm", ten, tuoi, "tuổi")</code></li>
+<li><strong>Quy tắc đặt tên:</strong> không bắt đầu bằng số, không trùng từ khoá, không có dấu cách.</li>
+<li><strong>Lưu ý đề thi:</strong> Đề mẫu 03 có câu hỏi "tên biến nào hợp lệ" — nên cho SV thực hành luôn 5 ví dụ tên biến hợp lệ/không hợp lệ.</li>
+</ul>
+<h4 id="hoat-ong-32-20-phut-4-kieu-du-lieu-cot-loi">Hoạt động 3.2 (20 phút) — 4 kiểu dữ liệu cốt lõi</h4>
+<ul>
+<li><strong>Bảng quy tắc nhanh:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Kiểu</th>
+<th>Ví dụ</th>
+<th>Kiểm tra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td><code>25</code>, <code>-100</code></td>
+<td><code>type(25)</code></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>3.14</code>, <code>0.5</code></td>
+<td><code>type(3.14)</code></td>
+</tr>
+<tr>
+<td><code>str</code></td>
+<td><code>"Lan"</code>, <code>'25'</code></td>
+<td><code>type("Lan")</code></td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td><code>True</code>, <code>False</code></td>
+<td><code>type(True)</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Bài tập đoán kiểu (10 phút):</strong> Giảng viên đưa ra 10 giá trị, SV trả lời nhanh kiểu của nó. Có "bẫy": <code>"25"</code> (str), <code>25.0</code> (float), <code>True + 1</code> (vì sao = 2?).</li>
+</ul>
+<h4 id="hoat-ong-33-25-phut-toan-tu-so-hoc-ac-biet-va">Hoạt động 3.3 (25 phút) — Toán tử số học, đặc biệt <code>//</code> và <code>%</code></h4>
+<ul>
+<li><strong>Demo có chủ đích:</strong>
+  <code>python
+  print(7 / 2)    # 3.5
+  print(7 // 2)   # 3
+  print(7 % 2)    # 1
+  print(2 ** 10)  # 1024</code></li>
+<li><strong>Câu hỏi đào sâu:</strong> "Phép <code>%</code> có gì hữu ích trong đời thực?" → Dẫn vào ví dụ kinh điển: kiểm tra số chẵn/lẻ, kiểm tra năm nhuận (<code>năm % 4 == 0</code>).</li>
+<li><strong>Mini-bài tập:</strong> Cho 17 viên kẹo chia đều cho 5 bạn. Mỗi bạn được mấy viên? Còn dư mấy viên? → Viết bằng Python.</li>
+</ul>
+<blockquote>
+<p><strong>Đề thi cảnh báo:</strong> Đề mẫu 03, 04, 05 đều có câu hỏi <code>%</code> để tính năm nhuận hoặc chia kẹo. Đây là <strong>must-cover</strong>.</p>
+</blockquote>
+<h4 id="hoat-ong-34-15-phut-input-va-chuyen-kieu">Hoạt động 3.4 (15 phút) — input() và chuyển kiểu</h4>
+<ul>
+<li><strong>Tình huống:</strong> "Bây giờ chương trình của em luôn in cùng một thứ. Làm sao để chương trình hỏi người dùng?"</li>
+<li><strong>Demo:</strong>
+  <code>python
+  ten = input("Tên bạn là gì? ")
+  tuoi = input("Tuổi của bạn? ")
+  print("Chào", ten, "—", tuoi, "tuổi")</code></li>
+<li><strong>Bẫy phải gỡ:</strong> <code>tuoi + 1</code> sẽ lỗi! Vì <code>input()</code> luôn trả về <strong>str</strong>.</li>
+<li><strong>Giải pháp:</strong> <code>tuoi = int(input("Tuổi: "))</code>.</li>
+<li><strong>Đây là dạng câu hỏi đề thi yêu thích nhất</strong> — đảm bảo SV làm 3 ví dụ.</li>
+</ul>
+<hr />
+<h3 id="tiet-4-400-500-lab-tong-hop-anh-gia">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Đánh giá</h3>
+<h4 id="hoat-ong-41-35-phut-lab-nhom-tinh-lai-cho-khach-hang-au-tien">Hoạt động 4.1 (35 phút) — Lab nhóm: "Tính lãi cho khách hàng đầu tiên"</h4>
+<ul>
+<li><strong>Hình thức:</strong> Nhóm 2-3 SV, dùng Jupyter.</li>
+<li><strong>Đề bài (chia 3 mức để phân hoá năng lực):</strong></li>
+</ul>
+<p><strong>Mức cơ bản (bắt buộc):</strong> Viết chương trình hỏi:
+  - Tên khách hàng (str)
+  - Số tiền gửi (float)
+  - Lãi suất %/năm (float)
+  - Số năm (int)</p>
+<p>Sau đó in ra: <code>Khách [tên] sẽ có [số tiền cuối] đồng sau [n] năm.</code>
+  Công thức lãi đơn: <code>cuối = gốc * (1 + lãi/100 * năm)</code>.</p>
+<p><strong>Mức nâng cao (khuyến khích):</strong> Cho phép nhập số năm là số thập phân.</p>
+<p><strong>Mức thử thách (optional):</strong> Tính cả lãi kép — <code>cuối = gốc * (1 + lãi/100) ** năm</code>. So sánh với lãi đơn cho cùng input.</p>
+<ul>
+<li><strong>Vai trò giảng viên:</strong> Đi từng nhóm, <strong>không cho đáp án ngay</strong> — chỉ gợi ý bằng câu hỏi.</li>
+</ul>
+<h4 id="hoat-ong-42-10-phut-trinh-bay-rut-kinh-nghiem">Hoạt động 4.2 (10 phút) — Trình bày &amp; rút kinh nghiệm</h4>
+<ul>
+<li>2 nhóm xung phong chia sẻ màn hình, demo chương trình của họ.</li>
+<li>Cả lớp tìm "bug" hoặc "có thể cải thiện gì".</li>
+</ul>
+<h4 id="hoat-ong-43-10-phut-5-cau-trac-nghiem-format-e-thi">Hoạt động 4.3 (10 phút) — 5 câu trắc nghiệm format đề thi</h4>
+<ul>
+<li>Giảng viên chiếu 5 câu, SV trả lời qua Mentimeter/giơ tay A-B-C-D.</li>
+<li>5 câu mẫu (xem mục VII).</li>
+</ul>
+<h4 id="hoat-ong-44-5-phut-tong-ket-cau-noi">Hoạt động 4.4 (5 phút) — Tổng kết &amp; cầu nối</h4>
+<ul>
+<li>Khoá lại 4 ý: <strong>biến, kiểu, toán tử, input/output.</strong></li>
+<li>Câu cầu nối sang Buổi 2: <em>"Hôm nay chương trình của ta tính lãi cho 1 khách. Nếu có 1000 khách, mỗi người có một lãi suất khác nhau, ta có viết 1000 chương trình không? Tuần sau ta giải bài đó."</em></li>
+</ul>
+<hr />
+<h2 id="v-bang-cau-hoi-thao-luan-danh-cho-giang-vien">V. BẢNG CÂU HỎI THẢO LUẬN (dành cho giảng viên)</h2>
+<table>
+<thead>
+<tr>
+<th>Thời điểm</th>
+<th>Câu hỏi</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mở đầu</td>
+<td>"Khi em chuyển khoản, ai đang làm việc đằng sau?"</td>
+<td>Kích hoạt cái Biết</td>
+</tr>
+<tr>
+<td>Trước phần lịch sử</td>
+<td>"Em sẽ thiết kế cỗ máy đó thế nào?"</td>
+<td>Tạo nhu cầu học</td>
+</tr>
+<tr>
+<td>Sau Turing</td>
+<td>"Vậy điện thoại em có phải là Turing machine không?"</td>
+<td>Kết nối lý thuyết với đời sống</td>
+</tr>
+<tr>
+<td>Trước biến</td>
+<td>"Trong các bạn ai từng dùng Excel? <code>A1</code>, <code>B2</code> là gì?"</td>
+<td>Liên hệ với cái đã biết</td>
+</tr>
+<tr>
+<td>Trước <code>%</code></td>
+<td>"Tại sao máy ATM biết khi nào trả tiền 'chẵn 100k'?"</td>
+<td>Tạo bối cảnh thực tế</td>
+</tr>
+<tr>
+<td>Trước <code>int(input())</code></td>
+<td>"Tại sao 'tuổi + 1' bị lỗi?"</td>
+<td>Bẫy nhận thức có chủ đích</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</h2>
+<p><strong>Bắt buộc:</strong>
+1. Hoàn thiện chương trình tính lãi đơn (nếu chưa xong tại lớp).
+2. Viết chương trình hỏi năm sinh, tính tuổi và in ra: "Bạn sinh năm nhuận!" hoặc "Bạn sinh năm thường!" — <em>gợi ý dùng <code>%</code></em> (sẽ được hoàn thiện ở Buổi 2 với <code>if</code>).
+3. Tự đọc trước phần "toán tử logic và bảng sự thật" trong slide Chương 2.</p>
+<p><strong>Tự chọn (cho SV muốn đào sâu):</strong>
+4. Viết chương trình tính BMI từ chiều cao và cân nặng — chú ý chuyển kiểu input.</p>
+<hr />
+<h2 id="vii-5-cau-trac-nghiem-cuoi-buoi-ung-format-e-mau">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI (đúng format đề mẫu)</h2>
+<p><strong>Câu 1.</strong> Lệnh nào trả về phần dư của phép chia 17 cho 5?
+A. <code>17 / 5</code>   B. <code>17 // 5</code>   C. <code>17 % 5</code>   D. <code>17 ** 5</code>
+<em>Đáp án: C</em></p>
+<p><strong>Câu 2.</strong> Sau khi chạy <code>x = "25"</code>, lệnh nào sau đây gây <strong>lỗi</strong>?
+A. <code>print(x)</code>   B. <code>print(x + "1")</code>   C. <code>print(x + 1)</code>   D. <code>print(type(x))</code>
+<em>Đáp án: C — vì <code>x</code> là str, không cộng được với int</em></p>
+<p><strong>Câu 3.</strong> Tên biến nào sau đây <strong>không hợp lệ</strong> trong Python?
+A. <code>so_du</code>   B. <code>_balance</code>   C. <code>2024_data</code>   D. <code>khach1</code>
+<em>Đáp án: C — không bắt đầu bằng số</em></p>
+<p><strong>Câu 4.</strong> Đoạn mã sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">//</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>3 1</code>   B. <code>3.5 1</code>   C. <code>1 3</code>   D. <code>3 0</code>
+<em>Đáp án: A</em></p>
+<p><strong>Câu 5.</strong> Lệnh nào dùng để chuyển chuỗi <code>"3.14"</code> thành kiểu số thực?
+A. <code>int("3.14")</code>   B. <code>float("3.14")</code>   C. <code>str("3.14")</code>   D. <code>bool("3.14")</code>
+<em>Đáp án: B</em></p>
+<hr />
+<h2 id="viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</h2>
+<ol>
+<li><strong>Đừng kéo dài phần lịch sử quá 25 phút.</strong> Đây là chỗ dễ làm SV mất hứng nhất.</li>
+<li><strong>Cài đặt Anaconda</strong> là điểm dễ vỡ — luôn có 1-2 SV gặp lỗi. Hãy có Google Colab làm phương án dự phòng.</li>
+<li><strong><code>%</code> và <code>//</code></strong> là điểm trọng yếu cho đề thi. Nếu thiếu thời gian, cắt phần lịch sử, KHÔNG cắt phần toán tử.</li>
+<li><strong>Lab cuối buổi</strong> là thước đo thật sự buổi học có thành công hay không. Nếu ≥ 70% nhóm hoàn thành mức cơ bản → buổi học đạt mục tiêu.</li>
+<li>Luôn kết buổi bằng <strong>một câu hỏi mở dẫn đến buổi sau</strong>, đừng kết bằng tóm tắt khô khan.</li>
+</ol>
+<hr />
+<p><em>Hết kịch bản Buổi 1.</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>

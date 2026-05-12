@@ -1,0 +1,93 @@
+{
+  "chapter": 4,
+  "title": "Đệ quy & Xử lý lỗi",
+  "sessions": [4],
+  "scqa": {
+    "situation": "Chương trình của chúng ta hoạt động tốt... cho đến khi khách hàng nhập nhầm chữ vào ô nhập số tiền, hoặc khi đường truyền internet bị ngắt giữa chừng.",
+    "complication": "Một lỗi nhỏ không được xử lý có thể làm sập toàn bộ hệ thống ngân hàng, gây mất niềm tin và thiệt hại tài chính khổng lồ. Đồng thời, có những bài toán phức tạp (như tìm kiếm trong cấu trúc phân cấp) rất khó giải bằng vòng lặp thông thường.",
+    "question": "Làm thế nào để chương trình 'không sập' khi gặp dữ liệu bẩn? Và có cách nào để giải quyết một bài toán lớn bằng cách chia nó thành các bài toán nhỏ hơn cùng loại?",
+    "answer": "Chúng ta sử dụng Xử lý ngoại lệ (try-except) để bắt lỗi một cách chủ động và dùng Đệ quy (Recursion) để giải quyết các bài toán có tính lặp lại cấu trúc một cách thanh thoát."
+  },
+  "concepts": [
+    {
+      "id": "c4-recursion",
+      "term": "Đệ quy (Recursion)",
+      "definition": "Kỹ thuật lập trình trong đó một hàm tự gọi lại chính nó để giải quyết một phiên bản nhỏ hơn của cùng một bài toán.",
+      "key_points": [
+        "Phải có điều kiện dừng (Base case) để tránh lặp vô hạn",
+        "Có bước đệ quy (Recursive step) để tiến gần đến điều kiện dừng",
+        "Phù hợp với bài toán như: Giai thừa, dãy Fibonacci, duyệt thư mục"
+      ],
+      "case_study": {
+        "title": "Cấu trúc cây gia đình/phòng ban",
+        "context": "Tính tổng doanh số của một phòng ban bao gồm cả các tổ đội trực thuộc bên dưới.",
+        "analysis": "Hàm tinh_doanh_so(phong) = Doanh số phòng đó + tinh_doanh_so(tung_doi_con).",
+        "lesson_learned": "Đệ quy giúp giải quyết các cấu trúc phân tầng phức tạp một cách tự nhiên."
+      },
+      "related_concepts": ["c4-exceptions"]
+    },
+    {
+      "id": "c4-exceptions",
+      "term": "Xử lý ngoại lệ (Exception Handling)",
+      "definition": "Cơ chế bắt và xử lý các lỗi phát sinh trong lúc chương trình đang chạy (runtime errors) để chương trình không bị dừng đột ngột.",
+      "key_points": [
+        "try: Chứa đoạn mã có nguy cơ lỗi",
+        "except: Chứa đoạn mã xử lý nếu lỗi xảy ra",
+        "finally: Luôn luôn thực hiện (thường dùng để đóng file, ngắt kết nối)"
+      ],
+      "case_study": {
+        "title": "Nhập số tiền giao dịch",
+        "context": "Khách hàng nhập '100 triệu' (chữ) thay vì '100000000' (số).",
+        "analysis": "Dùng try-except để bắt lỗi ValueError. Nếu lỗi, in thông báo 'Vui lòng chỉ nhập số' thay vì để chương trình sập.",
+        "lesson_learned": "Xử lý lỗi tốt tạo nên trải nghiệm người dùng (UX) chuyên nghiệp."
+      },
+      "related_concepts": ["c4-recursion"]
+    },
+    {
+      "id": "c4-assertions",
+      "term": "Xác nhận (Assertions)",
+      "definition": "Một câu lệnh kiểm tra một điều kiện logic mà lập trình viên tin là luôn đúng tại thời điểm đó.",
+      "key_points": [
+        "Dùng để gỡ lỗi (debugging) trong quá trình phát triển",
+        "Nếu điều kiện False, chương trình sẽ dừng ngay lập tức kèm thông báo lỗi",
+        "Cú pháp: assert điều_kiện, thông_bao_loi"
+      ],
+      "case_study": {
+        "title": "Kiểm tra số dư không âm",
+        "context": "Trước khi thực hiện lệnh chuyển tiền, ta phải chắc chắn số dư tài khoản không được nhỏ hơn 0.",
+        "analysis": "Lệnh assert so_du >= 0 giúp phát hiện sớm các lỗi logic trong công thức tính toán.",
+        "lesson_learned": "Assertion là 'chốt an toàn' cho các logic nghiệp vụ quan trọng."
+      },
+      "related_concepts": ["c4-exceptions"]
+    }
+  ],
+  "tests": {
+    "level_1": {
+      "name": "🎯 Level 1: Nhận diện lỗi",
+      "description": "Phân biệt các loại lỗi và cú pháp bắt lỗi.",
+      "bloom_level": "Remember / Understand",
+      "questions": [
+        { "id": "L1-q1", "type": "mc", "concept_ref": "c4-exceptions", "question": "Khối mã nào sẽ luôn được thực thi dù có lỗi xảy ra hay không?", "options": ["A. try", "B. except", "C. finally", "D. else"], "correct": "C" },
+        { "id": "L1-q2", "type": "mc", "concept_ref": "c4-recursion", "question": "Thành phần nào là BẮT BUỘC để một hàm đệ quy không chạy mãi mãi?", "options": ["A. Vòng lặp for", "B. Điều kiện dừng (Base case)", "C. Biến toàn cục", "D. Lệnh return 0"], "correct": "B" },
+        { "id": "L1-q3", "type": "mc", "concept_ref": "c4-assertions", "question": "Mục đích chính của 'assert' là gì?", "options": ["A. Để in kết quả ra màn hình", "B. Để bắt lỗi người dùng nhập sai", "C. Để kiểm tra tính đúng đắn của logic trong lúc code", "D. Để tăng tốc độ chương trình"], "correct": "C" }
+      ]
+    },
+    "level_2": {
+      "name": "📝 Level 2: Phân tích đệ quy",
+      "description": "Theo dõi luồng chạy của hàm tự gọi chính mình.",
+      "bloom_level": "Understand / Analyze",
+      "questions": [
+        { "id": "L2-q1", "type": "essay", "concept_ref": "c4-recursion", "question": "Điều gì sẽ xảy ra nếu một hàm đệ quy không có điều kiện dừng?", "rubric": "Cần nêu: Lỗi 'RecursionError' (tràn bộ nhớ stack), chương trình bị treo và sập.", "max_words": 200 },
+        { "id": "L2-q2", "type": "essay", "concept_ref": "c4-exceptions", "question": "Tại sao không nên dùng try-except bao quanh toàn bộ chương trình một cách vô tội vạ?", "rubric": "Cần nêu: Làm che giấu các lỗi logic quan trọng, khó gỡ lỗi sau này, làm chậm chương trình.", "max_words": 300 }
+      ]
+    },
+    "level_3": {
+      "name": "🚀 Level 3: Xây dựng hệ thống an toàn",
+      "description": "Kết hợp xử lý lỗi vào quy trình nghiệp vụ tài chính.",
+      "bloom_level": "Apply / Create",
+      "questions": [
+        { "id": "L3-q1", "type": "essay", "question": "Hãy viết mã giả (pseudocode) cho một hàm rút tiền ATM có sử dụng try-except để bắt lỗi khi người dùng nhập số tiền không phải là số, và dùng assert để đảm bảo số tiền rút là số dương (>0).", "rubric": "Cần có cấu trúc try... except ValueError... và assert so_tien > 0. Giải thích lý do chọn các vị trí đó.", "max_words": 500 }
+      ]
+    }
+  }
+}

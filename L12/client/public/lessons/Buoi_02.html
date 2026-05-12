@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUỔI 2 — CẤU TRÚC ĐIỀU KHIỂN, VÒNG LẶP & KIỂM TRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#buoi-2-cau-truc-ieu-khien-vong-lap-kiem-tra">BUỔI 2 — CẤU TRÚC ĐIỀU KHIỂN, VÒNG LẶP &amp; KIỂM TRA</a><ul>
+<li><a href="#i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</a></li>
+<li><a href="#ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</a></li>
+<li><a href="#iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</a></li>
+<li><a href="#iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</a><ul>
+<li><a href="#tiet-1-000-115-toan-tu-logic-bang-su-that">Tiết 1 (0:00 – 1:15) — Toán tử logic &amp; bảng sự thật</a><ul>
+<li><a href="#hoat-ong-11-10-phut-on-tap-nhanh-buoi-1">Hoạt động 1.1 (10 phút) — Ôn tập nhanh Buổi 1</a></li>
+<li><a href="#hoat-ong-12-20-phut-toan-tu-so-sanh">Hoạt động 1.2 (20 phút) — Toán tử so sánh</a></li>
+<li><a href="#hoat-ong-13-25-phut-toan-tu-logic-bang-su-that">Hoạt động 1.3 (25 phút) — Toán tử logic &amp; bảng sự thật</a></li>
+<li><a href="#hoat-ong-14-20-phut-if-if-else">Hoạt động 1.4 (20 phút) — if, if-else</a></li>
+</ul>
+</li>
+<li><a href="#tiet-2-115-230-mo-rong-if-elif-else-for">Tiết 2 (1:15 – 2:30) — Mở rộng if-elif-else &amp; for</a><ul>
+<li><a href="#hoat-ong-21-25-phut-if-elif-else-qua-bai-toan-goi-tiet-kiem">Hoạt động 2.1 (25 phút) — if-elif-else qua bài toán gói tiết kiệm</a></li>
+<li><a href="#hoat-ong-22-30-phut-vong-lap-for">Hoạt động 2.2 (30 phút) — Vòng lặp for</a></li>
+<li><a href="#hoat-ong-23-20-phut-lab-ket-noi-tinh-lai-cho-5-khach">Hoạt động 2.3 (20 phút) — Lab kết nối: tính lãi cho 5 khách</a></li>
+</ul>
+</li>
+<li><a href="#giai-lao-15-phut">GIẢI LAO (15 phút)</a></li>
+<li><a href="#tiet-3-245-400-vong-lap-while-xu-ly-chuoi">Tiết 3 (2:45 – 4:00) — Vòng lặp while &amp; xử lý chuỗi</a><ul>
+<li><a href="#hoat-ong-31-30-phut-while-qua-bai-atm-nhap-sai-ma-pin">Hoạt động 3.1 (30 phút) — while qua bài "ATM nhập sai mã PIN"</a></li>
+<li><a href="#hoat-ong-32-20-phut-for-vs-while-khi-nao-dung-cai-nao">Hoạt động 3.2 (20 phút) — for vs while: khi nào dùng cái nào?</a></li>
+<li><a href="#hoat-ong-33-25-phut-thao-tac-chuoi">Hoạt động 3.3 (25 phút) — Thao tác chuỗi</a></li>
+</ul>
+</li>
+<li><a href="#tiet-4-400-500-bisection-lab-tong-hop">Tiết 4 (4:00 – 5:00) — Bisection &amp; Lab tổng hợp</a><ul>
+<li><a href="#hoat-ong-41-25-phut-tro-choi-oan-so-ky-thuat-chia-oi">Hoạt động 4.1 (25 phút) — Trò chơi "Đoán số" → kỹ thuật chia đôi</a></li>
+<li><a href="#hoat-ong-42-20-phut-lab-nhom-tong-hop">Hoạt động 4.2 (20 phút) — Lab nhóm tổng hợp</a></li>
+<li><a href="#hoat-ong-43-10-phut-5-cau-trac-nghiem-cuoi-buoi">Hoạt động 4.3 (10 phút) — 5 câu trắc nghiệm cuối buổi</a></li>
+<li><a href="#hoat-ong-44-5-phut-cau-noi-sang-buoi-3">Hoạt động 4.4 (5 phút) — Cầu nối sang Buổi 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</a></li>
+<li><a href="#vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</a></li>
+<li><a href="#vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</a></li>
+<li><a href="#viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="buoi-2-cau-truc-ieu-khien-vong-lap-kiem-tra">BUỔI 2 — CẤU TRÚC ĐIỀU KHIỂN, VÒNG LẶP &amp; KIỂM TRA</h1>
+<blockquote>
+<p><strong>Chương 2 của giáo trình</strong> · Thời lượng 5 giờ trên lớp (4 tiết × 75 phút + giải lao)
+<strong>Vai trò trong câu chuyện xuyên suốt:</strong> Buổi 1 ta tính được lãi cho 1 khách. Buổi này ta dạy chương trình <strong>biết quyết định</strong> (lãi suất khác nhau theo gói) và <strong>biết lặp lại</strong> (xử lý hàng nghìn khách).</p>
+</blockquote>
+<hr />
+<h2 id="i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</h2>
+<p>Sau buổi này, sinh viên có thể:</p>
+<ol>
+<li>Sử dụng toán tử so sánh (<code>==, !=, &lt;, &gt;, &lt;=, &gt;=</code>) và toán tử logic (<code>and, or, not</code>).</li>
+<li>Đọc và viết được bảng sự thật (truth table) cho <code>and</code>, <code>or</code>, <code>not</code>.</li>
+<li>Viết cấu trúc rẽ nhánh <code>if</code>, <code>if-else</code>, <code>if-elif-else</code> để xử lý nhiều điều kiện.</li>
+<li>Viết vòng lặp <code>for</code> (đếm cố định) và <code>while</code> (đếm có điều kiện) để xử lý lặp lại.</li>
+<li>Áp dụng kỹ thuật <strong>đoán-và-kiểm tra</strong> và <strong>chia đôi</strong> để tìm nghiệm gần đúng của bài toán đơn giản.</li>
+</ol>
+<p><strong>Kết nối CLO:</strong> CLO1 (khái niệm cốt lõi), CLO2 (áp dụng vào tài chính), CLO3 (giải vấn đề thực tế).</p>
+<p><strong>Kết nối đề thi:</strong> Chương 2 chiếm 6/40 câu (15%) đề cuối kỳ. Đề mẫu 03/04/05 đều hỏi trace code có vòng lặp và điều kiện — đây là <strong>dạng câu hỏi quan trọng nhất</strong> của buổi.</p>
+<hr />
+<h2 id="ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</h2>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Situation</strong></td>
+<td>Buổi 1 ta đã viết chương trình tính lãi cho 1 khách hàng. Ngân hàng có 3 gói tiết kiệm: dưới 6 tháng (lãi 4%/năm), 6-12 tháng (5.5%), trên 12 tháng (7%).</td>
+</tr>
+<tr>
+<td><strong>Complication</strong></td>
+<td>Chương trình hiện tại không biết "chọn" — nó luôn áp dụng cùng một mức lãi. Hơn nữa, ngân hàng có 1000 khách. Ta không thể chạy chương trình 1000 lần bằng tay.</td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Làm sao chương trình biết "nếu… thì…"? Làm sao bảo nó "lặp lại 1000 lần"? Và làm sao chương trình tự <strong>đoán</strong> nghiệm cho một bài toán không có công thức trực tiếp?</td>
+</tr>
+<tr>
+<td><strong>Answer</strong></td>
+<td>Ba "siêu năng lực" mới: <strong>rẽ nhánh</strong> (if/elif/else), <strong>vòng lặp</strong> (for/while), và kỹ thuật <strong>bisection</strong> — máy tính có thể đoán nghiệm còn nhanh hơn ta!</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</h2>
+<p>Trước khi vào lý thuyết, hỏi SV 3 câu:</p>
+<ol>
+<li><em>"Khi em rút tiền ATM, máy hỏi 'Số tiền bao nhiêu?'. Nếu em nhập 50,000 nhưng tài khoản chỉ có 30,000 — máy phản ứng thế nào?"</em> → SV nói "báo lỗi". Đó là <code>if</code>.</li>
+<li><em>"Em đã từng đoán mật khẩu Wi-Fi nhà bạn chưa? Em đoán thế nào?"</em> → SV thường nói "thử từng cái". Đó là vòng lặp + kiểm tra.</li>
+<li><em>"Trò chơi 'đoán số từ 1 đến 100', em đoán thế nào để nhanh nhất?"</em> → SV giỏi sẽ nói "đoán 50 trước". Đó chính là <strong>bisection</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Ý nghĩa sư phạm:</strong> SV đã biết tất cả khái niệm này từ đời sống. Buổi học chỉ là dạy họ "viết những thứ đó bằng Python".</p>
+</blockquote>
+<hr />
+<h2 id="iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</h2>
+<h3 id="tiet-1-000-115-toan-tu-logic-bang-su-that">Tiết 1 (0:00 – 1:15) — Toán tử logic &amp; bảng sự thật</h3>
+<h4 id="hoat-ong-11-10-phut-on-tap-nhanh-buoi-1">Hoạt động 1.1 (10 phút) — Ôn tập nhanh Buổi 1</h4>
+<ul>
+<li>Cho SV làm 3 câu trắc nghiệm chớp nhoáng (dùng Mentimeter hoặc giơ A-B-C-D):</li>
+<li>Một câu về <code>%</code></li>
+<li>Một câu về <code>int(input())</code></li>
+<li>Một câu về tên biến hợp lệ</li>
+<li><strong>Mục đích:</strong> Phát hiện lỗ hổng kiến thức <strong>trước khi</strong> vào nội dung mới.</li>
+</ul>
+<h4 id="hoat-ong-12-20-phut-toan-tu-so-sanh">Hoạt động 1.2 (20 phút) — Toán tử so sánh</h4>
+<ul>
+<li><strong>Tình huống:</strong> ATM kiểm tra <code>so_tien_rut &lt;= so_du</code>. Đây là phép so sánh.</li>
+<li><strong>Demo trên Jupyter:</strong>
+  <code>python
+  so_du = 30000
+  so_rut = 50000
+  print(so_rut &lt;= so_du)   # False</code></li>
+<li><strong>Bảng 6 toán tử:</strong> <code>==, !=, &lt;, &gt;, &lt;=, &gt;=</code>. <strong>Cảnh báo bẫy:</strong> <code>=</code> (gán) ≠ <code>==</code> (so sánh).</li>
+<li><strong>Mini-bài tập (5 phút):</strong> Viết biểu thức Python kiểm tra:</li>
+<li>"Tuổi đủ 18"</li>
+<li>"Năm nhuận" (đã làm dở ở BTVN buổi 1)</li>
+<li>"Số dư đủ để rút"</li>
+</ul>
+<h4 id="hoat-ong-13-25-phut-toan-tu-logic-bang-su-that">Hoạt động 1.3 (25 phút) — Toán tử logic &amp; bảng sự thật</h4>
+<ul>
+<li><strong>Tình huống dẫn dắt:</strong> Ngân hàng cho vay nếu <code>tuoi &gt;= 18 AND thu_nhap &gt;= 10_000_000</code>. Đây là phép <code>and</code>.</li>
+<li><strong>Vẽ bảng sự thật</strong> trên bảng cùng SV (không chiếu sẵn — bắt SV điền vào):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A and B</th>
+<th>A or B</th>
+<th>not A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Tình huống đào sâu — short-circuit:</strong> Cho SV đoán kết quả của:
+  <code>python
+  x = 10
+  if x &gt; 0 and (10 / x) &gt; 1:
+      print("OK")</code>
+  Sau đó đổi <code>x = 0</code> — vì sao không lỗi chia cho 0? <em>(Vì Python kiểm tra <code>x &gt; 0</code> trước, sai → bỏ qua phần sau).</em> <strong>Đây là kiến thức "ngầm" mà đề thi yêu thích.</strong></li>
+</ul>
+<h4 id="hoat-ong-14-20-phut-if-if-else">Hoạt động 1.4 (20 phút) — <code>if</code>, <code>if-else</code></h4>
+<ul>
+<li><strong>Bắt đầu bằng tình huống ATM:</strong>
+  <code>python
+  so_du = 30000
+  so_rut = float(input("Bạn muốn rút bao nhiêu? "))
+  if so_rut &lt;= so_du:
+      so_du = so_du - so_rut
+      print("Rút thành công. Số dư còn:", so_du)
+  else:
+      print("Số dư không đủ.")</code></li>
+<li><strong>Lưu ý cú pháp:</strong> dấu <code>:</code>, <strong>thụt đầu dòng</strong> — đây là chỗ SV thường lỗi.</li>
+<li><strong>Mini-lab (10 phút):</strong> Viết chương trình hỏi tuổi, in: "Bé" (&lt;13), "Thiếu niên" (13-17), "Người lớn" (≥18). Buộc SV dùng <code>if-elif-else</code>.</li>
+</ul>
+<hr />
+<h3 id="tiet-2-115-230-mo-rong-if-elif-else-for">Tiết 2 (1:15 – 2:30) — Mở rộng <code>if-elif-else</code> &amp; <code>for</code></h3>
+<h4 id="hoat-ong-21-25-phut-if-elif-else-qua-bai-toan-goi-tiet-kiem">Hoạt động 2.1 (25 phút) — <code>if-elif-else</code> qua bài toán gói tiết kiệm</h4>
+<ul>
+<li><strong>Đề bài thật trong câu chuyện xuyên suốt:</strong>
+  ```
+  Ngân hàng có 3 gói:</li>
+<li>Dưới 6 tháng: 4%/năm</li>
+<li>6-12 tháng:   5.5%/năm</li>
+<li>Trên 12 tháng: 7%/năm</li>
+</ul>
+<p>Viết chương trình hỏi số tháng gửi → in ra lãi suất.
+  <code>- **Quy trình sư phạm:**
+  1. Cho SV thử 5 phút (cá nhân).
+  2. Mời 1 SV chia sẻ màn hình.
+  3. Cả lớp thảo luận: bạn ấy làm đúng/sai chỗ nào?
+  4. Giảng viên hoàn thiện code chuẩn:</code>python
+     thang = int(input("Số tháng gửi: "))
+     if thang &lt; 6:
+         lai = 4
+     elif thang &lt;= 12:
+         lai = 5.5
+     else:
+         lai = 7
+     print("Lãi suất áp dụng:", lai, "%/năm")
+     <code>``
+- **Bẫy nhận thức cần làm rõ:** Vì sao</code>elif thang &lt;= 12<code>mà không phải</code>elif 6 &lt;= thang &lt;= 12<code>? *(Vì</code>elif<code>chỉ chạy khi</code>if<code>trước đã sai — Python đã biết</code>thang &gt;= 6`).*</p>
+<h4 id="hoat-ong-22-30-phut-vong-lap-for">Hoạt động 2.2 (30 phút) — Vòng lặp <code>for</code></h4>
+<ul>
+<li><strong>Tình huống dẫn dắt:</strong> "Buổi 1 ta tính lãi cho 1 khách. Bây giờ có danh sách 5 khách — ta sẽ làm gì?"</li>
+<li><strong>Demo từng bước:</strong>
+  <code>python
+  khach_hang = ["Lan", "Nam", "Hoa", "Bình", "An"]
+  for ten in khach_hang:
+      print("Chào", ten)</code></li>
+<li><strong>Giải thích:</strong> <code>for ... in ...</code> lấy lần lượt từng phần tử.</li>
+<li><strong><code>range()</code></strong> — công cụ đếm:
+  <code>python
+  for i in range(5):     # 0, 1, 2, 3, 4
+  for i in range(1, 6):  # 1, 2, 3, 4, 5
+  for i in range(0, 10, 2):  # 0, 2, 4, 6, 8</code></li>
+<li><strong>Mini-lab (15 phút):</strong> Viết chương trình in tổng các số từ 1 đến 100. <em>(Đáp án <code>5050</code>).</em></li>
+</ul>
+<h4 id="hoat-ong-23-20-phut-lab-ket-noi-tinh-lai-cho-5-khach">Hoạt động 2.3 (20 phút) — Lab kết nối: tính lãi cho 5 khách</h4>
+<ul>
+<li><strong>Đề:</strong>
+  ```python
+  khach = ["Lan", "Nam", "Hoa", "Bình", "An"]
+  tien_gui = [100_000_000, 50_000_000, 200_000_000, 30_000_000, 80_000_000]
+  thang_gui = [3, 8, 24, 6, 14]</li>
+</ul>
+<p># Yêu cầu: với mỗi khách, áp dụng đúng gói lãi suất, tính số tiền cuối kỳ
+  <code>- **Mục đích:** SV ghép `for` + `if-elif-else` lần đầu. Đây là **khoảnh khắc click**.
+- **Cách làm (gợi ý cho giảng viên):**</code>python
+  for i in range(len(khach)):
+      thang = thang_gui[i]
+      if thang &lt; 6:
+          lai = 4
+      elif thang &lt;= 12:
+          lai = 5.5
+      else:
+          lai = 7
+      cuoi = tien_gui[i] * (1 + lai/100 * thang/12)
+      print(khach[i], ":", cuoi)
+  ```</p>
+<hr />
+<h3 id="giai-lao-15-phut">GIẢI LAO (15 phút)</h3>
+<hr />
+<h3 id="tiet-3-245-400-vong-lap-while-xu-ly-chuoi">Tiết 3 (2:45 – 4:00) — Vòng lặp <code>while</code> &amp; xử lý chuỗi</h3>
+<h4 id="hoat-ong-31-30-phut-while-qua-bai-atm-nhap-sai-ma-pin">Hoạt động 3.1 (30 phút) — <code>while</code> qua bài "ATM nhập sai mã PIN"</h4>
+<ul>
+<li><strong>Tình huống:</strong> "Em nhập sai PIN ATM 3 lần thì máy nuốt thẻ. Đó là <code>while</code> đếm số lần thử."</li>
+<li><strong>Demo:</strong>
+  <code>python
+  pin_dung = "1234"
+  so_lan = 0
+  while so_lan &lt; 3:
+      pin_nhap = input("Nhập PIN: ")
+      if pin_nhap == pin_dung:
+          print("Đúng. Chào mừng.")
+          break
+      so_lan = so_lan + 1
+      print("Sai. Còn", 3 - so_lan, "lần.")
+  else:
+      print("Thẻ bị khóa.")</code></li>
+<li><strong>Khái niệm phải làm rõ:</strong></li>
+<li><code>while</code> chạy <strong>cho đến khi</strong> điều kiện sai.</li>
+<li><code>break</code> thoát sớm.</li>
+<li><strong>Bẫy chết người:</strong> quên cập nhật biến điều kiện → vòng lặp vô hạn. (Demo cố tình một lần để SV thấy.)</li>
+</ul>
+<h4 id="hoat-ong-32-20-phut-for-vs-while-khi-nao-dung-cai-nao">Hoạt động 3.2 (20 phút) — <code>for</code> vs <code>while</code>: khi nào dùng cái nào?</h4>
+<ul>
+<li><strong>Quy tắc đơn giản:</strong></li>
+<li>Biết trước số lần lặp → dùng <code>for</code>.</li>
+<li>Lặp <strong>cho đến khi</strong> một điều kiện xảy ra → dùng <code>while</code>.</li>
+<li><strong>Bài tập đối chiếu:</strong> Cho SV viết cùng một bài "in 1 đến 10" bằng cả 2 cách → so sánh.</li>
+</ul>
+<h4 id="hoat-ong-33-25-phut-thao-tac-chuoi">Hoạt động 3.3 (25 phút) — Thao tác chuỗi</h4>
+<ul>
+<li><strong>Demo các phép cơ bản:</strong>
+  <code>python
+  ten = "Nguyễn Văn An"
+  print(len(ten))           # 13
+  print(ten[0])             # 'N'
+  print(ten[-1])            # 'n'
+  print(ten[0:6])           # 'Nguyễn'
+  print(ten.upper())        # 'NGUYỄN VĂN AN'
+  print(ten.replace("An", "Bình"))
+  print("Văn" in ten)       # True</code></li>
+<li><strong>Mini-bài tập:</strong> Cho <code>"0901234567"</code> (số điện thoại). Viết code in ra "Đầu số: 090".</li>
+<li><strong>Vòng lặp trên chuỗi:</strong>
+  <code>python
+  for ky_tu in "Hello":
+      print(ky_tu)</code></li>
+</ul>
+<hr />
+<h3 id="tiet-4-400-500-bisection-lab-tong-hop">Tiết 4 (4:00 – 5:00) — Bisection &amp; Lab tổng hợp</h3>
+<h4 id="hoat-ong-41-25-phut-tro-choi-oan-so-ky-thuat-chia-oi">Hoạt động 4.1 (25 phút) — Trò chơi "Đoán số" → kỹ thuật chia đôi</h4>
+<ul>
+<li><strong>Bước 1 — Trò chơi (10 phút):</strong> Giảng viên nghĩ một số 1-1000. SV cả lớp đoán. Giảng viên chỉ trả lời "lớn hơn" / "nhỏ hơn".</li>
+<li>SV thông minh sẽ nhanh chóng phát hiện chiến thuật <strong>đoán giữa</strong>.</li>
+<li>Đếm số lần đoán cần để ra → ~10 lần cho khoảng 1000.</li>
+<li><strong>Bước 2 — Tổng quát hóa (5 phút):</strong> Giảng viên giới thiệu: đây chính là <strong>bisection</strong> — kỹ thuật mạnh để tìm nghiệm.</li>
+<li><strong>Bước 3 — Code mẫu (10 phút):</strong> Tìm căn bậc 2 của 25 bằng bisection (mức 0.001):
+  <code>python
+  x = 25
+  thap = 0
+  cao = x
+  doan = (thap + cao) / 2
+  while abs(doan**2 - x) &gt; 0.001:
+      if doan**2 &lt; x:
+          thap = doan
+      else:
+          cao = doan
+      doan = (thap + cao) / 2
+  print("√25 ≈", doan)</code></li>
+</ul>
+<h4 id="hoat-ong-42-20-phut-lab-nhom-tong-hop">Hoạt động 4.2 (20 phút) — Lab nhóm tổng hợp</h4>
+<ul>
+<li><strong>Đề:</strong> Nâng cấp chương trình ngân hàng buổi 1, bây giờ:</li>
+<li>Hỏi tên, tiền gửi, số tháng.</li>
+<li><strong>Tự áp dụng</strong> đúng gói lãi suất.</li>
+<li><strong>Lặp lại</strong> việc xử lý cho đến khi người dùng nhập tên là <code>"thoat"</code>.</li>
+<li>Cuối cùng in tổng số khách đã xử lý + tổng tiền.</li>
+</ul>
+<h4 id="hoat-ong-43-10-phut-5-cau-trac-nghiem-cuoi-buoi">Hoạt động 4.3 (10 phút) — 5 câu trắc nghiệm cuối buổi</h4>
+<p><em>(Xem mục VII)</em></p>
+<h4 id="hoat-ong-44-5-phut-cau-noi-sang-buoi-3">Hoạt động 4.4 (5 phút) — Cầu nối sang Buổi 3</h4>
+<ul>
+<li><em>"Em có thấy chương trình của ta ngày càng dài và lặp lại không? Nếu phải dùng phần tính lãi ở 10 chỗ khác — ta sẽ copy 10 lần?"</em> → Buổi 3 trả lời: <strong>hàm</strong>.</li>
+</ul>
+<hr />
+<h2 id="v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</h2>
+<table>
+<thead>
+<tr>
+<th>Thời điểm</th>
+<th>Câu hỏi</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mở đầu</td>
+<td>"Em thử nhập sai PIN ATM bao giờ chưa? Máy phản ứng thế nào?"</td>
+<td>Kích hoạt cái Biết</td>
+</tr>
+<tr>
+<td>Trước <code>and/or</code></td>
+<td>"Vay ngân hàng cần bao nhiêu điều kiện cùng lúc?"</td>
+<td>Tạo nhu cầu logic</td>
+</tr>
+<tr>
+<td>Sau bảng sự thật</td>
+<td>"Vì sao <code>True or X</code> luôn True bất kể X là gì?"</td>
+<td>Đào khái niệm short-circuit</td>
+</tr>
+<tr>
+<td>Trước <code>for</code></td>
+<td>"Nếu có 1 triệu khách, em copy code 1 triệu lần?"</td>
+<td>Tạo nhu cầu lặp</td>
+</tr>
+<tr>
+<td>Trước <code>while</code></td>
+<td>"Khác biệt giữa 'lặp 5 lần' và 'lặp đến khi đúng'?"</td>
+<td>Phân biệt for vs while</td>
+</tr>
+<tr>
+<td>Trước bisection</td>
+<td>"Em chơi đoán số 1-100 nhanh nhất bằng cách nào?"</td>
+<td>Khai thác trực giác</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</h2>
+<p><strong>Bắt buộc:</strong>
+1. Viết chương trình cho người dùng 3 lần đoán mật khẩu (dạng <code>while</code>).
+2. In bảng cửu chương 2 đến 9 dùng 2 vòng <code>for</code> lồng nhau.
+3. Cho danh sách 10 số, đếm số lượng số chẵn dùng <code>for</code> + <code>if</code>.</p>
+<p><strong>Tự chọn:</strong>
+4. Tìm √2 bằng bisection chính xác đến 6 chữ số thập phân.
+5. Viết chương trình xếp loại học lực dựa vào điểm trung bình (Xuất sắc ≥ 9, Giỏi ≥ 8, Khá ≥ 6.5, TB ≥ 5, Yếu &lt; 5).</p>
+<hr />
+<h2 id="vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</h2>
+<p><strong>Câu 1.</strong> Đoạn mã sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>A</code>   B. <code>B</code>   C. <code>A B</code>   D. <code>C</code>
+<em>Đáp án: A — chỉ một nhánh được chọn</em></p>
+<p><strong>Câu 2.</strong> Số lần lặp của vòng <code>for i in range(2, 10, 3):</code>?
+A. 2   B. 3   C. 4   D. 8
+<em>Đáp án: B — i = 2, 5, 8</em></p>
+<p><strong>Câu 3.</strong> Giá trị <code>tong</code> sau đoạn code:</p>
+<div class="highlight"><pre><span></span><code><span class="n">tong</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">tong</span> <span class="o">=</span> <span class="n">tong</span> <span class="o">+</span> <span class="n">i</span>
+</code></pre></div>
+
+<p>A. 6   B. 10   C. 15   D. 5
+<em>Đáp án: B — 1+2+3+4=10</em></p>
+<p><strong>Câu 4.</strong> Biểu thức nào kiểm tra "tuổi từ 18 đến 65" đúng cách?
+A. <code>18 &lt; tuoi &lt; 65</code>   B. <code>tuoi &gt;= 18 and tuoi &lt;= 65</code>   C. <code>tuoi &gt;= 18 or tuoi &lt;= 65</code>   D. Cả A và B đều đúng
+<em>Đáp án: D — Python hỗ trợ chuỗi so sánh; lưu ý A loại đúng 18 và 65 nếu dùng dấu &lt; chặt — cẩn thận với inclusive/exclusive</em></p>
+<blockquote>
+<p><strong>Ghi chú giảng viên:</strong> Câu 4 nên thảo luận thêm về sự khác biệt <code>&lt;</code> và <code>&lt;=</code>. Nếu muốn bao gồm 18 và 65, đáp án đúng là B. Nếu chấp nhận đề nói "từ 18 đến 65" theo nghĩa mở, A và B khác nhau. Đây là cơ hội tốt để dạy SV đọc đề kỹ.</p>
+</blockquote>
+<p><strong>Câu 5.</strong> Đoạn code sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div>
+
+<p>A. <code>0 1 2</code>   B. <code>1 2 3</code>   C. <code>0 1 2 3</code>   D. Vòng lặp vô hạn
+<em>Đáp án: A</em></p>
+<hr />
+<h2 id="viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</h2>
+<ol>
+<li><strong>Thụt đầu dòng</strong> là cú pháp Python — mất 5 phút đầu nhấn mạnh <strong>trước</strong> khi vào <code>if</code>. Nhiều SV gõ tab/space lung tung sẽ bị lỗi.</li>
+<li><strong><code>=</code> vs <code>==</code></strong>: là lỗi phổ biến nhất. Mỗi khi SV viết <code>if x = 5</code>, dùng nó làm "khoảnh khắc dạy".</li>
+<li><strong>Vòng lặp vô hạn</strong>: cố tình tạo một cái rồi nhấn <code>Ctrl+C</code> (hoặc <code>Kernel → Interrupt</code> trên Jupyter) để SV biết cách thoát.</li>
+<li><strong>Bisection</strong> dễ làm SV không chuyên choáng. Nếu thiếu thời gian, <strong>cắt phần này</strong> và chuyển sang BTVN — nó không phải trọng tâm đề thi như <code>for/while/if</code>.</li>
+<li><strong>Khi 1 SV gõ sai</strong> trên màn hình chia sẻ — đừng vội sửa. Hỏi cả lớp "ai thấy lỗi?". Đây là dạy debugging từ buổi 2.</li>
+<li><strong>Lab cuối buổi</strong> cần ≥ 60% nhóm hoàn thành. Nếu thấp hơn → SV chưa nắm vững <code>for + if</code>, cần củng cố ngay đầu Buổi 3.</li>
+</ol>
+<hr />
+<p><em>Hết kịch bản Buổi 2.</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>

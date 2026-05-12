@@ -1,0 +1,8 @@
+node_modules/
+.env
+dist/
+.DS_Store
+*.log
+data/_mock_db.json
+server/data/uploads/*
+!server/data/uploads/.gitkeep

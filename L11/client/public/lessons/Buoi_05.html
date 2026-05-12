@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUỔI 5 — LỚP, ĐỐI TƯỢNG & LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#buoi-5-lop-oi-tuong-lap-trinh-huong-oi-tuong">BUỔI 5 — LỚP, ĐỐI TƯỢNG &amp; LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG</a><ul>
+<li><a href="#i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</a></li>
+<li><a href="#ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</a></li>
+<li><a href="#iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</a></li>
+<li><a href="#iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</a><ul>
+<li><a href="#tiet-1-000-115-vi-sao-can-oop">Tiết 1 (0:00 – 1:15) — Vì sao cần OOP?</a><ul>
+<li><a href="#hoat-ong-11-10-phut-tra-bai-giua-ky-warmup">Hoạt động 1.1 (10 phút) — Trả bài giữa kỳ + warmup</a></li>
+<li><a href="#hoat-ong-12-20-phut-procedural-en-gioi-han">Hoạt động 1.2 (20 phút) — "Procedural đến giới hạn"</a></li>
+<li><a href="#hoat-ong-13-45-phut-class-au-tien">Hoạt động 1.3 (45 phút) — Class đầu tiên</a></li>
+</ul>
+</li>
+<li><a href="#tiet-2-115-230-ao-sau-class">Tiết 2 (1:15 – 2:30) — Đào sâu class</a><ul>
+<li><a href="#hoat-ong-21-25-phut-lab-nhom-class-khachhang">Hoạt động 2.1 (25 phút) — Lab nhóm: Class KhachHang</a></li>
+<li><a href="#hoat-ong-22-15-phut-thuoc-tinh-class-vs-thuoc-tinh-instance">Hoạt động 2.2 (15 phút) — Thuộc tính class vs thuộc tính instance</a></li>
+<li><a href="#hoat-ong-23-15-phut-encapsulation-an-du-lieu-nhay-cam">Hoạt động 2.3 (15 phút) — Encapsulation: ẩn dữ liệu nhạy cảm</a></li>
+<li><a href="#hoat-ong-24-20-phut-phuong-thuc-ac-biet-__str__">Hoạt động 2.4 (20 phút) — Phương thức đặc biệt: __str__</a></li>
+</ul>
+</li>
+<li><a href="#giai-lao-15-phut">GIẢI LAO (15 phút)</a></li>
+<li><a href="#tiet-3-245-400-ke-thua-inheritance">Tiết 3 (2:45 – 4:00) — Kế thừa (Inheritance)</a><ul>
+<li><a href="#hoat-ong-31-15-phut-van-e-can-ke-thua">Hoạt động 3.1 (15 phút) — Vấn đề cần kế thừa</a></li>
+<li><a href="#hoat-ong-32-35-phut-cu-phap-ke-thua">Hoạt động 3.2 (35 phút) — Cú pháp kế thừa</a></li>
+<li><a href="#hoat-ong-33-25-phut-lab-thiet-ke-he-thong-tai-khoan">Hoạt động 3.3 (25 phút) — Lab: thiết kế hệ thống tài khoản</a></li>
+</ul>
+</li>
+<li><a href="#tiet-4-400-500-lab-tong-hop-anh-gia">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Đánh giá</a><ul>
+<li><a href="#hoat-ong-41-35-phut-lab-tong-hop">Hoạt động 4.1 (35 phút) — Lab tổng hợp</a></li>
+<li><a href="#hoat-ong-42-15-phut-5-cau-trac-nghiem-cau-noi-buoi-6">Hoạt động 4.2 (15 phút) — 5 câu trắc nghiệm + Cầu nối Buổi 6</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</a></li>
+<li><a href="#vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</a></li>
+<li><a href="#vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</a></li>
+<li><a href="#viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="buoi-5-lop-oi-tuong-lap-trinh-huong-oi-tuong">BUỔI 5 — LỚP, ĐỐI TƯỢNG &amp; LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG</h1>
+<blockquote>
+<p><strong>Chương 5 của giáo trình</strong> · Thời lượng 5 giờ trên lớp.
+<strong>Vai trò trong câu chuyện xuyên suốt:</strong> Buổi 4 ta đã có hàm xử lý 1 khách hàng. Nhưng khi quản lý 1000 khách, code thành "rừng dictionary và list rối rắm". Buổi này ta nâng cấp lên kiến trúc OOP — mỗi khách hàng là một <strong>đối tượng</strong> với dữ liệu và hành vi riêng.</p>
+<p><strong>Trọng tâm đề thi:</strong> Chương 5 chiếm 9/40 câu (22.5%) — cao thứ 2 sau Chương 6. Đây là buổi <strong>không thể bỏ qua</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</h2>
+<p>Sau buổi này, sinh viên có thể:</p>
+<ol>
+<li>Phân biệt <strong>lập trình thủ tục</strong> (procedural) và <strong>lập trình hướng đối tượng</strong> (OOP).</li>
+<li>Định nghĩa lớp (class), tạo đối tượng (object/instance) trong Python.</li>
+<li>Sử dụng <code>__init__</code> để khởi tạo đối tượng.</li>
+<li>Phân biệt <strong>thuộc tính</strong> (attribute) và <strong>phương thức</strong> (method).</li>
+<li>Sử dụng <code>self</code> đúng cách.</li>
+<li>Xây dựng quan hệ kế thừa (inheritance) giữa lớp cha và lớp con.</li>
+<li>Giải thích đơn giản các nguyên lý: encapsulation (đóng gói), inheritance (kế thừa), polymorphism (đa hình).</li>
+</ol>
+<p><strong>Kết nối CLO:</strong> CLO1, CLO2, CLO3.</p>
+<p><strong>Kết nối đề thi:</strong> Đề mẫu 02 chuyên về OOP — nên xem trước với SV.</p>
+<hr />
+<h2 id="ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</h2>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Situation</strong></td>
+<td>Cuối Buổi 4, ta quản lý nhiều khách hàng bằng cách dùng list của dictionary: <code>khach[0] = {"ten": ..., "so_du": ..., "lich_su": [...]}</code>. Mỗi khách có 10 thuộc tính, có 5 thao tác (nạp, rút, xem, đóng, in báo cáo).</td>
+</tr>
+<tr>
+<td><strong>Complication</strong></td>
+<td>Code trở thành "rừng": <code>khach[i]["lich_su"].append(...)</code>, <code>if khach[i]["loai"] == "VIP" ...</code> Mỗi lần thêm tính năng mới, ta lại sửa khắp nơi. Nếu có <strong>2 loại tài khoản</strong> (vãng lai vs tiết kiệm) với cách tính lãi khác nhau — ta sẽ viết thế nào?</td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Làm sao <strong>gắn dữ liệu với hành vi</strong> thành một thể thống nhất? Làm sao tái sử dụng cho 2 loại tài khoản mà không copy-paste?</td>
+</tr>
+<tr>
+<td><strong>Answer</strong></td>
+<td><strong>Class</strong> = bản thiết kế. <strong>Object</strong> = sản phẩm tạo ra từ thiết kế. Mỗi object mang theo cả <strong>dữ liệu</strong> và <strong>hành vi</strong> của riêng nó. <strong>Kế thừa</strong> cho phép loại con tái sử dụng từ loại cha.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</h2>
+<p>3 ẩn dụ chuẩn:</p>
+<ol>
+<li><strong>Khuôn bánh và cái bánh.</strong> Khuôn = class, bánh = object. Một khuôn làm ra nhiều bánh giống cấu trúc nhưng khác nhau (có cái nho, có cái sô-cô-la).</li>
+<li><strong>Chứng minh thư.</strong> Mọi người Việt đều có CMND/CCCD theo cùng một mẫu (class), nhưng mỗi người có nội dung riêng (object). Bản thân CCCD có hành vi: "kiểm tra hết hạn", "in lại"...</li>
+<li><strong>App điện thoại.</strong> App Vietcombank và app Techcombank đều là "app ngân hàng" (lớp cha), kế thừa các tính năng chung (đăng nhập, chuyển khoản), nhưng mỗi app có giao diện và tính năng riêng.</li>
+</ol>
+<hr />
+<h2 id="iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</h2>
+<h3 id="tiet-1-000-115-vi-sao-can-oop">Tiết 1 (0:00 – 1:15) — Vì sao cần OOP?</h3>
+<h4 id="hoat-ong-11-10-phut-tra-bai-giua-ky-warmup">Hoạt động 1.1 (10 phút) — Trả bài giữa kỳ + warmup</h4>
+<ul>
+<li>Phát kết quả thi giữa kỳ 1 (nếu có).</li>
+<li>Giảng các câu sai phổ biến (nếu có).</li>
+</ul>
+<h4 id="hoat-ong-12-20-phut-procedural-en-gioi-han">Hoạt động 1.2 (20 phút) — "Procedural đến giới hạn"</h4>
+<ul>
+<li><strong>Demo gây ấn tượng:</strong> Cho SV xem <strong>đoạn code 50 dòng</strong> quản lý 3 tài khoản theo cách thủ tục:
+  ```python
+  ten = ["Lan", "Nam", "Hoa"]
+  so_du = [100_000, 50_000, 200_000]
+  loai = ["thuong", "VIP", "thuong"]
+  lich_su = [[], [], []]</li>
+</ul>
+<p>def nap(i, so):
+      so_du[i] += so
+      lich_su[i].append(("nap", so))</p>
+<p>def rut(i, so):
+      if so_du[i] &gt;= so:
+          so_du[i] -= so
+          lich_su[i].append(("rut", so))
+      ...
+  <code>``
+- **Hỏi SV:** "Em thấy gì khó chịu?"
+  - SV sẽ chỉ ra: lặp</code>[i]` khắp nơi, dữ liệu rời rạc, dễ sai khi thêm trường mới.
+- <strong>Khẳng định:</strong> "Đây là vấn đề thật của các công ty fintech. OOP ra đời để giải nó."</p>
+<h4 id="hoat-ong-13-45-phut-class-au-tien">Hoạt động 1.3 (45 phút) — Class đầu tiên</h4>
+<ul>
+<li><strong>Bước 1 — Cú pháp tối thiểu:</strong>
+  ```python
+  class TaiKhoan:
+      pass</li>
+</ul>
+<p>tk1 = TaiKhoan()
+  tk1.ten = "Lan"
+  tk1.so_du = 100_000
+  print(tk1.ten, tk1.so_du)
+  ```</p>
+<p><em>"Một class trống cũng đã là một bản thiết kế. Mỗi <code>TaiKhoan()</code> tạo một đối tượng mới."</em></p>
+<ul>
+<li><strong>Bước 2 — <code>__init__</code></strong> (constructor):
+  ```python
+  class TaiKhoan:
+      def <strong>init</strong>(self, ten, so_du_ban_dau):
+          self.ten = ten
+          self.so_du = so_du_ban_dau</li>
+</ul>
+<p>tk1 = TaiKhoan("Lan", 100_000)
+  tk2 = TaiKhoan("Nam", 50_000)
+  print(tk1.ten, tk1.so_du)
+  print(tk2.ten, tk2.so_du)
+  ```</p>
+<ul>
+<li><strong>Giải phẫu <code>self</code>:</strong></li>
+<li><code>self</code> = "đối tượng đang gọi phương thức này".</li>
+<li><code>self.ten = ten</code> — gán giá trị tham số <code>ten</code> vào thuộc tính <code>ten</code> của object.</li>
+<li>
+<p><strong>Bẫy nhận thức:</strong> Khi gọi <code>tk1 = TaiKhoan("Lan", 100_000)</code>, Python <strong>tự động</strong> truyền <code>tk1</code> vào vị trí <code>self</code> — đó là lý do ta bỏ qua nó khi gọi.</p>
+</li>
+<li>
+<p><strong>Bước 3 — Phương thức (method):</strong>
+  ```python
+  class TaiKhoan:
+      def <strong>init</strong>(self, ten, so_du):
+          self.ten = ten
+          self.so_du = so_du</p>
+<p>def nap(self, so):
+      self.so_du += so
+      print(f"Đã nạp {so}. Số dư: {self.so_du}")</p>
+<p>def rut(self, so):
+      if so &lt;= self.so_du:
+          self.so_du -= so
+          print(f"Đã rút {so}. Số dư: {self.so_du}")
+      else:
+          print("Số dư không đủ.")</p>
+</li>
+</ul>
+<p>tk1 = TaiKhoan("Lan", 100_000)
+  tk1.nap(50_000)
+  tk1.rut(30_000)
+  ```</p>
+<ul>
+<li><strong>Khoảnh khắc click:</strong> "Em thấy không, <code>tk1.nap(50_000)</code> ngắn hơn rất nhiều so với <code>nap(0, 50_000)</code> ở phiên bản thủ tục."</li>
+</ul>
+<hr />
+<h3 id="tiet-2-115-230-ao-sau-class">Tiết 2 (1:15 – 2:30) — Đào sâu class</h3>
+<h4 id="hoat-ong-21-25-phut-lab-nhom-class-khachhang">Hoạt động 2.1 (25 phút) — Lab nhóm: Class <code>KhachHang</code></h4>
+<ul>
+<li><strong>Đề:</strong> Viết class <code>KhachHang</code> đầy đủ:</li>
+<li>Thuộc tính: <code>ten, cmnd, so_du, lich_su</code> (list).</li>
+<li>Phương thức: <code>nap(so)</code>, <code>rut(so)</code>, <code>xem_so_du()</code>, <code>xem_lich_su()</code>, <code>chuyen_khoan(khac, so)</code>.</li>
+<li><strong>Quy tắc:</strong> Mỗi giao dịch phải được ghi vào <code>lich_su</code>.</li>
+<li><strong>Nhóm 2-3 SV</strong> làm 20 phút, sau đó 1 nhóm chia sẻ.</li>
+</ul>
+<h4 id="hoat-ong-22-15-phut-thuoc-tinh-class-vs-thuoc-tinh-instance">Hoạt động 2.2 (15 phút) — Thuộc tính class vs thuộc tính instance</h4>
+<ul>
+<li><strong>Tình huống:</strong> Lãi suất chung của ngân hàng — mỗi khách có lãi suất riêng hay chung?</li>
+<li>
+<p><strong>Cú pháp:</strong>
+  ```python
+  class TaiKhoan:
+      lai_suat_chung = 5    # class attribute (chung cho mọi instance)</p>
+<p>def <strong>init</strong>(self, ten, so_du):
+      self.ten = ten         # instance attribute
+      self.so_du = so_du
+  <code>- **Demo phân biệt:**</code>python
+  TaiKhoan.lai_suat_chung = 6   # đổi cho cả lớp
+  tk1.lai_suat_chung   # 6
+  tk2.lai_suat_chung   # 6
+  ```
+  <em>"Đổi 1 chỗ, ảnh hưởng mọi đối tượng. Đây là sức mạnh của class attribute."</em></p>
+</li>
+</ul>
+<h4 id="hoat-ong-23-15-phut-encapsulation-an-du-lieu-nhay-cam">Hoạt động 2.3 (15 phút) — Encapsulation: ẩn dữ liệu nhạy cảm</h4>
+<ul>
+<li><strong>Ý nghĩa:</strong> Số dư là dữ liệu nhạy cảm — không nên cho gán trực tiếp <code>tk1.so_du = -100</code>.</li>
+<li>
+<p><strong>Quy ước Python:</strong> Tên thuộc tính bắt đầu bằng <code>_</code> → "private" (quy ước, không cứng).
+  ```python
+  class TaiKhoan:
+      def <strong>init</strong>(self, ten, so_du):
+          self.ten = ten
+          self._so_du = so_du   # quy ước private</p>
+<p>def lay_so_du(self):
+      return self._so_du
+  <code>``
+- **Bẫy:** Python **không cấm** truy cập</code>tk._so_du<code>— đây là quy ước **văn hóa** không phải kỹ thuật. Các ngôn ngữ như Java có</code>private` cứng, Python thì không.</p>
+</li>
+</ul>
+<h4 id="hoat-ong-24-20-phut-phuong-thuc-ac-biet-__str__">Hoạt động 2.4 (20 phút) — Phương thức đặc biệt: <code>__str__</code></h4>
+<ul>
+<li><strong>Tình huống:</strong> Khi <code>print(tk1)</code>, mặc định in ra <code>&lt;__main__.TaiKhoan object at 0x...&gt;</code> — không thân thiện.</li>
+<li>
+<p><strong>Giải pháp:</strong>
+  ```python
+  class TaiKhoan:
+      def <strong>init</strong>(self, ten, so_du):
+          self.ten = ten
+          self.so_du = so_du</p>
+<p>def <strong>str</strong>(self):
+      return f"TK[{self.ten}]: số dư {self.so_du:,}đ"</p>
+</li>
+</ul>
+<p>print(tk1)   # TK[Lan]: số dư 100,000đ
+  ```
+- <strong>Khoảnh khắc đẹp:</strong> SV thấy lập trình OOP có thẩm mỹ, gần với cách viết tự nhiên.</p>
+<hr />
+<h3 id="giai-lao-15-phut">GIẢI LAO (15 phút)</h3>
+<hr />
+<h3 id="tiet-3-245-400-ke-thua-inheritance">Tiết 3 (2:45 – 4:00) — Kế thừa (Inheritance)</h3>
+<h4 id="hoat-ong-31-15-phut-van-e-can-ke-thua">Hoạt động 3.1 (15 phút) — Vấn đề cần kế thừa</h4>
+<ul>
+<li><strong>Tình huống:</strong> Ngân hàng có 2 loại tài khoản:</li>
+<li>Tài khoản vãng lai (current): không lãi, có thể rút bất cứ lúc nào.</li>
+<li>Tài khoản tiết kiệm (savings): có lãi, nhưng rút trước hạn bị phạt.</li>
+<li><strong>Câu hỏi:</strong> Cả 2 loại đều có <code>ten, so_du, nap, rut</code> — viết 2 class riêng và copy hết các thứ này?</li>
+</ul>
+<h4 id="hoat-ong-32-35-phut-cu-phap-ke-thua">Hoạt động 3.2 (35 phút) — Cú pháp kế thừa</h4>
+<ul>
+<li>
+<p><strong>Lớp cha:</strong>
+  ```python
+  class TaiKhoan:
+      def <strong>init</strong>(self, ten, so_du):
+          self.ten = ten
+          self.so_du = so_du</p>
+<p>def nap(self, so):
+      self.so_du += so</p>
+<p>def rut(self, so):
+      if so &lt;= self.so_du:
+          self.so_du -= so
+          return True
+      return False</p>
+<p>def <strong>str</strong>(self):
+      return f"TK[{self.ten}]: {self.so_du:,}đ"
+  ```</p>
+</li>
+<li>
+<p><strong>Lớp con — Tài khoản tiết kiệm:</strong>
+  ```python
+  class TKTietKiem(TaiKhoan):
+      def <strong>init</strong>(self, ten, so_du, lai_suat):
+          super().<strong>init</strong>(ten, so_du)    # gọi <strong>init</strong> của cha
+          self.lai_suat = lai_suat</p>
+<p>def cong_lai(self):
+      self.so_du *= (1 + self.lai_suat / 100)</p>
+<p># rút có phạt
+  def rut(self, so):
+      phat = so * 0.01    # phạt 1% nếu rút trước hạn
+      tong = so + phat
+      if tong &lt;= self.so_du:
+          self.so_du -= tong
+          return True
+      return False
+  ```</p>
+</li>
+<li>
+<p><strong>Demo override:</strong>
+  ```python
+  vl = TaiKhoan("Lan", 100_000)
+  tk = TKTietKiem("Nam", 100_000, 7)</p>
+</li>
+</ul>
+<p>vl.rut(50_000)    # còn 50,000
+  tk.rut(50_000)    # còn 49,500 (mất phạt 500)
+  tk.cong_lai()     # tăng lãi
+  ```</p>
+<ul>
+<li><strong>Khái niệm cần nhấn mạnh:</strong></li>
+<li><code>super().__init__(...)</code> — gọi constructor cha.</li>
+<li><strong>Override</strong>: lớp con định nghĩa lại phương thức của cha.</li>
+<li><strong>Polymorphism</strong>: cùng tên <code>rut</code>, hành vi khác nhau ở 2 lớp.</li>
+</ul>
+<h4 id="hoat-ong-33-25-phut-lab-thiet-ke-he-thong-tai-khoan">Hoạt động 3.3 (25 phút) — Lab: thiết kế hệ thống tài khoản</h4>
+<ul>
+<li><strong>Đề:</strong> Mở rộng cây kế thừa:</li>
+<li><code>TaiKhoan</code> (cha)<ul>
+<li><code>TKVangLai</code> (không có gì thêm — kế thừa nguyên xi)</li>
+<li><code>TKTietKiem</code> (có lãi, có phạt rút sớm)</li>
+<li><code>TKVIP</code> (có lãi cao hơn, không phạt)</li>
+</ul>
+</li>
+<li>Tạo 3 đối tượng, mỗi loại 1 cái. Test các hành vi.</li>
+</ul>
+<hr />
+<h3 id="tiet-4-400-500-lab-tong-hop-anh-gia">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Đánh giá</h3>
+<h4 id="hoat-ong-41-35-phut-lab-tong-hop">Hoạt động 4.1 (35 phút) — Lab tổng hợp</h4>
+<ul>
+<li><strong>Đề:</strong> Hệ thống quản lý 5 khách hàng, mỗi người có 1 tài khoản (bất kỳ loại nào). Chương trình cho phép:</li>
+<li>Liệt kê tất cả tài khoản (dùng <code>__str__</code>).</li>
+<li>Nạp/rút cho 1 khách bất kỳ.</li>
+<li>Cuối tháng: tự động cộng lãi cho mọi tài khoản tiết kiệm và VIP.</li>
+<li><strong>Yêu cầu:</strong> Code phải dùng vòng lặp duyệt qua list các đối tượng <code>TaiKhoan</code>. Demo polymorphism.</li>
+</ul>
+<h4 id="hoat-ong-42-15-phut-5-cau-trac-nghiem-cau-noi-buoi-6">Hoạt động 4.2 (15 phút) — 5 câu trắc nghiệm + Cầu nối Buổi 6</h4>
+<p><em>(Xem mục VII)</em></p>
+<ul>
+<li><strong>Cầu nối:</strong> <em>"Buổi sau ta giải bài bí ẩn từ Buổi 4: vì sao <code>fib(40)</code> chậm thế? Và làm sao để biết một thuật toán có nhanh không, mà không cần chạy thử?"</em></li>
+</ul>
+<hr />
+<h2 id="v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</h2>
+<table>
+<thead>
+<tr>
+<th>Thời điểm</th>
+<th>Câu hỏi</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mở đầu</td>
+<td>"Em thấy gì khó chịu khi quản lý 3 tài khoản bằng list/dict?"</td>
+<td>Tạo nhu cầu OOP</td>
+</tr>
+<tr>
+<td>Sau class trống</td>
+<td>"Em đã thấy gì khác so với hàm?"</td>
+<td>Phân biệt class với function</td>
+</tr>
+<tr>
+<td>Trước <code>self</code></td>
+<td>"Khi gọi <code>tk1.nap(50)</code>, ai là <code>tk1</code>? Ai là <code>50</code>?"</td>
+<td>Khắc sâu self</td>
+</tr>
+<tr>
+<td>Trước <code>__init__</code></td>
+<td>"Mỗi khách hàng cần khởi tạo những gì?"</td>
+<td>Tự nhiên dẫn vào constructor</td>
+</tr>
+<tr>
+<td>Trước kế thừa</td>
+<td>"TKVangLai và TKTietKiem trùng nhau bao nhiêu phần?"</td>
+<td>Tạo nhu cầu kế thừa</td>
+</tr>
+<tr>
+<td>Sau override</td>
+<td>"Nếu lớp con không định nghĩa <code>rut</code>, gọi <code>tk.rut()</code> thì sao?"</td>
+<td>Làm rõ tìm theo hierarchy</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</h2>
+<p><strong>Bắt buộc:</strong>
+1. Viết class <code>SinhVien</code> với thuộc tính <code>ten, mssv, danh_sach_diem</code> và phương thức <code>them_diem</code>, <code>tinh_tb</code>, <code>xep_loai</code>. Dùng <code>__str__</code> để in đẹp.
+2. Tạo lớp con <code>SinhVienXuatSac</code> kế thừa từ <code>SinhVien</code>, override <code>xep_loai</code> (chỉ trả "Xuất sắc" nếu TB ≥ 9.5).
+3. Viết class <code>SanPham</code> cho cửa hàng online với <code>ten, gia, soluong</code>, kèm phương thức <code>tang_ton(n)</code>, <code>giam_ton(n)</code>.</p>
+<p><strong>Tự chọn:</strong>
+4. Đọc về nguyên lý SOLID (chỉ S và O — Single Responsibility và Open/Closed) — chuẩn bị thảo luận buổi sau.
+5. Làm đề mẫu 02 (chuyên về OOP).</p>
+<hr />
+<h2 id="vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</h2>
+<p><strong>Câu 1.</strong> Trong Python, từ khoá nào dùng để định nghĩa lớp?
+A. <code>def</code>   B. <code>class</code>   C. <code>function</code>   D. <code>object</code>
+<em>Đáp án: B</em></p>
+<p><strong>Câu 2.</strong> Phương thức nào được gọi tự động khi tạo đối tượng?
+A. <code>__str__</code>   B. <code>__init__</code>   C. <code>__main__</code>   D. <code>__del__</code>
+<em>Đáp án: B</em></p>
+<p><strong>Câu 3.</strong> Đoạn code sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">A</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<p>A. <code>10</code>   B. <code>A</code>   C. Lỗi   D. <code>self</code>
+<em>Đáp án: A</em></p>
+<p><strong>Câu 4.</strong> Trong cú pháp <code>class B(A):</code>, A đóng vai trò gì?
+A. Đối tượng   B. Lớp con   C. Lớp cha   D. Phương thức
+<em>Đáp án: C</em></p>
+<p><strong>Câu 5.</strong> Đoạn code sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TaiKhoan</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sd</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sd</span> <span class="o">=</span> <span class="n">sd</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sd</span> <span class="o">+=</span> <span class="n">x</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TKVIP</span><span class="p">(</span><span class="n">TaiKhoan</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sd</span> <span class="o">+=</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">1.1</span>   <span class="c1"># VIP nạp được cộng thêm 10%</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">TKVIP</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">nap</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">sd</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>200</code>   B. <code>210.0</code>   C. <code>100</code>   D. Lỗi
+<em>Đáp án: B — VIP override <code>nap</code>, 100 + 100</em>1.1 = 210*</p>
+<hr />
+<h2 id="viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</h2>
+<ol>
+<li><strong><code>self</code> là điểm vướng lớn nhất</strong> với SV mới. Dành thời gian giải thích chậm. Vẽ trên bảng quá trình <code>tk1.nap(50)</code> được Python "dịch" thành <code>TaiKhoan.nap(tk1, 50)</code>.</li>
+<li><strong>Đề mẫu 02</strong> chuyên về OOP — nên cho SV xem trước đề này 30 phút trước khi vào buổi. Họ sẽ học có động cơ rõ hơn.</li>
+<li><strong><code>__init__</code> vs <code>__str__</code></strong> thường lẫn lộn. Giải thích: <code>__init__</code> = "khi sinh ra", <code>__str__</code> = "khi cần in ra".</li>
+<li><strong>Encapsulation <code>_</code> quy ước</strong> — đừng dạy <code>__name</code> (name mangling) — quá khó, ngoài phạm vi.</li>
+<li><strong>Đa kế thừa</strong>: KHÔNG dạy. Quá phức tạp cho SV nhập môn.</li>
+<li><strong>Lab cuối buổi</strong> đo độ thành công: ≥ 60% nhóm xây được hệ thống chạy được — đạt mục tiêu.</li>
+<li><strong>Dạng câu hỏi đề thi yêu thích nhất</strong>: trace code có override + super(). Cho 3-5 ví dụ.</li>
+</ol>
+<hr />
+<p><em>Hết kịch bản Buổi 5.</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>

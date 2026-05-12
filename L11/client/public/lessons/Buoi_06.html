@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUỔI 6 — ĐỘ HIỆU QUẢ CỦA CHƯƠNG TRÌNH (BIG-O)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#buoi-6-o-hieu-qua-cua-chuong-trinh-big-o">BUỔI 6 — ĐỘ HIỆU QUẢ CỦA CHƯƠNG TRÌNH (BIG-O)</a><ul>
+<li><a href="#i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</a></li>
+<li><a href="#ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</a></li>
+<li><a href="#iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</a></li>
+<li><a href="#iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</a><ul>
+<li><a href="#tiet-1-000-115-vi-sao-can-o-o-hieu-qua">Tiết 1 (0:00 – 1:15) — Vì sao cần đo độ hiệu quả?</a><ul>
+<li><a href="#hoat-ong-11-15-phut-demo-shock-and-awe">Hoạt động 1.1 (15 phút) — Demo "shock and awe"</a></li>
+<li><a href="#hoat-ong-12-15-phut-em-phep-tinh">Hoạt động 1.2 (15 phút) — "Đếm phép tính"</a></li>
+<li><a href="#hoat-ong-13-25-phut-bang-cac-big-o-thuong-gap">Hoạt động 1.3 (25 phút) — Bảng các Big-O thường gặp</a></li>
+<li><a href="#hoat-ong-14-20-phut-quy-tac-em-big-o">Hoạt động 1.4 (20 phút) — Quy tắc đếm Big-O</a></li>
+</ul>
+</li>
+<li><a href="#tiet-2-115-230-so-sanh-thuat-toan-cau-truc-du-lieu">Tiết 2 (1:15 – 2:30) — So sánh thuật toán &amp; cấu trúc dữ liệu</a><ul>
+<li><a href="#hoat-ong-21-25-phut-tim-kiem-tuyen-tinh-vs-nhi-phan">Hoạt động 2.1 (25 phút) — Tìm kiếm tuyến tính vs nhị phân</a></li>
+<li><a href="#hoat-ong-22-20-phut-list-vs-dict-vs-set">Hoạt động 2.2 (20 phút) — list vs dict vs set</a></li>
+<li><a href="#hoat-ong-23-20-phut-bai-toan-fibonacci-giai-bi-an-cua-buoi-4">Hoạt động 2.3 (20 phút) — Bài toán Fibonacci: giải bí ẩn của Buổi 4</a></li>
+</ul>
+</li>
+<li><a href="#giai-lao-15-phut">GIẢI LAO (15 phút)</a></li>
+<li><a href="#tiet-3-245-400-o-luong-thuc-te-toi-uu">Tiết 3 (2:45 – 4:00) — Đo lường thực tế &amp; tối ưu</a><ul>
+<li><a href="#hoat-ong-31-20-phut-module-time-va-o-benchmark">Hoạt động 3.1 (20 phút) — Module time và đo benchmark</a></li>
+<li><a href="#hoat-ong-32-35-phut-lab-toi-uu-hoa-thuc-te">Hoạt động 3.2 (35 phút) — Lab tối ưu hóa thực tế</a></li>
+<li><a href="#hoat-ong-33-20-phut-trade-off-thoi-gian-vs-bo-nho">Hoạt động 3.3 (20 phút) — Trade-off: thời gian vs bộ nhớ</a></li>
+</ul>
+</li>
+<li><a href="#tiet-4-400-500-lab-tong-ket-on-giua-ky-2">Tiết 4 (4:00 – 5:00) — Lab tổng kết &amp; Ôn giữa kỳ 2</a><ul>
+<li><a href="#hoat-ong-41-20-phut-lab-tong-ket-khoa-soi-code">Hoạt động 4.1 (20 phút) — Lab tổng kết khoá: "Soi code"</a></li>
+<li><a href="#hoat-ong-42-10-phut-5-cau-trac-nghiem-cuoi-buoi">Hoạt động 4.2 (10 phút) — 5 câu trắc nghiệm cuối buổi</a></li>
+<li><a href="#hoat-ong-43-25-phut-on-nhanh-giua-ky-2-chuong-4-6">Hoạt động 4.3 (25 phút) — Ôn nhanh giữa kỳ 2 (Chương 4-6)</a></li>
+<li><a href="#hoat-ong-44-5-phut-tong-ket-khoa-hoc">Hoạt động 4.4 (5 phút) — Tổng kết khoá học</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</a></li>
+<li><a href="#vi-bai-tap-ve-nha-cung-la-on-cho-thi-cuoi-ky">VI. BÀI TẬP VỀ NHÀ (cũng là ôn cho thi cuối kỳ)</a></li>
+<li><a href="#vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</a></li>
+<li><a href="#viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="buoi-6-o-hieu-qua-cua-chuong-trinh-big-o">BUỔI 6 — ĐỘ HIỆU QUẢ CỦA CHƯƠNG TRÌNH (BIG-O)</h1>
+<blockquote>
+<p><strong>Chương 6 của giáo trình</strong> · Thời lượng 5 giờ trên lớp.
+<strong>Vai trò trong câu chuyện xuyên suốt:</strong> Hệ thống ngân hàng của ta đã chạy được. Nhưng khi triển khai cho 1 triệu khách, chương trình <strong>chậm đến mức không dùng được</strong>. Buổi này ta học cách <strong>đo và dự đoán</strong> tốc độ chương trình mà không cần chạy thử trên dữ liệu lớn — đó chính là Big-O.</p>
+<p><strong>Trọng tâm đề thi:</strong> Chương 6 chiếm 9/40 câu (22.5%) — cao nhất cùng với Chương 5. Đây là buổi <strong>cuối khoá</strong>, định hình điểm thi.</p>
+<p><strong>⚠ Sau buổi này có Kiểm tra giữa kỳ 2</strong> (theo đề cương) — dành 30 phút cuối ôn nhanh Chương 4-6.</p>
+</blockquote>
+<hr />
+<h2 id="i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</h2>
+<p>Sau buổi này, sinh viên có thể:</p>
+<ol>
+<li>Hiểu vì sao "chương trình đúng" chưa đủ — còn cần "chương trình đủ nhanh".</li>
+<li>Đếm số phép tính cơ bản trong một đoạn code đơn giản.</li>
+<li>Đọc và viết các ký hiệu Big-O thường gặp: O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ).</li>
+<li>Đối chiếu các thuật toán quen thuộc với độ phức tạp tương ứng.</li>
+<li>So sánh hiệu suất cấu trúc dữ liệu cơ bản: list vs dict vs set.</li>
+<li>Đo thời gian chạy thực tế bằng module <code>time</code>.</li>
+<li>Lựa chọn được giải pháp nhanh hơn cho bài toán đơn giản.</li>
+</ol>
+<p><strong>Kết nối CLO:</strong> CLO1 (khái niệm), CLO2 (áp dụng), CLO3 (giải vấn đề).</p>
+<hr />
+<h2 id="ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</h2>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Situation</strong></td>
+<td>Hệ thống của ta hoạt động ổn với 100 khách. Sếp muốn mở rộng cho 1 triệu khách.</td>
+</tr>
+<tr>
+<td><strong>Complication</strong></td>
+<td>Demo trực tiếp: cùng một đoạn code "tìm kiếm khách hàng" chạy 0.001s với 1000 khách, nhưng mất <strong>5 phút</strong> với 1 triệu khách. Một đoạn code khác chỉ mất 0.001s ngay cả với 1 triệu khách. <strong>Vì sao chênh lệch khủng khiếp như vậy?</strong></td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Làm sao <strong>dự đoán</strong> một thuật toán có nhanh không, mà không cần chạy thử trên dữ liệu lớn? Có cách nào "đo" độ phức tạp một cách phổ quát?</td>
+</tr>
+<tr>
+<td><strong>Answer</strong></td>
+<td><strong>Big-O notation</strong> — ngôn ngữ chuẩn của ngành để mô tả tốc độ tăng của thời gian chạy theo kích thước dữ liệu. Học Big-O = học "siêu năng lực" nhìn ra code chậm trước khi chạy nó.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</h2>
+<p>3 ẩn dụ đời thường:</p>
+<ol>
+<li><strong>Tìm số trong danh bạ.</strong> Em có 1000 số điện thoại. Tìm số của Lan: nếu danh bạ chưa sắp xếp, em đọc từng cái — O(n). Nếu đã sắp xếp theo bảng chữ cái, em mở giữa rồi loại nửa — O(log n). <em>(Chính là bisection của Buổi 2!)</em></li>
+<li><strong>Soi xe biển số.</strong> Trong bãi 100 xe, tìm xe biển 51F-99999: nếu bãi sắp xếp, nhanh; nếu lộn xộn, phải đi từng hàng.</li>
+<li><strong>Game đoán số.</strong> Buổi 2 ta đã chơi rồi. Đoán số 1-1000 chỉ cần ~10 lần — O(log n). Đó là sức mạnh của log!</li>
+</ol>
+<blockquote>
+<p><strong>Kết nối các buổi trước:</strong> Buổi 2 dạy bisection, Buổi 4 đã thấy fib(40) chậm bất thường — bây giờ ta giải thích vì sao.</p>
+</blockquote>
+<hr />
+<h2 id="iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</h2>
+<h3 id="tiet-1-000-115-vi-sao-can-o-o-hieu-qua">Tiết 1 (0:00 – 1:15) — Vì sao cần đo độ hiệu quả?</h3>
+<h4 id="hoat-ong-11-15-phut-demo-shock-and-awe">Hoạt động 1.1 (15 phút) — Demo "shock and awe"</h4>
+<ul>
+<li><strong>Code 1 — Tìm trong list (chậm):</strong>
+  ```python
+  import time</li>
+</ul>
+<p>ds = list(range(1, 10_000_001))    # 10 triệu số</p>
+<p>start = time.time()
+  ket_qua = 9_999_999 in ds   # tìm gần cuối
+  print(time.time() - start, "giây")
+  <code>- **Code 2 — Tìm trong set (nhanh):**</code>python
+  ds_set = set(ds)
+  start = time.time()
+  ket_qua = 9_999_999 in ds_set
+  print(time.time() - start, "giây")
+  ```
+- <strong>Kết quả thường thấy:</strong> List ~0.2 giây, set ~0.000001 giây. <strong>Chênh khoảng 100,000 lần.</strong>
+- <strong>Câu hỏi cho SV:</strong> "Hai đoạn code làm cùng một việc. Vì sao chênh thế?" → Đó là chủ đề buổi học.</p>
+<h4 id="hoat-ong-12-15-phut-em-phep-tinh">Hoạt động 1.2 (15 phút) — "Đếm phép tính"</h4>
+<ul>
+<li><strong>Khái niệm:</strong> Big-O không đo bằng giây mà đo bằng <strong>số phép tính cơ bản</strong> theo <code>n</code>.</li>
+<li><strong>Demo đếm:</strong>
+  <code>python
+  def vi_du_1(n):
+      print(n)        # 1 phép
+      print(n + 1)    # 1 phép
+      print(n * 2)    # 1 phép
+                      # → tổng 3 phép, không phụ thuộc n</code>
+  → O(1), gọi là <strong>hằng số</strong>.</li>
+</ul>
+<p><code>python
+  def vi_du_2(n):
+      for i in range(n):
+          print(i)    # 1 phép, lặp n lần
+                      # → n phép</code>
+  → O(n), gọi là <strong>tuyến tính</strong>.</p>
+<h4 id="hoat-ong-13-25-phut-bang-cac-big-o-thuong-gap">Hoạt động 1.3 (25 phút) — Bảng các Big-O thường gặp</h4>
+<ul>
+<li><strong>Vẽ bảng to trên bảng:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Big-O</th>
+<th>Tên</th>
+<th>Ví dụ thuật toán</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(1)</td>
+<td>Hằng số</td>
+<td>Truy cập <code>ds[5]</code>, <code>set.add()</code></td>
+</tr>
+<tr>
+<td>O(log n)</td>
+<td>Logarit</td>
+<td>Tìm kiếm nhị phân (bisection)</td>
+</tr>
+<tr>
+<td>O(n)</td>
+<td>Tuyến tính</td>
+<td>Duyệt list để tìm</td>
+</tr>
+<tr>
+<td>O(n log n)</td>
+<td>Tuyến-log</td>
+<td>Sắp xếp hiệu quả (sort, mergesort)</td>
+</tr>
+<tr>
+<td>O(n²)</td>
+<td>Bình phương</td>
+<td>2 vòng lặp lồng (sắp xếp đơn giản)</td>
+</tr>
+<tr>
+<td>O(2ⁿ)</td>
+<td>Lũy thừa</td>
+<td>Fibonacci đệ quy ngây thơ</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Bảng so sánh con số thực tế</strong> — cực kỳ quan trọng để gây ấn tượng:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(1)</th>
+<th>O(log n)</th>
+<th>O(n)</th>
+<th>O(n²)</th>
+<th>O(2ⁿ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>1</td>
+<td>3</td>
+<td>10</td>
+<td>100</td>
+<td>1,024</td>
+</tr>
+<tr>
+<td>100</td>
+<td>1</td>
+<td>7</td>
+<td>100</td>
+<td>10,000</td>
+<td>gần như vô hạn</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>1</td>
+<td>10</td>
+<td>1,000</td>
+<td>1,000,000</td>
+<td>bất khả thi</td>
+</tr>
+<tr>
+<td>1,000,000</td>
+<td>1</td>
+<td>20</td>
+<td>1,000,000</td>
+<td>10¹² (nhiều ngày)</td>
+<td>bất khả thi</td>
+</tr>
+</tbody>
+</table>
+<p><em>"Em thấy không, O(2ⁿ) chỉ chịu được n=20-30 trở xuống."</em></p>
+<h4 id="hoat-ong-14-20-phut-quy-tac-em-big-o">Hoạt động 1.4 (20 phút) — Quy tắc đếm Big-O</h4>
+<ul>
+<li><strong>3 quy tắc đơn giản:</strong></li>
+<li><strong>Bỏ hằng số:</strong> <code>O(3n) = O(n)</code>, <code>O(5) = O(1)</code>.</li>
+<li><strong>Giữ bậc cao nhất:</strong> <code>O(n² + n) = O(n²)</code>.</li>
+<li>
+<p><strong>Vòng lặp lồng = nhân:</strong> <code>for...for</code> n×n lần → O(n²).</p>
+</li>
+<li>
+<p><strong>Bài tập đếm tại lớp:</strong>
+  ```python
+  # 1
+  for i in range(n):
+      print(i)
+  # → O(?)</p>
+</li>
+</ul>
+<p># 2
+  for i in range(n):
+      for j in range(n):
+          print(i, j)
+  # → O(?)</p>
+<p># 3
+  for i in range(100):
+      print(i)
+  # → O(?)</p>
+<p># 4
+  for i in range(n):
+      print(i)
+  for j in range(n):
+      print(j)
+  # → O(?)
+  ```
+  <em>Đáp án: 1) O(n), 2) O(n²), 3) O(1), 4) O(n) — không phải O(2n).</em></p>
+<hr />
+<h3 id="tiet-2-115-230-so-sanh-thuat-toan-cau-truc-du-lieu">Tiết 2 (1:15 – 2:30) — So sánh thuật toán &amp; cấu trúc dữ liệu</h3>
+<h4 id="hoat-ong-21-25-phut-tim-kiem-tuyen-tinh-vs-nhi-phan">Hoạt động 2.1 (25 phút) — Tìm kiếm tuyến tính vs nhị phân</h4>
+<ul>
+<li>
+<p><strong>Code tuyến tính (linear search):</strong>
+  <code>python
+  def tim_tuyen_tinh(ds, x):
+      for i in range(len(ds)):
+          if ds[i] == x:
+              return i
+      return -1</code>
+  → Trường hợp xấu nhất: kiểm tra cả n phần tử → O(n).</p>
+</li>
+<li>
+<p><strong>Code nhị phân (binary search):</strong> <em>(Yêu cầu ds đã sắp xếp.)</em>
+  <code>python
+  def tim_nhi_phan(ds, x):
+      thap, cao = 0, len(ds) - 1
+      while thap &lt;= cao:
+          giua = (thap + cao) // 2
+          if ds[giua] == x:
+              return giua
+          elif ds[giua] &lt; x:
+              thap = giua + 1
+          else:
+              cao = giua - 1
+      return -1</code>
+  → Mỗi lần cắt nửa → log₂(n) lần → O(log n).</p>
+</li>
+<li>
+<p><strong>Demo so sánh thực tế:</strong> Cho ds 10 triệu phần tử đã sắp xếp, đo thời gian 2 cách → log n ăn đứt.</p>
+</li>
+</ul>
+<h4 id="hoat-ong-22-20-phut-list-vs-dict-vs-set">Hoạt động 2.2 (20 phút) — list vs dict vs set</h4>
+<ul>
+<li><strong>Bảng tổng hợp</strong> (ghi nhớ cốt lõi):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Thao tác</th>
+<th>list</th>
+<th>dict</th>
+<th>set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Truy cập theo index/key</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Tìm kiếm <code>x in s</code></td>
+<td><strong>O(n)</strong></td>
+<td><strong>O(1)</strong></td>
+<td><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Thêm phần tử</td>
+<td>O(1) cuối</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Xóa</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Khoảnh khắc click:</strong> "Đây chính là lý do code 2 ở đầu buổi nhanh hơn 100,000 lần — vì set tìm kiếm O(1)!"</li>
+</ul>
+<h4 id="hoat-ong-23-20-phut-bai-toan-fibonacci-giai-bi-an-cua-buoi-4">Hoạt động 2.3 (20 phút) — Bài toán Fibonacci: giải bí ẩn của Buổi 4</h4>
+<ul>
+<li><strong>Code fib đệ quy của Buổi 4:</strong>
+  <code>python
+  def fib(n):
+      if n &lt;= 1:
+          return n
+      return fib(n-1) + fib(n-2)</code></li>
+<li><strong>Vẽ cây gọi đệ quy</strong> trên bảng cho <code>fib(5)</code>:
+  <code>fib(5) → fib(4) + fib(3)
+        → (fib(3) + fib(2)) + (fib(2) + fib(1))
+        → ...</code>
+  <em>Cây phình lên rất nhanh — số nút ≈ 2ⁿ.</em></li>
+<li><strong>Khoảnh khắc:</strong> "Đây là lý do <code>fib(40)</code> chậm — phải tính 2⁴⁰ ≈ 10¹² nút."</li>
+<li><strong>Giải pháp dùng vòng lặp:</strong>
+  <code>python
+  def fib_loop(n):
+      a, b = 0, 1
+      for _ in range(n):
+          a, b = b, a + b
+      return a</code>
+  → O(n). <code>fib_loop(1000)</code> chạy gần như tức thì.</li>
+</ul>
+<hr />
+<h3 id="giai-lao-15-phut">GIẢI LAO (15 phút)</h3>
+<hr />
+<h3 id="tiet-3-245-400-o-luong-thuc-te-toi-uu">Tiết 3 (2:45 – 4:00) — Đo lường thực tế &amp; tối ưu</h3>
+<h4 id="hoat-ong-31-20-phut-module-time-va-o-benchmark">Hoạt động 3.1 (20 phút) — Module <code>time</code> và đo benchmark</h4>
+<ul>
+<li><strong>Cú pháp đo:</strong>
+  ```python
+  import time</li>
+</ul>
+<p>start = time.time()
+  # ... đoạn code cần đo ...
+  end = time.time()
+  print(f"Mất {end - start:.4f} giây")
+  <code>``
+- **Lab nhanh:** SV đo 3 đoạn code:
+  - Tổng 1 đến 1 triệu bằng</code>for<code>.
+  - Tổng 1 đến 1 triệu bằng</code>sum(range(...))<code>.
+  - Tổng 1 đến 1 triệu bằng công thức</code>n*(n+1)/2`.</p>
+<p>→ Cùng kết quả, thời gian khác nhau ~10⁵ lần. Bài học: <strong>chọn thuật toán đúng quan trọng hơn tối ưu vi mô.</strong></p>
+<h4 id="hoat-ong-32-35-phut-lab-toi-uu-hoa-thuc-te">Hoạt động 3.2 (35 phút) — Lab tối ưu hóa thực tế</h4>
+<ul>
+<li><strong>Đề:</strong> Cho 1 list 100,000 mã khách hàng, một list 1000 mã cần kiểm tra "có trong hệ thống không".</li>
+</ul>
+<p><strong>Phiên bản 1 (chậm):</strong>
+  <code>python
+  for ma in can_kiem_tra:
+      if ma in danh_sach:   # O(n) cho mỗi lần
+          print(ma, "có")</code>
+  → Tổng O(n × m) = 100,000 × 1000 = 10⁸ phép.</p>
+<p><strong>Phiên bản 2 (nhanh):</strong> Chuyển <code>danh_sach</code> thành set trước.
+  <code>python
+  ds_set = set(danh_sach)
+  for ma in can_kiem_tra:
+      if ma in ds_set:      # O(1) cho mỗi lần
+          print(ma, "có")</code>
+  → Tổng O(n + m) = 101,000 phép.</p>
+<ul>
+<li><strong>Yêu cầu:</strong> SV viết cả 2 phiên bản, đo thực tế, ghi kết quả lên bảng.</li>
+</ul>
+<h4 id="hoat-ong-33-20-phut-trade-off-thoi-gian-vs-bo-nho">Hoạt động 3.3 (20 phút) — Trade-off: thời gian vs bộ nhớ</h4>
+<ul>
+<li><strong>Khái niệm:</strong> Đôi khi tăng tốc đổi bằng tốn thêm bộ nhớ.</li>
+<li>Set tìm kiếm O(1) nhưng tốn ~2-3x bộ nhớ so với list.</li>
+<li>Cache (memoization) lưu kết quả → nhanh hơn nhưng tốn RAM.</li>
+<li><strong>Demo memoization cho fib:</strong>
+  <code>python
+  cache = {}
+  def fib_cache(n):
+      if n in cache:
+          return cache[n]
+      if n &lt;= 1:
+          cache[n] = n
+      else:
+          cache[n] = fib_cache(n-1) + fib_cache(n-2)
+      return cache[n]</code>
+  → Đệ quy có cache trở thành O(n).</li>
+<li><strong>Bài học:</strong> Lập trình giỏi = biết trade-off cho từng tình huống.</li>
+</ul>
+<hr />
+<h3 id="tiet-4-400-500-lab-tong-ket-on-giua-ky-2">Tiết 4 (4:00 – 5:00) — Lab tổng kết &amp; Ôn giữa kỳ 2</h3>
+<h4 id="hoat-ong-41-20-phut-lab-tong-ket-khoa-soi-code">Hoạt động 4.1 (20 phút) — Lab tổng kết khoá: "Soi code"</h4>
+<ul>
+<li><strong>Đề:</strong> Phát cho mỗi nhóm 5 đoạn code ngắn. Yêu cầu:</li>
+<li>Xác định Big-O của mỗi đoạn.</li>
+<li>Đoạn nào tệ nhất? Có cách nào tối ưu?</li>
+<li><strong>Ví dụ đoạn:</strong>
+  ```python
+  # Đoạn A
+  def f(n):
+      tong = 0
+      for i in range(n):
+          for j in range(n):
+              tong += 1
+      return tong</li>
+</ul>
+<p># Đoạn B
+  def g(ds):
+      kq = []
+      for x in ds:
+          if x not in kq:
+              kq.append(x)
+      return kq</p>
+<p># Đoạn C
+  def h(ds):
+      return list(set(ds))
+  ```
+  <em>(A: O(n²), B: O(n²), C: O(n) — và là cách tốt hơn cho cùng mục tiêu của B!)</em></p>
+<h4 id="hoat-ong-42-10-phut-5-cau-trac-nghiem-cuoi-buoi">Hoạt động 4.2 (10 phút) — 5 câu trắc nghiệm cuối buổi</h4>
+<p><em>(Xem mục VII)</em></p>
+<h4 id="hoat-ong-43-25-phut-on-nhanh-giua-ky-2-chuong-4-6">Hoạt động 4.3 (25 phút) — Ôn nhanh giữa kỳ 2 (Chương 4-6)</h4>
+<ul>
+<li><strong>Cấu trúc:</strong> 20 câu, 30 phút (theo đề cương).</li>
+<li>Phân bổ Bloom: 40% Biết, 40% Hiểu, 20% Áp dụng.</li>
+<li><strong>Hướng dẫn ôn:</strong></li>
+<li>Chương 4: try/except, assert, đệ quy giai thừa</li>
+<li>Chương 5: class, <strong>init</strong>, kế thừa, override</li>
+<li>Chương 6: Big-O, list vs set, đếm phép tính</li>
+<li><strong>3 câu mẫu chiếu trên màn hình</strong> từ đề mẫu.</li>
+</ul>
+<h4 id="hoat-ong-44-5-phut-tong-ket-khoa-hoc">Hoạt động 4.4 (5 phút) — Tổng kết khoá học</h4>
+<ul>
+<li><strong>Hỏi SV (chia sẻ tự do):</strong> "Em ấn tượng nhất điều gì sau 6 buổi?"</li>
+<li><strong>Đóng:</strong> <em>"Em không phải đã thành lập trình viên sau 30 giờ. Nhưng em có công cụ để giải các bài toán đời thường, có ngôn ngữ chung với kỹ sư phần mềm, và có nền tảng để học tiếp khoá Python nâng cao, AI, hay phân tích dữ liệu."</em></li>
+<li><strong>Thông báo lịch thi cuối kỳ + tài liệu ôn tập.</strong></li>
+</ul>
+<hr />
+<h2 id="v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</h2>
+<table>
+<thead>
+<tr>
+<th>Thời điểm</th>
+<th>Câu hỏi</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mở đầu</td>
+<td>"Cùng một việc, sao một cách 0.001s, một cách 5 phút?"</td>
+<td>Tạo cú sốc nhận thức</td>
+</tr>
+<tr>
+<td>Sau bảng Big-O</td>
+<td>"n=10⁶, O(n²) sẽ là bao nhiêu phép?"</td>
+<td>Khắc sâu cảm nhận quy mô</td>
+</tr>
+<tr>
+<td>Trước nhị phân</td>
+<td>"Ta đã biết 'đoán giữa' từ buổi nào?"</td>
+<td>Kết nối với bisection Buổi 2</td>
+</tr>
+<tr>
+<td>Trước list/dict/set</td>
+<td>"Vì sao set tìm kiếm nhanh hơn list?"</td>
+<td>Mở khái niệm bảng băm</td>
+</tr>
+<tr>
+<td>Sau cây Fibonacci</td>
+<td>"fib(50) liệu chạy được không?"</td>
+<td>Củng cố cảm giác về 2ⁿ</td>
+</tr>
+<tr>
+<td>Trước trade-off</td>
+<td>"Tăng tốc miễn phí có không?"</td>
+<td>Mở khái niệm đánh đổi</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vi-bai-tap-ve-nha-cung-la-on-cho-thi-cuoi-ky">VI. BÀI TẬP VỀ NHÀ (cũng là ôn cho thi cuối kỳ)</h2>
+<p><strong>Bắt buộc:</strong>
+1. Cho 4 đoạn code, xác định Big-O của mỗi đoạn (đề kèm).
+2. Viết 2 phiên bản tìm số trùng lặp trong list 1 triệu phần tử: phiên bản O(n²) và O(n). Đo thời gian cả 2.
+3. Cải tiến <code>fib</code> ngây thơ thành <code>fib</code> có memoization.</p>
+<p><strong>Ôn thi cuối kỳ:</strong>
+- Đọc lại slide cả 6 chương.
+- Làm cả 5 đề mẫu (01-05).
+- Trace 10 đoạn code có for + if + function + class.</p>
+<p><strong>Tự chọn (cho SV muốn đào sâu):</strong>
+- Đọc về thuật toán sắp xếp (bubble vs merge): vì sao bubble O(n²) và merge O(n log n).</p>
+<hr />
+<h2 id="vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</h2>
+<p><strong>Câu 1.</strong> Big-O của đoạn code sau?</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. O(n)   B. O(n²)   C. O(2n)   D. O(log n)
+<em>Đáp án: B</em></p>
+<p><strong>Câu 2.</strong> Thao tác nào sau đây có Big-O <strong>lớn nhất</strong> (chậm nhất)?
+A. <code>x = ds[5]</code> (list)   B. <code>x in s</code> (set)   C. <code>x in ds</code> (list n phần tử)   D. <code>d["key"]</code> (dict)
+<em>Đáp án: C — list tìm kiếm O(n), các thao tác kia O(1)</em></p>
+<p><strong>Câu 3.</strong> Big-O của tìm kiếm nhị phân (binary search) trên list n phần tử đã sắp xếp?
+A. O(1)   B. O(log n)   C. O(n)   D. O(n²)
+<em>Đáp án: B</em></p>
+<p><strong>Câu 4.</strong> Cho <code>n = 1,000,000</code>, thuật toán nào <strong>không khả thi</strong> trong vài giây?
+A. O(n)   B. O(n log n)   C. O(n²)   D. O(log n)
+<em>Đáp án: C — n² = 10¹² phép, nhiều phút đến nhiều giờ</em></p>
+<p><strong>Câu 5.</strong> Đoạn code sau có Big-O bao nhiêu?</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">tong</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">tong</span> <span class="o">=</span> <span class="n">tong</span> <span class="o">+</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">tong</span> <span class="o">=</span> <span class="n">tong</span> <span class="o">+</span> <span class="n">j</span>
+    <span class="k">return</span> <span class="n">tong</span>
+</code></pre></div>
+
+<p>A. O(n)   B. O(n²)   C. O(2n²)   D. O(2)
+<em>Đáp án: A — 2 vòng tuần tự = O(n + n) = O(2n) = O(n)</em></p>
+<hr />
+<h2 id="viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</h2>
+<ol>
+<li><strong>Đừng dạy Big-O bằng toán formal.</strong> SV không chuyên không cần định nghĩa epsilon-N. Dạy bằng <strong>trực giác con số</strong> (bảng so sánh n vs phép tính).</li>
+<li><strong>Demo sống</strong> là vũ khí quan trọng nhất. Đo thực tế gây ấn tượng hơn nhiều slide lý thuyết. Phải có Jupyter mở từ đầu.</li>
+<li><strong>Quy tắc đếm 3 dòng</strong> (bỏ hằng, giữ bậc cao, lồng = nhân) là tất cả những gì cần. Đừng dạy thêm Θ, Ω, o, ω.</li>
+<li><strong>Memoization</strong> đề thi không hỏi sâu. Nếu thiếu thời gian → bỏ Hoạt động 3.3, ưu tiên list vs set.</li>
+<li><strong>Buổi cuối có cảm xúc</strong> — dành 5 phút cuối cho SV chia sẻ. Khoá học không chỉ là kiến thức mà còn là trải nghiệm.</li>
+<li><strong>Lưu ý lịch giữa kỳ 2</strong> — đề cương ghi sau Chương 7 nhưng môn chỉ có 6 chương. Phải xác nhận với điều phối.</li>
+<li><strong>Chuẩn bị đề ôn 30 câu trắc nghiệm tổng hợp</strong> cho SV về làm trước thi cuối kỳ — đây là deliverable quan trọng cho SV.</li>
+</ol>
+<hr />
+<p><em>Hết kịch bản Buổi 6. Hết khoá học.</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>

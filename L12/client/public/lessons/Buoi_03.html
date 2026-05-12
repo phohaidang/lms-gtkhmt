@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUỔI 3 — HÀM, PHÂN RÃ & TRỪU TƯỢNG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#buoi-3-ham-phan-ra-truu-tuong">BUỔI 3 — HÀM, PHÂN RÃ &amp; TRỪU TƯỢNG</a><ul>
+<li><a href="#i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</a></li>
+<li><a href="#ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</a></li>
+<li><a href="#iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</a></li>
+<li><a href="#iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</a><ul>
+<li><a href="#tiet-1-000-115-ham-la-gi">Tiết 1 (0:00 – 1:15) — Hàm là gì?</a><ul>
+<li><a href="#hoat-ong-11-10-phut-on-tap-chuan-bi">Hoạt động 1.1 (10 phút) — Ôn tập + chuẩn bị</a></li>
+<li><a href="#hoat-ong-12-25-phut-inh-nghia-ham-au-tien">Hoạt động 1.2 (25 phút) — Định nghĩa hàm đầu tiên</a></li>
+<li><a href="#hoat-ong-13-20-phut-return-vs-print-cuc-ky-quan-trong">Hoạt động 1.3 (20 phút) — return vs print (cực kỳ quan trọng)</a></li>
+<li><a href="#hoat-ong-14-20-phut-lab-viet-3-ham-tai-chinh">Hoạt động 1.4 (20 phút) — Lab: viết 3 hàm tài chính</a></li>
+</ul>
+</li>
+<li><a href="#tiet-2-115-230-tham-so-scope-ham-built-in">Tiết 2 (1:15 – 2:30) — Tham số, scope, hàm built-in</a><ul>
+<li><a href="#hoat-ong-21-25-phut-tham-so-positional-default-keyword">Hoạt động 2.1 (25 phút) — Tham số: positional, default, keyword</a></li>
+<li><a href="#hoat-ong-22-25-phut-scope-bien-cuc-bo-vs-bien-toan-cuc">Hoạt động 2.2 (25 phút) — Scope: biến cục bộ vs biến toàn cục</a></li>
+<li><a href="#hoat-ong-23-25-phut-ham-built-in">Hoạt động 2.3 (25 phút) — Hàm built-in</a></li>
+</ul>
+</li>
+<li><a href="#giai-lao-15-phut">GIẢI LAO (15 phút)</a></li>
+<li><a href="#tiet-3-245-400-phan-ra-truu-tuong">Tiết 3 (2:45 – 4:00) — Phân rã &amp; Trừu tượng</a><ul>
+<li><a href="#hoat-ong-31-15-phut-bai-toan-lon-qua-phan-ra-la-gi">Hoạt động 3.1 (15 phút) — "Bài toán lớn quá!" — phân rã là gì?</a></li>
+<li><a href="#hoat-ong-32-30-phut-lab-phan-ra-co-huong-dan">Hoạt động 3.2 (30 phút) — Lab phân rã có hướng dẫn</a></li>
+<li><a href="#hoat-ong-33-30-phut-truu-tuong-hop-en">Hoạt động 3.3 (30 phút) — Trừu tượng: hộp đen</a></li>
+</ul>
+</li>
+<li><a href="#tiet-4-400-500-lab-tong-hop-anh-gia">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Đánh giá</a><ul>
+<li><a href="#hoat-ong-41-35-phut-lab-tong-hop-bo-cong-cu-tai-chinh">Hoạt động 4.1 (35 phút) — Lab tổng hợp: "Bộ công cụ tài chính"</a></li>
+<li><a href="#hoat-ong-42-15-phut-5-cau-trac-nghiem-cuoi-buoi-cau-noi-buoi-4">Hoạt động 4.2 (15 phút) — 5 câu trắc nghiệm cuối buổi + cầu nối Buổi 4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</a></li>
+<li><a href="#vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</a></li>
+<li><a href="#vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</a></li>
+<li><a href="#viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="buoi-3-ham-phan-ra-truu-tuong">BUỔI 3 — HÀM, PHÂN RÃ &amp; TRỪU TƯỢNG</h1>
+<blockquote>
+<p><strong>Chương 3 của giáo trình (phần I/II)</strong> · Thời lượng 5 giờ trên lớp.
+<strong>Vai trò trong câu chuyện xuyên suốt:</strong> Buổi 2 ta xử lý nhiều khách bằng <code>for + if</code>. Nhưng code đang dài và lặp lại. Buổi này ta dạy chương trình biết <strong>chia bài toán thành miếng nhỏ</strong> và <strong>đóng gói</strong> từng miếng thành công cụ tái sử dụng.</p>
+<p><strong>Lưu ý quan trọng:</strong> Đây là chương dài nhất (66 slide). Tôi cố ý <strong>chia Chương 3 thành 2 phần</strong>: Buổi 3 dạy hàm + phân rã + trừu tượng + scope; Buổi 4 dạy đệ quy + xử lý chuỗi sâu + lồng ghép Chương 4 (testing/debugging).</p>
+</blockquote>
+<hr />
+<h2 id="i-muc-tieu-buoi-hoc">I. MỤC TIÊU BUỔI HỌC</h2>
+<p>Sau buổi này, sinh viên có thể:</p>
+<ol>
+<li>Định nghĩa và gọi hàm trong Python; phân biệt tham số (parameter) và đối số (argument).</li>
+<li>Sử dụng <code>return</code> để trả giá trị; phân biệt với <code>print</code>.</li>
+<li>Phân biệt <strong>biến cục bộ</strong> và <strong>biến toàn cục</strong> (scope).</li>
+<li>Phân rã (decompose) một bài toán lớn thành nhiều hàm nhỏ.</li>
+<li>Hiểu khái niệm <strong>trừu tượng</strong> (abstraction): dùng hàm như "hộp đen" mà không cần biết bên trong.</li>
+<li>Sử dụng các hàm built-in: <code>abs()</code>, <code>round()</code>, <code>max()</code>, <code>min()</code>, <code>len()</code>.</li>
+</ol>
+<p><strong>Kết nối CLO:</strong> CLO1, CLO2, CLO3.</p>
+<p><strong>Kết nối đề thi:</strong> Chương 3 chiếm 6/40 câu (15%). Đề mẫu thường hỏi về kết quả <code>return</code>, scope của biến, gọi hàm với đối số.</p>
+<hr />
+<h2 id="ii-khung-scqa-cua-buoi">II. KHUNG SCQA CỦA BUỔI</h2>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Situation</strong></td>
+<td>Cuối buổi 2, chương trình ngân hàng đã làm được nhiều việc: xử lý lãi, rẽ nhánh, lặp. Nhưng code dài 50 dòng và <strong>lặp lại nhiều đoạn</strong>.</td>
+</tr>
+<tr>
+<td><strong>Complication</strong></td>
+<td>Phòng kế toán muốn dùng phần "tính lãi" trong báo cáo tháng. Phòng tín dụng muốn dùng phần "kiểm tra điều kiện". Có copy-paste 10 lần ở 10 chỗ khác nhau không? Một lần sửa công thức → phải sửa 10 chỗ.</td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Làm sao <strong>đóng gói</strong> một đoạn code thành "công cụ" có thể gọi đi gọi lại? Làm sao chia một bài toán phức tạp thành nhiều miếng nhỏ dễ giải?</td>
+</tr>
+<tr>
+<td><strong>Answer</strong></td>
+<td><strong>Hàm</strong> = công cụ đóng gói. <strong>Phân rã</strong> = chia để trị. <strong>Trừu tượng</strong> = giấu chi tiết, chỉ phơi giao diện. Đây là 3 khái niệm cốt lõi của lập trình chuyên nghiệp.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="iii-khoi-ong-tu-cai-biet">III. KHỞI ĐỘNG TỪ "CÁI BIẾT"</h2>
+<p>3 ẩn dụ đời thường để mở đầu:</p>
+<ol>
+<li><strong>Remote TV.</strong> Em bấm nút "kênh +", TV chuyển kênh. Em có cần biết bên trong nó làm gì không? Không. Em chỉ cần biết "bấm nút này → có kết quả này". Đó là <strong>trừu tượng</strong>.</li>
+<li><strong>Microwave.</strong> "Bấm 3 phút" rồi bấm Start. Bên trong nó dùng sóng vi ba, nhiệt độ, công suất bao nhiêu — em không cần biết.</li>
+<li><strong>Excel <code>SUM()</code>.</strong> Em đã từng dùng <code>=SUM(A1:A10)</code> chưa? Em có cần biết Excel cộng thế nào không? Đó chính là <strong>hàm</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Mục đích sư phạm:</strong> SV đã sống trong thế giới của hàm và trừu tượng. Nhiệm vụ của buổi học là <strong>gọi tên những gì họ đã trực giác được</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="iv-kich-ban-chi-tiet-theo-timeline">IV. KỊCH BẢN CHI TIẾT THEO TIMELINE</h2>
+<h3 id="tiet-1-000-115-ham-la-gi">Tiết 1 (0:00 – 1:15) — Hàm là gì?</h3>
+<h4 id="hoat-ong-11-10-phut-on-tap-chuan-bi">Hoạt động 1.1 (10 phút) — Ôn tập + chuẩn bị</h4>
+<ul>
+<li>Mở lại code "tính lãi cho 5 khách" của Buổi 2.</li>
+<li>Hỏi: <em>"Đoạn nào trong code này bị lặp lại?"</em> → SV chỉ ra phần tính lãi.</li>
+<li>Đặt câu hỏi: <em>"Có cách nào viết một lần, dùng nhiều lần không?"</em> → Mở đường vào hàm.</li>
+</ul>
+<h4 id="hoat-ong-12-25-phut-inh-nghia-ham-au-tien">Hoạt động 1.2 (25 phút) — Định nghĩa hàm đầu tiên</h4>
+<ul>
+<li><strong>Demo từ procedural sang function:</strong></li>
+</ul>
+<p>Trước (lặp lại):
+  <code>python
+  # Tính lãi cho khách 1
+  cuoi1 = 100_000_000 * (1 + 5/100 * 1)
+  print("Khách 1:", cuoi1)
+  # Tính lãi cho khách 2
+  cuoi2 = 50_000_000 * (1 + 5/100 * 1)
+  print("Khách 2:", cuoi2)</code></p>
+<p>Sau (đóng gói):
+  ```python
+  def tinh_lai_don(goc, lai_suat, nam):
+      cuoi = goc * (1 + lai_suat/100 * nam)
+      return cuoi</p>
+<p>print("Khách 1:", tinh_lai_don(100_000_000, 5, 1))
+  print("Khách 2:", tinh_lai_don(50_000_000, 5, 1))
+  ```</p>
+<ul>
+<li>
+<p><strong>Giải phẫu cú pháp</strong> (vẽ trên bảng):
+  <code>def  tinh_lai_don   (goc, lai_suat, nam):
+   ↑        ↑                ↑
+   từ      tên           tham số (parameters)
+   khoá    hàm
+       cuoi = goc * (1 + lai_suat/100 * nam)   ← thân hàm
+       return cuoi                              ← trả về kết quả</code></p>
+</li>
+<li>
+<p><strong>Khái niệm cần làm rõ:</strong></p>
+</li>
+<li><strong>Định nghĩa</strong> hàm (def) ≠ <strong>gọi</strong> hàm.</li>
+<li><strong>Tham số</strong> (parameter, trong định nghĩa) ≠ <strong>đối số</strong> (argument, khi gọi).</li>
+<li><strong><code>return</code></strong> ≠ <strong><code>print</code></strong> — đây là điểm gây nhầm lẫn lớn nhất, dạy ngay phần sau.</li>
+</ul>
+<h4 id="hoat-ong-13-20-phut-return-vs-print-cuc-ky-quan-trong">Hoạt động 1.3 (20 phút) — <code>return</code> vs <code>print</code> (cực kỳ quan trọng)</h4>
+<ul>
+<li><strong>Tình huống bẫy:</strong>
+  ```python
+  def cong(a, b):
+      print(a + b)</li>
+</ul>
+<p>ket_qua = cong(2, 3)  # in ra 5
+  print(ket_qua)        # in ra None — vì sao?
+  <code>``
+- **Demo phân tích:**</code>print<code>chỉ "nói ra" giá trị, không "trao" giá trị về cho nơi gọi.</code>return<code>mới là "trao".
+- **Bài tập so sánh (10 phút):** Cho SV viết 2 phiên bản hàm</code>binh_phuong(x)<code>— một dùng</code>print<code>, một dùng</code>return<code>. Sau đó chạy</code>binh_phuong(5) + 1` → cái nào lỗi?</p>
+<h4 id="hoat-ong-14-20-phut-lab-viet-3-ham-tai-chinh">Hoạt động 1.4 (20 phút) — Lab: viết 3 hàm tài chính</h4>
+<ul>
+<li><strong>Đề:</strong></li>
+<li><code>tinh_lai_don(goc, lai_suat, nam)</code> — đã có.</li>
+<li><code>tinh_lai_kep(goc, lai_suat, nam)</code> — <code>cuoi = goc * (1 + lai_suat/100) ** nam</code>.</li>
+<li>
+<p><code>gap_doi_sau_bao_lau(lai_suat)</code> — số năm để gốc gấp đôi với lãi kép. <em>(Gợi ý: dùng <code>while</code>).</em></p>
+</li>
+<li>
+<p><strong>Sau lab:</strong> Hỏi SV: <em>"Em vừa viết 3 hàm, em đã làm gì với phần lãi đơn?"</em> → SV nhận ra họ đã <strong>tái sử dụng</strong>. Đây là khoảnh khắc phải chỉ ra rõ.</p>
+</li>
+</ul>
+<hr />
+<h3 id="tiet-2-115-230-tham-so-scope-ham-built-in">Tiết 2 (1:15 – 2:30) — Tham số, scope, hàm built-in</h3>
+<h4 id="hoat-ong-21-25-phut-tham-so-positional-default-keyword">Hoạt động 2.1 (25 phút) — Tham số: positional, default, keyword</h4>
+<ul>
+<li><strong>Tham số mặc định:</strong>
+  ```python
+  def tinh_lai_don(goc, lai_suat=5, nam=1):
+      return goc * (1 + lai_suat/100 * nam)</li>
+</ul>
+<p>print(tinh_lai_don(100_000_000))           # dùng mặc định
+  print(tinh_lai_don(100_000_000, 7))        # đổi lãi
+  print(tinh_lai_don(100_000_000, nam=3))    # keyword argument
+  <code>``
+- **Bẫy phải nói rõ:** Tham số có giá trị mặc định **phải đứng sau** tham số bắt buộc. Nếu viết</code>def f(a=1, b)` → lỗi.</p>
+<h4 id="hoat-ong-22-25-phut-scope-bien-cuc-bo-vs-bien-toan-cuc">Hoạt động 2.2 (25 phút) — Scope: biến cục bộ vs biến toàn cục</h4>
+<ul>
+<li><strong>Tình huống bẫy:</strong>
+  ```python
+  x = 10</li>
+</ul>
+<p>def thay_x():
+      x = 20  # đây là biến cục bộ MỚI, không phải x ngoài
+      print("Trong hàm:", x)</p>
+<p>thay_x()
+  print("Ngoài hàm:", x)   # vẫn là 10!
+  <code>``
+- **Vẽ "ngăn kéo":** Hàm có "ngăn kéo" riêng. Khi hàm kết thúc, ngăn kéo bị hủy.
+- **Quy tắc:**
+  - Biến định nghĩa **trong** hàm → cục bộ, chỉ tồn tại khi hàm chạy.
+  - Biến định nghĩa **ngoài** hàm → toàn cục, hàm có thể đọc nhưng không sửa (mặc định).
+  - **</code>global`**: cách phá rào (chỉ đề cập, không khuyến khích dùng).</p>
+<blockquote>
+<p><strong>Đây là dạng câu hỏi đề thi rất hay gặp.</strong> Cho SV trace 3 ví dụ scope khác nhau ở mục bài tập.</p>
+</blockquote>
+<h4 id="hoat-ong-23-25-phut-ham-built-in">Hoạt động 2.3 (25 phút) — Hàm built-in</h4>
+<ul>
+<li><strong>Bảng các hàm thường gặp:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Hàm</th>
+<th>Tác dụng</th>
+<th>Ví dụ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>abs(x)</code></td>
+<td>Giá trị tuyệt đối</td>
+<td><code>abs(-5) → 5</code></td>
+</tr>
+<tr>
+<td><code>round(x, n)</code></td>
+<td>Làm tròn n chữ số</td>
+<td><code>round(3.14159, 2) → 3.14</code></td>
+</tr>
+<tr>
+<td><code>max(a, b, ...)</code></td>
+<td>Lớn nhất</td>
+<td><code>max(3, 7, 2) → 7</code></td>
+</tr>
+<tr>
+<td><code>min(...)</code></td>
+<td>Nhỏ nhất</td>
+<td><code>min(3, 7, 2) → 2</code></td>
+</tr>
+<tr>
+<td><code>len(s)</code></td>
+<td>Độ dài</td>
+<td><code>len("hello") → 5</code></td>
+</tr>
+<tr>
+<td><code>sum([..])</code></td>
+<td>Tổng</td>
+<td><code>sum([1,2,3]) → 6</code></td>
+</tr>
+<tr>
+<td><code>int(x)</code>, <code>float(x)</code>, <code>str(x)</code></td>
+<td>Chuyển kiểu</td>
+<td>đã học buổi 1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Bài tập nhanh:</strong> Cho danh sách điểm <code>[7.5, 8.2, 6.0, 9.1, 5.5]</code>. Tính trung bình, max, min, làm tròn 1 chữ số.</li>
+</ul>
+<hr />
+<h3 id="giai-lao-15-phut">GIẢI LAO (15 phút)</h3>
+<hr />
+<h3 id="tiet-3-245-400-phan-ra-truu-tuong">Tiết 3 (2:45 – 4:00) — Phân rã &amp; Trừu tượng</h3>
+<h4 id="hoat-ong-31-15-phut-bai-toan-lon-qua-phan-ra-la-gi">Hoạt động 3.1 (15 phút) — "Bài toán lớn quá!" — phân rã là gì?</h4>
+<ul>
+<li><strong>Tình huống dẫn dắt:</strong> "Sếp giao em viết phần mềm quản lý ngân hàng cộng đồng. Em bắt đầu từ đâu?"</li>
+<li><strong>Thảo luận nhóm 5 phút:</strong> SV liệt kê các "công việc" mà phần mềm cần làm.</li>
+<li><strong>Tổng kết:</strong> Mỗi "công việc" là một hàm. Đây chính là <strong>phân rã</strong>.</li>
+<li><strong>Quy tắc kinh nghiệm:</strong> Một hàm tốt làm <strong>một việc</strong> và làm tốt việc đó. Nếu mô tả phải dùng "và", có thể nên tách.</li>
+</ul>
+<h4 id="hoat-ong-32-30-phut-lab-phan-ra-co-huong-dan">Hoạt động 3.2 (30 phút) — Lab phân rã có hướng dẫn</h4>
+<ul>
+<li><strong>Đề bài:</strong> Viết chương trình quản lý 1 tài khoản ngân hàng:</li>
+<li>Hỏi tên chủ tài khoản, số dư ban đầu.</li>
+<li>Cho phép: nạp tiền, rút tiền, xem số dư, thoát.</li>
+<li>
+<p>Khi rút, kiểm tra số dư đủ.</p>
+</li>
+<li>
+<p><strong>Cách hướng dẫn (rất quan trọng):</strong></p>
+</li>
+<li><strong>5 phút:</strong> Cho SV thảo luận nhóm — chương trình này nên có những hàm gì?</li>
+<li><strong>2 phút:</strong> Giảng viên tổng kết, đề xuất: <code>nap_tien</code>, <code>rut_tien</code>, <code>xem_so_du</code>, <code>menu</code>.</li>
+<li><strong>20 phút:</strong> SV viết code theo phân chia này.</li>
+<li>
+<p><strong>3 phút:</strong> 1 nhóm chia sẻ.</p>
+</li>
+<li>
+<p><strong>Code mẫu cho giảng viên:</strong>
+  ```python
+  so_du = 0</p>
+</li>
+</ul>
+<p>def nap_tien(so_du, so_tien):
+      return so_du + so_tien</p>
+<p>def rut_tien(so_du, so_tien):
+      if so_tien &lt;= so_du:
+          return so_du - so_tien, True
+      return so_du, False</p>
+<p>def xem_so_du(so_du):
+      print("Số dư hiện tại:", so_du)</p>
+<p>while True:
+      print("\n1.Nạp 2.Rút 3.Xem 4.Thoát")
+      lua_chon = input("Chọn: ")
+      if lua_chon == "1":
+          so = float(input("Số tiền nạp: "))
+          so_du = nap_tien(so_du, so)
+      elif lua_chon == "2":
+          so = float(input("Số tiền rút: "))
+          so_du, ok = rut_tien(so_du, so)
+          if not ok:
+              print("Không đủ số dư.")
+      elif lua_chon == "3":
+          xem_so_du(so_du)
+      else:
+          break
+  ```</p>
+<h4 id="hoat-ong-33-30-phut-truu-tuong-hop-en">Hoạt động 3.3 (30 phút) — Trừu tượng: hộp đen</h4>
+<ul>
+<li><strong>Ẩn dụ máy chiếu:</strong> Em bật máy chiếu — em có cần biết tia laser/ánh sáng/quạt làm thế nào không? Không. Em chỉ cần "bấm nút". Hàm cũng vậy.</li>
+<li><strong>Tình huống giáo dục:</strong>
+  <code>python
+  import math
+  print(math.sqrt(2))        # √2 — em có cần biết Python tính thế nào?
+  print(math.factorial(10))  # 10!</code>
+  <em>Đây là trừu tượng. Em dùng kết quả mà không cần code lại.</em></li>
+<li><strong>Bài tập tư duy (10 phút):</strong> Liệt kê 5 hàm "hộp đen" em đã dùng từ đầu khoá: <code>print, input, len, type, range</code>. Em có biết chúng implement thế nào không?</li>
+</ul>
+<blockquote>
+<p><strong>Khái niệm cần khắc sâu:</strong> Trừu tượng tốt = giao diện đơn giản, công dụng rõ ràng, không bắt người dùng quan tâm chi tiết bên trong.</p>
+</blockquote>
+<hr />
+<h3 id="tiet-4-400-500-lab-tong-hop-anh-gia">Tiết 4 (4:00 – 5:00) — Lab tổng hợp &amp; Đánh giá</h3>
+<h4 id="hoat-ong-41-35-phut-lab-tong-hop-bo-cong-cu-tai-chinh">Hoạt động 4.1 (35 phút) — Lab tổng hợp: "Bộ công cụ tài chính"</h4>
+<ul>
+<li><strong>Đề:</strong> Viết một module gồm 5 hàm:</li>
+<li><code>tinh_lai_don(goc, ls, nam)</code> → trả về số tiền cuối kỳ.</li>
+<li><code>tinh_lai_kep(goc, ls, nam)</code> → tương tự với lãi kép.</li>
+<li><code>chon_lai_suat_theo_ky_han(thang)</code> → trả về lãi suất theo gói (đã làm Buổi 2).</li>
+<li><code>tinh_lai_tong_hop(goc, thang)</code> → kết hợp hàm 3 và 1.</li>
+<li>
+<p><code>bao_cao(danh_sach_khach)</code> → in báo cáo tổng cho danh sách.</p>
+</li>
+<li>
+<p><strong>Yêu cầu mỗi hàm có docstring</strong> (1 dòng comment trên đầu hàm) — đây là chuẩn nghề nghiệp.</p>
+</li>
+</ul>
+<h4 id="hoat-ong-42-15-phut-5-cau-trac-nghiem-cuoi-buoi-cau-noi-buoi-4">Hoạt động 4.2 (15 phút) — 5 câu trắc nghiệm cuối buổi + cầu nối Buổi 4</h4>
+<p><em>(Xem mục VII)</em></p>
+<ul>
+<li><strong>Cầu nối:</strong> <em>"Tuần sau ta sẽ làm việc với chuỗi (tên khách, CMND...) một cách chuyên sâu, học cách viết hàm gọi chính nó (đệ quy), và quan trọng nhất — học cách bắt khi chương trình lỗi mà không 'sập'."</em></li>
+</ul>
+<hr />
+<h2 id="v-bang-cau-hoi-thao-luan">V. BẢNG CÂU HỎI THẢO LUẬN</h2>
+<table>
+<thead>
+<tr>
+<th>Thời điểm</th>
+<th>Câu hỏi</th>
+<th>Mục đích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mở đầu</td>
+<td>"Đoạn nào trong code Buổi 2 lặp lại?"</td>
+<td>Tự SV thấy nhu cầu hàm</td>
+</tr>
+<tr>
+<td>Sau hàm đầu</td>
+<td>"Em thấy code ngắn hay dài hơn?"</td>
+<td>Củng cố giá trị của hàm</td>
+</tr>
+<tr>
+<td>Trước scope</td>
+<td>"Vì sao biến trong hàm không 'leak' ra ngoài?"</td>
+<td>Mở khái niệm scope</td>
+</tr>
+<tr>
+<td>Trước phân rã</td>
+<td>"Em viết phần mềm ngân hàng — bắt đầu từ đâu?"</td>
+<td>Làm SV cảm thấy bị "ngộp" → cần phân rã</td>
+</tr>
+<tr>
+<td>Trước trừu tượng</td>
+<td>"Em đã dùng <code>print</code> bao nhiêu lần — em có biết nó làm gì bên trong không?"</td>
+<td>Khẳng định trừu tượng là tự nhiên</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vi-bai-tap-ve-nha">VI. BÀI TẬP VỀ NHÀ</h2>
+<p><strong>Bắt buộc:</strong>
+1. Viết hàm <code>tinh_bmi(can_nang, chieu_cao)</code> trả về BMI và phân loại (gầy/bình thường/thừa cân).
+2. Viết hàm <code>dem_nguyen_am(chuoi)</code> trả về số nguyên âm trong chuỗi.
+3. Viết hàm <code>lon_nhat_3(a, b, c)</code> trả về số lớn nhất trong 3 số (không dùng <code>max</code>).</p>
+<p><strong>Tự chọn:</strong>
+4. Viết hàm <code>kiem_tra_pin(pin_nhap, pin_dung, so_lan_toi_da)</code> quay lại bài Buổi 2 nhưng đóng gói thành hàm.
+5. Đọc trước phần "đệ quy" và "try/except" trong slide.</p>
+<hr />
+<h2 id="vii-5-cau-trac-nghiem-cuoi-buoi">VII. 5 CÂU TRẮC NGHIỆM CUỐI BUỔI</h2>
+<p><strong>Câu 1.</strong> Đoạn code sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</code></pre></div>
+
+<p>A. <code>14</code>   B. <code>7</code>   C. <code>12</code>   D. Lỗi
+<em>Đáp án: A — <code>f(3)=6, f(4)=8, 6+8=14</code></em></p>
+<p><strong>Câu 2.</strong> Kết quả của:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>6 6</code>   B. <code>6 None</code>   C. <code>5 None</code>   D. Lỗi
+<em>Đáp án: B — <code>g</code> không return, nên a = None</em></p>
+<p><strong>Câu 3.</strong> Đoạn code sau in ra gì?</p>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+
+<p>A. <code>20 20</code>   B. <code>10 10</code>   C. <code>20 10</code>   D. <code>10 20</code>
+<em>Đáp án: C — biến <code>x</code> trong hàm là cục bộ</em></p>
+<p><strong>Câu 4.</strong> Hàm nào KHÔNG phải hàm built-in của Python?
+A. <code>len()</code>   B. <code>print()</code>   C. <code>tinh_lai_don()</code>   D. <code>abs()</code>
+<em>Đáp án: C — đây là hàm tự định nghĩa</em></p>
+<p><strong>Câu 5.</strong> Định nghĩa nào HỢP LỆ?
+A. <code>def f(a=1, b): return a+b</code>
+B. <code>def f(a, b=1): return a+b</code>
+C. <code>def f a, b: return a+b</code>
+D. <code>def f(a, b) return a+b</code>
+<em>Đáp án: B — tham số default phải đứng sau tham số bắt buộc; cần dấu <code>:</code> và ngoặc</em></p>
+<hr />
+<h2 id="viii-luu-y-cho-giang-vien">VIII. LƯU Ý CHO GIẢNG VIÊN</h2>
+<ol>
+<li><strong><code>return</code> vs <code>print</code></strong> là nhầm lẫn lớn nhất của SV mới. Dành thời gian đầy đủ cho cú pháp này — nếu bỏ qua, sẽ trả giá ở Buổi 5 (OOP).</li>
+<li><strong>Phân rã</strong> là kỹ năng tư duy, không phải cú pháp. Đừng vội chấm code "đúng/sai" — hãy thảo luận về cách chia.</li>
+<li><strong>Scope</strong> dễ làm SV bối rối. Nếu nhiều SV không hiểu → quay lại ẩn dụ "ngăn kéo" của hàm.</li>
+<li><strong>Lab Tiết 4</strong> là quan trọng nhất. SV ra về phải tự tay đóng gói được ít nhất 3 hàm.</li>
+<li><strong>Đừng dạy đệ quy ở buổi này.</strong> Đẩy sang Buổi 4 — cần cho SV "tiêu hóa" hàm trước.</li>
+<li>Nếu có SV hỏi về <code>*args, **kwargs</code>, <code>lambda</code>, decorators — khen ngợi nhưng nói "ngoài phạm vi môn này, hẹn em khoá Python nâng cao".</li>
+</ol>
+<hr />
+<p><em>Hết kịch bản Buổi 3.</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>

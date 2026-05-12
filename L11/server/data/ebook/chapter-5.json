@@ -1,0 +1,88 @@
+{
+  "chapter": 5,
+  "title": "Lớp & Lập trình hướng đối tượng (OOP)",
+  "sessions": [5],
+  "scqa": {
+    "situation": "Đến lúc này, chúng ta quản lý khách hàng bằng các danh sách (list) và từ điển (dict) rời rạc. Mã nguồn bắt đầu trở nên 'rối như tơ vò' khi phải xử lý hàng trăm thuộc tính của khách hàng.",
+    "complication": "Thực tế ngân hàng có nhiều loại tài khoản: Tài khoản thanh toán (không lãi), Tài khoản tiết kiệm (có lãi), Tài khoản tín dụng (có hạn mức nợ). Chúng có nhiều điểm chung nhưng cũng có những quy tắc tính toán hoàn toàn khác nhau.",
+    "question": "Làm thế nào để gom nhóm cả dữ liệu (tên, số dư) và hành động (rút tiền, tính lãi) vào một thực thể thống nhất? Làm sao để tạo ra các loại tài khoản mới mà không cần viết lại mã từ đầu?",
+    "answer": "Chúng ta sử dụng Lập trình hướng đối tượng (OOP). Chúng ta định nghĩa 'Lớp' (Class) như một khuôn mẫu và tạo ra các 'Đối tượng' (Object) cụ thể. Tính 'Kế thừa' (Inheritance) cho phép các loại tài khoản chuyên biệt kế thừa đặc tính từ tài khoản chung."
+  },
+  "concepts": [
+    {
+      "id": "c5-class-object",
+      "term": "Lớp (Class) & Đối tượng (Object)",
+      "definition": "Lớp là bản thiết kế (khuôn mẫu), còn Đối tượng là thực thể cụ thể được tạo ra từ bản thiết kế đó.",
+      "key_points": [
+        "Lớp giống như khuôn làm bánh, Đối tượng là từng chiếc bánh",
+        "Thuộc tính (Attributes): Dữ liệu của đối tượng (VD: so_tk, chu_tk)",
+        "Phương thức (Methods): Hành động của đối tượng (VD: nap_tien(), rut_tien())"
+      ],
+      "case_study": {
+        "title": "Thẻ ngân hàng",
+        "context": "Mọi chiếc thẻ ATM đều có hình dáng, chip và tính năng rút tiền giống nhau.",
+        "analysis": "Lớp 'TheATM' định nghĩa cấu trúc chung. Chiếc thẻ trong ví của bạn là một Đối tượng (Object) cụ thể với số thẻ và tên chủ thẻ riêng.",
+        "lesson_learned": "OOP giúp mô hình hóa thế giới thực vào trong mã máy tính một cách chính xác."
+      },
+      "related_concepts": ["c5-inheritance"]
+    },
+    {
+      "id": "c5-self",
+      "term": "Tham số 'self'",
+      "definition": "Một biến đặc biệt trỏ đến chính đối tượng đang thực hiện hành động, giúp phân biệt dữ liệu của đối tượng này với đối tượng khác.",
+      "key_points": [
+        "Luôn là tham số đầu tiên trong các phương thức của lớp",
+        "Giúp hàm biết mình đang thao tác trên số dư của khách hàng nào",
+        "Tương đương với 'this' trong các ngôn ngữ khác (Java, C++)"
+      ],
+      "case_study": null,
+      "related_concepts": ["c5-class-object"]
+    },
+    {
+      "id": "c5-inheritance",
+      "term": "Tính kế thừa (Inheritance)",
+      "definition": "Cơ chế cho phép một lớp mới (lớp con) thừa hưởng các thuộc tính và phương thức của một lớp đã có (lớp cha).",
+      "key_points": [
+        "Giúp tái sử dụng mã nguồn tối đa",
+        "Lớp con có thể bổ sung hoặc sửa đổi (override) hành vi của lớp cha",
+        "Thể hiện mối quan hệ 'là một' (VD: Tài khoản tiết kiệm LÀ MỘT loại Tài khoản)"
+      ],
+      "case_study": {
+        "title": "Hệ thống tài khoản đa dạng",
+        "context": "Ngân hàng có lớp cha 'TaiKhoan' với tính năng nap_tien().",
+        "analysis": "Lớp 'TaiKhoanTietKiem' kế thừa 'TaiKhoan' nhưng ghi đè (override) phương thức rut_tien() để kiểm tra kỳ hạn.",
+        "lesson_learned": "Kế thừa giúp mở rộng hệ thống một cách cực kỳ nhanh chóng và ít lỗi."
+      },
+      "related_concepts": ["c5-class-object"]
+    }
+  ],
+  "tests": {
+    "level_1": {
+      "name": "🎯 Level 1: Thuật ngữ OOP",
+      "description": "Kiểm tra sự hiểu biết về các thành phần trong lớp.",
+      "bloom_level": "Remember / Understand",
+      "questions": [
+        { "id": "L1-q1", "type": "mc", "concept_ref": "c5-class-object", "question": "Hàm đặc biệt nào trong Python được dùng để khởi tạo một đối tượng mới?", "options": ["A. def start()", "B. def __init__()", "C. def class()", "D. def new()"], "correct": "B" },
+        { "id": "L1-q2", "type": "mc", "concept_ref": "c5-self", "question": "Tham số 'self' trong phương thức của lớp đại diện cho điều gì?", "options": ["A. Bản thân lớp đó", "B. Một biến toàn cục", "C. Chính đối tượng hiện tại đang gọi phương thức", "D. Người dùng chương trình"], "correct": "C" },
+        { "id": "L1-q3", "type": "mc", "concept_ref": "c5-inheritance", "question": "Nếu lớp B kế thừa lớp A, thì B có các đặc tính của A không?", "options": ["A. Không, B hoàn toàn mới", "B. Có, B thừa hưởng tất cả thuộc tính và phương thức của A", "C. Chỉ thừa hưởng nếu A cho phép", "D. Chỉ thừa hưởng các biến, không thừa hưởng hàm"], "correct": "B" }
+      ]
+    },
+    "level_2": {
+      "name": "📝 Level 2: So sánh cấu trúc",
+      "description": "Phân biệt giữa lập trình hướng thủ tục và hướng đối tượng.",
+      "bloom_level": "Understand / Analyze",
+      "questions": [
+        { "id": "L2-q1", "type": "essay", "concept_ref": "c5-class-object", "question": "Hãy giải thích sự khác biệt giữa Class và Object bằng ví dụ về 'Căn hộ chung cư'.", "rubric": "Class là bản vẽ thiết kế tòa nhà. Object là từng căn hộ cụ thể có số phòng, chủ nhà khác nhau.", "max_words": 250 },
+        { "id": "L2-q2", "type": "essay", "concept_ref": "c5-inheritance", "question": "Tại sao tính Kế thừa lại quan trọng trong việc bảo trì phần mềm ngân hàng?", "rubric": "Khi thay đổi logic chung ở lớp cha, tất cả lớp con sẽ tự động cập nhật, giúp giảm công sức sửa lỗi.", "max_words": 300 }
+      ]
+    },
+    "level_3": {
+      "name": "🚀 Level 3: Mô hình hóa nghiệp vụ",
+      "description": "Thiết kế lớp cho một sản phẩm tài chính mới.",
+      "bloom_level": "Apply / Create",
+      "questions": [
+        { "id": "L3-q1", "type": "essay", "question": "Hãy thiết kế cấu trúc lớp cho 'Thẻ tín dụng' (CreditCard) kế thừa từ lớp 'Thẻ' (Card). Thẻ tín dụng cần thêm thuộc tính 'hạn mức' (limit) và phương thức 'thanh toán nợ'. Hãy mô tả các thuộc tính và phương thức này.", "rubric": "Cần có: kế thừa Card, thêm self.limit, thêm method thanh_toan_no(). Giải thích logic trừ tiền vào hạn mức.", "max_words": 500 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TỔNG QUAN 6 BUỔI GIẢNG DẠY — GT KHOA HỌC MÁY TÍNH (BAF737)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pygments/2.15.1/default.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --toc-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --text: #f1f5f9;
+                --card-bg: #1e293b;
+                --border: #334155;
+                --toc-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 100px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 1.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; margin-top: 0; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th { background: rgba(79, 70, 229, 0.05); }
+
+        tr:hover { background: rgba(79, 70, 229, 0.02); }
+
+        .toc {
+            background: var(--toc-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .toc ul { list-style: none; padding-left: 20px; }
+        .toc a { color: var(--text); opacity: 0.8; font-size: 0.9rem; }
+        .toc a:hover { opacity: 1; color: var(--primary); }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(79, 70, 229, 0.05);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-card">
+            <div class="toc"><span class="toctitle">Mục lục</span><ul>
+<li><a href="#tong-quan-6-buoi-giang-day-gt-khoa-hoc-may-tinh-baf737">TỔNG QUAN 6 BUỔI GIẢNG DẠY — GT KHOA HỌC MÁY TÍNH (BAF737)</a><ul>
+<li><a href="#1-cau-chuyen-xuyen-suot">1. CÂU CHUYỆN XUYÊN SUỐT</a></li>
+<li><a href="#2-phan-bo-noi-dung-kiem-tra-e-thi">2. PHÂN BỔ NỘI DUNG — KIỂM TRA — ĐỀ THI</a><ul>
+<li><a href="#21-bang-tom-tat-6-buoi">2.1. Bảng tóm tắt 6 buổi</a></li>
+<li><a href="#22-lich-kiem-tra">2.2. Lịch kiểm tra</a></li>
+<li><a href="#23-e-mau-e-sv-lam-truoc-thi">2.3. Đề mẫu để SV làm trước thi</a></li>
+</ul>
+</li>
+<li><a href="#3-cau-truc-nhat-quan-cua-moi-buoi">3. CẤU TRÚC NHẤT QUÁN CỦA MỌI BUỔI</a></li>
+<li><a href="#4-nhip-cau-noi-giua-cac-buoi">4. NHỊP "CẦU NỐI" GIỮA CÁC BUỔI</a></li>
+<li><a href="#5-nguyen-tac-su-pham-ap-dung-xuyen-suot">5. NGUYÊN TẮC SƯ PHẠM ÁP DỤNG XUYÊN SUỐT</a><ul>
+<li><a href="#51-bat-au-tu-cai-biet">5.1. Bắt đầu từ "Cái Biết"</a></li>
+<li><a href="#52-scqa-cho-moi-buoi">5.2. SCQA cho mỗi buổi</a></li>
+<li><a href="#53-code-along-lab">5.3. Code-along + Lab</a></li>
+<li><a href="#54-anh-gia-lien-tuc">5.4. Đánh giá liên tục</a></li>
+<li><a href="#55-phan-hoa-nang-luc">5.5. Phân hoá năng lực</a></li>
+</ul>
+</li>
+<li><a href="#6-canh-bao-quan-trong-cho-giang-vien">6. CẢNH BÁO QUAN TRỌNG CHO GIẢNG VIÊN</a></li>
+<li><a href="#7-checklist-chuan-bi-truoc-moi-buoi">7. CHECKLIST CHUẨN BỊ TRƯỚC MỖI BUỔI</a></li>
+<li><a href="#8-thu-muc-file">8. THƯ MỤC FILE</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="tong-quan-6-buoi-giang-day-gt-khoa-hoc-may-tinh-baf737">TỔNG QUAN 6 BUỔI GIẢNG DẠY — GT KHOA HỌC MÁY TÍNH (BAF737)</h1>
+<blockquote>
+<p>File này là <strong>bản đồ học</strong> xuyên suốt 6 buổi. Nên đọc file này <strong>đầu tiên</strong> trước khi đi vào chi tiết từng buổi.</p>
+</blockquote>
+<hr />
+<h2 id="1-cau-chuyen-xuyen-suot">1. CÂU CHUYỆN XUYÊN SUỐT</h2>
+<p>Toàn bộ khoá học được tổ chức quanh <strong>một câu chuyện duy nhất</strong>:</p>
+<blockquote>
+<p><em>"Chúng ta đang xây dựng một mini-fintech để phục vụ ngân hàng cộng đồng. Mỗi buổi, hệ thống của chúng ta lớn lên một chút."</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Buổi</th>
+<th>Hệ thống của chúng ta sau buổi này</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Tính được lãi cho <strong>1 khách hàng</strong> (input + biến + toán tử)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Xử lý <strong>nhiều khách</strong> với gói lãi khác nhau (if + for + while)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Code được <strong>đóng gói</strong> thành các hàm tái sử dụng</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Không sập</strong> khi gặp dữ liệu bẩn (try/except + chuỗi)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Quản lý khách bằng <strong>đối tượng</strong> (class + kế thừa)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Chạy được trên <strong>1 triệu khách</strong> (Big-O + tối ưu)</td>
+</tr>
+</tbody>
+</table>
+<p>Lợi ích sư phạm: SV <strong>luôn biết "vì sao" mình học</strong>. Mỗi khái niệm mới được thúc đẩy bởi một <strong>vấn đề thực</strong> mà code hôm trước chưa giải được.</p>
+<hr />
+<h2 id="2-phan-bo-noi-dung-kiem-tra-e-thi">2. PHÂN BỔ NỘI DUNG — KIỂM TRA — ĐỀ THI</h2>
+<h3 id="21-bang-tom-tat-6-buoi">2.1. Bảng tóm tắt 6 buổi</h3>
+<table>
+<thead>
+<tr>
+<th>Buổi</th>
+<th>Chương SGK</th>
+<th>Trọng tâm</th>
+<th>Tỷ trọng đề cuối kỳ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Ch.1</td>
+<td>Lịch sử + Python cơ bản, biến, toán tử</td>
+<td>10% (4 câu)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ch.2</td>
+<td>Logic, if-elif-else, for/while, bisection</td>
+<td>15% (6 câu)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ch.3 phần I</td>
+<td>Hàm, scope, phân rã, trừu tượng</td>
+<td>~10% (4 câu)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ch.3 phần II + Ch.4</td>
+<td>Đệ quy, chuỗi, try/except, assert</td>
+<td>~20% (8 câu)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Ch.5</td>
+<td>OOP, class, kế thừa</td>
+<td>22.5% (9 câu)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Ch.6</td>
+<td>Big-O, list/dict/set, tối ưu</td>
+<td>22.5% (9 câu)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Lưu ý:</strong> Đề cương ghi Ch.3 = 15%, Ch.4 = 15%. Vì tôi gộp chúng thành Buổi 4 nên 30% ấy chia theo trọng số: ~10% cho Buổi 3 (hàm + phân rã) và ~20% cho Buổi 4 (đệ quy + xử lý chuỗi + Ch.4).</p>
+</blockquote>
+<h3 id="22-lich-kiem-tra">2.2. Lịch kiểm tra</h3>
+<ul>
+<li><strong>Sau Buổi 4</strong> (kết Chương 4): <strong>Kiểm tra giữa kỳ 1</strong> — 20 câu trắc nghiệm, 30 phút, nội dung Ch.1-4. Tỷ lệ Bloom 40-40-20.</li>
+<li><strong>Sau Buổi 6</strong> (kết khoá): <strong>Kiểm tra giữa kỳ 2</strong> — 20 câu, 30 phút, Ch.4-6. Tỷ lệ Bloom 40-40-20.</li>
+<li><em>Lưu ý:</em> Đề cương ghi sau Ch.7, nhưng môn chỉ có 6 chương — cần xác nhận với điều phối khoa.</li>
+<li><strong>Cuối kỳ:</strong> 40 câu trắc nghiệm, 60 phút, toàn bộ Ch.1-6. Tỷ lệ Bloom 35-35-30.</li>
+</ul>
+<h3 id="23-e-mau-e-sv-lam-truoc-thi">2.3. Đề mẫu để SV làm trước thi</h3>
+<table>
+<thead>
+<tr>
+<th>Đề mẫu</th>
+<th>Trọng tâm</th>
+<th>Phù hợp dùng sau buổi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Đề 03, 04, 05</td>
+<td>Python cơ bản, type, modulo, trace code</td>
+<td>Sau Buổi 2-3</td>
+</tr>
+<tr>
+<td>Đề 02</td>
+<td>OOP, class, attribute</td>
+<td>Sau Buổi 5</td>
+</tr>
+<tr>
+<td>Đề 01 (PDF)</td>
+<td>Đa dạng (cấu trúc đề chuẩn)</td>
+<td>Trước thi cuối kỳ</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-cau-truc-nhat-quan-cua-moi-buoi">3. CẤU TRÚC NHẤT QUÁN CỦA MỌI BUỔI</h2>
+<p>Mỗi file kịch bản buổi học đều có <strong>8 phần</strong> với cùng cấu trúc:</p>
+<div class="highlight"><pre><span></span><code>I.   Mục tiêu buổi học (kết nối CLO + đề thi)
+II.  Khung SCQA (Situation → Complication → Question → Answer)
+III. Khởi động từ &quot;Cái Biết&quot; của SV
+IV.  Kịch bản chi tiết theo timeline (4 tiết × 75 phút)
+V.   Bảng câu hỏi thảo luận (cho giảng viên)
+VI.  Bài tập về nhà
+VII. 3-5 câu trắc nghiệm cuối buổi (đúng format đề thi)
+VIII.Lưu ý cho giảng viên
+</code></pre></div>
+
+<p>Mỗi tiết có nhịp 4 hoạt động: <strong>mở</strong> (5-15 phút) → <strong>đào sâu khái niệm</strong> (15-30 phút) → <strong>demo có tham gia</strong> → <strong>lab nhóm</strong>. Tỷ lệ tham chiếu: thuyết giảng ≤ 40%, hoạt động SV ≥ 60%.</p>
+<hr />
+<h2 id="4-nhip-cau-noi-giua-cac-buoi">4. NHỊP "CẦU NỐI" GIỮA CÁC BUỔI</h2>
+<p>Mỗi buổi kết bằng một <strong>câu hỏi mở</strong> dẫn vào buổi sau, để SV ra về với sự <strong>tò mò chứ không phải mệt mỏi</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Cuối buổi</th>
+<th>Câu hỏi cầu nối</th>
+<th>Buổi sau giải quyết</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>"Có 1000 khách, mỗi người lãi khác nhau — copy chương trình 1000 lần?"</td>
+<td>Buổi 2 — for + if</td>
+</tr>
+<tr>
+<td>2</td>
+<td>"Code dài và lặp lại — có cách viết một lần dùng nhiều lần không?"</td>
+<td>Buổi 3 — hàm</td>
+</tr>
+<tr>
+<td>3</td>
+<td>"Khách gõ 'abc' thay vì số tiền — chương trình sập!"</td>
+<td>Buổi 4 — try/except</td>
+</tr>
+<tr>
+<td>4</td>
+<td>"Quản lý 1000 khách bằng list-of-dict — có cách tốt hơn?"</td>
+<td>Buổi 5 — OOP</td>
+</tr>
+<tr>
+<td>5</td>
+<td>"fib(40) chạy mãi không xong — vì sao?"</td>
+<td>Buổi 6 — Big-O</td>
+</tr>
+<tr>
+<td>6</td>
+<td>(Khoá học kết thúc)</td>
+<td>Khoá Python nâng cao / AI / Data</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-nguyen-tac-su-pham-ap-dung-xuyen-suot">5. NGUYÊN TẮC SƯ PHẠM ÁP DỤNG XUYÊN SUỐT</h2>
+<h3 id="51-bat-au-tu-cai-biet">5.1. Bắt đầu từ "Cái Biết"</h3>
+<p>Mỗi khái niệm mới đều được dẫn từ một trải nghiệm SV đã có:
+- Vòng lặp ↔ nhập sai PIN ATM
+- Đệ quy ↔ búp bê Nga
+- Class ↔ khuôn bánh
+- Kế thừa ↔ app Vietcombank kế thừa app ngân hàng nói chung
+- Big-O ↔ tìm số trong danh bạ chưa sắp xếp</p>
+<h3 id="52-scqa-cho-moi-buoi">5.2. SCQA cho mỗi buổi</h3>
+<p>Không bắt đầu bằng định nghĩa. Bắt đầu bằng <strong>một vấn đề</strong> mà SV cảm thấy <strong>đáng giải</strong>.</p>
+<h3 id="53-code-along-lab">5.3. Code-along + Lab</h3>
+<p>Tỷ lệ thực hành cao — dù đề cương ghi 0 giờ thực hành. Mọi khái niệm phải được <strong>gõ thật trên Jupyter</strong> ngay tại lớp, không chỉ chiếu slide.</p>
+<h3 id="54-anh-gia-lien-tuc">5.4. Đánh giá liên tục</h3>
+<p>Cuối mỗi buổi: <strong>3-5 câu trắc nghiệm</strong> đúng format đề thi. Vừa kiểm tra vừa luyện thi.</p>
+<h3 id="55-phan-hoa-nang-luc">5.5. Phân hoá năng lực</h3>
+<p>Mỗi lab có 3 mức: cơ bản (bắt buộc) — nâng cao (khuyến khích) — thử thách (optional). SV giỏi không chán, SV yếu không tụt lại.</p>
+<hr />
+<h2 id="6-canh-bao-quan-trong-cho-giang-vien">6. CẢNH BÁO QUAN TRỌNG CHO GIẢNG VIÊN</h2>
+<p>Đây là những "vùng nguy hiểm" tôi rút ra qua phân tích đề cương + slide:</p>
+<ol>
+<li><strong>Buổi 1</strong>: Đừng để phần lịch sử quá 25 phút. Đó là chỗ dễ làm SV không chuyên buồn ngủ.</li>
+<li><strong>Buổi 2</strong>: Thụt đầu dòng + dấu <code>=</code> vs <code>==</code> là nguồn lỗi #1. Nhấn 5 phút <strong>trước</strong> khi vào <code>if</code>.</li>
+<li><strong>Buổi 3</strong>: <code>return</code> vs <code>print</code> — nhầm lẫn lớn nhất. Đừng bỏ qua.</li>
+<li><strong>Buổi 4</strong>: Đệ quy là điểm khó. Nếu lớp đuối → giảm còn giai thừa, bỏ Fibonacci. Đề thi không nặng.</li>
+<li><strong>Buổi 5</strong>: <code>self</code> cần vẽ trên bảng quá trình "Python tự dịch" <code>tk.nap(50)</code> thành <code>TK.nap(tk, 50)</code>.</li>
+<li><strong>Buổi 6</strong>: Đừng dạy Big-O bằng toán formal. Dạy bằng <strong>trực giác con số</strong> (bảng so sánh n vs phép tính). Demo sống là vũ khí số 1.</li>
+</ol>
+<hr />
+<h2 id="7-checklist-chuan-bi-truoc-moi-buoi">7. CHECKLIST CHUẨN BỊ TRƯỚC MỖI BUỔI</h2>
+<ul>
+<li>[ ] Đã yêu cầu SV cài Anaconda hoặc có sẵn Google Colab dự phòng.</li>
+<li>[ ] Mở sẵn Jupyter Notebook trên máy giảng viên, chia sẻ màn hình.</li>
+<li>[ ] Có sẵn 5 câu trắc nghiệm cuối buổi (đã chuẩn bị trong file kịch bản).</li>
+<li>[ ] Có Mentimeter / Kahoot link để hỏi đáp tương tác (tùy chọn).</li>
+<li>[ ] Đã đọc trước phần "Lưu ý cho giảng viên" của buổi đó.</li>
+<li>[ ] Có đề mẫu phù hợp để phát/chiếu cho SV.</li>
+</ul>
+<hr />
+<h2 id="8-thu-muc-file">8. THƯ MỤC FILE</h2>
+<div class="highlight"><pre><span></span><code>Kich_ban_giang_day/
+├── 00_Tong_quan_6_buoi.md                       ← FILE NÀY
+├── Buoi_01_Gioi_thieu_KHMT_Python_co_ban.md
+├── Buoi_02_Cau_truc_dieu_khien_va_vong_lap.md
+├── Buoi_03_Ham_phan_ra_truu_tuong.md
+├── Buoi_04_De_quy_chuoi_va_xu_ly_loi.md
+├── Buoi_05_Lop_va_lap_trinh_huong_doi_tuong.md
+└── Buoi_06_Big_O_va_do_hieu_qua.md
+</code></pre></div>
+
+<p>Mỗi file kịch bản dài ~15KB, đủ chi tiết cho giảng viên dùng trực tiếp khi lên lớp.</p>
+<hr />
+<p><em>Tổng quan kết thúc — chúc giảng viên có 6 buổi sống động và sinh viên có một khoá học đáng nhớ!</em></p>
+        </div>
+        <footer>
+            Generated by Second Brain MD-to-Web Converter Skill
+        </footer>
+    </div>
+</body>
+</html>

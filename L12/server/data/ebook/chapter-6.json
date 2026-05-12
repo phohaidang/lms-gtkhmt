@@ -1,0 +1,88 @@
+{
+  "chapter": 6,
+  "title": "Độ hiệu quả chương trình (Big-O)",
+  "sessions": [6],
+  "scqa": {
+    "situation": "Chương trình của bạn đã hoàn thiện, quản lý khách hàng bằng các đối tượng OOP chuyên nghiệp. Nó chạy cực nhanh trên máy tính cá nhân với dữ liệu thử nghiệm 100 khách hàng.",
+    "complication": "Khi ngân hàng triển khai thực tế cho 10 triệu khách hàng, chương trình bỗng nhiên chạy chậm như rùa bò. Thậm chí có những phép tính tìm kiếm mất cả tiếng đồng hồ mới ra kết quả. Khách hàng phàn nàn, hệ thống đứng trước nguy cơ quá tải.",
+    "question": "Tại sao cùng một logic nhưng khi dữ liệu lớn lên lại chậm đi đột ngột? Làm thế nào để đo lường độ 'tốt' của một giải thuật trước khi nó được triển khai? Có cách nào để tăng tốc độ tìm kiếm từ hàng phút xuống hàng miligiây?",
+    "answer": "Chúng ta sử dụng khái niệm Độ phức tạp thuật toán (Big-O) để đo lường hiệu suất. Chúng ta cũng học cách sử dụng các cấu trúc dữ liệu tối ưu như Dictionary (từ điển) và Set (tập hợp) để thay thế cho List (danh sách) trong những tình huống cần tốc độ cao."
+  },
+  "concepts": [
+    {
+      "id": "c6-big-o",
+      "term": "Độ phức tạp thuật toán (Big-O Notation)",
+      "definition": "Một ký hiệu toán học mô tả cách thời gian chạy hoặc không gian bộ nhớ của thuật toán tăng lên khi kích thước dữ liệu đầu vào (n) tăng lên.",
+      "key_points": [
+        "O(1): Thời gian hằng số (nhanh nhất, không phụ thuộc n)",
+        "O(n): Thời gian tuyến tính (tăng đều theo dữ liệu)",
+        "O(n^2): Thời gian bình phương (nguy hiểm khi dữ liệu lớn)"
+      ],
+      "case_study": {
+        "title": "Tìm khách hàng trong danh sách",
+        "context": "Bạn tìm một người trong danh bạ 1 triệu tên chưa sắp xếp.",
+        "analysis": "Phải duyệt từ đầu đến cuối, mất tối đa 1 triệu bước => O(n). Nếu dùng từ điển (hash table), việc tìm kiếm chỉ mất 1 bước => O(1).",
+        "lesson_learned": "Giải thuật tốt quan trọng hơn máy tính mạnh."
+      },
+      "related_concepts": ["c6-data-structures"]
+    },
+    {
+      "id": "c6-data-structures",
+      "term": "Cấu trúc dữ liệu (List, Dict, Set)",
+      "definition": "Các cách tổ chức dữ liệu khác nhau trong bộ nhớ, mỗi cách có ưu và nhược điểm về tốc độ và tính năng riêng.",
+      "key_points": [
+        "List: Danh sách có thứ tự, truy cập theo chỉ số (index)",
+        "Dict: Cặp khóa-giá trị, cực nhanh khi tìm kiếm theo khóa",
+        "Set: Tập hợp các phần tử không trùng lặp, dùng để lọc dữ liệu"
+      ],
+      "case_study": {
+        "title": "Kiểm tra khách hàng nợ xấu",
+        "context": "Hệ thống cần kiểm tra xem CMND của khách có nằm trong danh sách đen (Blacklist) hay không.",
+        "analysis": "Nếu Blacklist để trong List, kiểm tra 1 khách mất O(n). Nếu để trong Set, kiểm tra chỉ mất O(1).",
+        "lesson_learned": "Chọn đúng cấu trúc dữ liệu giúp tăng tốc hệ thống hàng nghìn lần."
+      },
+      "related_concepts": ["c6-big-o"]
+    },
+    {
+      "id": "c6-optimization",
+      "term": "Tối ưu hóa (Optimization)",
+      "definition": "Quá trình điều chỉnh mã nguồn và giải thuật để giảm thiểu tài nguyên tiêu thụ (thời gian, bộ nhớ) mà vẫn giữ nguyên kết quả.",
+      "key_points": [
+        "Tránh các vòng lặp lồng nhau vô ích (O(n^2))",
+        "Sử dụng các hàm có sẵn của Python (thường đã được tối ưu)",
+        "Ưu tiên tốc độ tìm kiếm trong các hệ thống giao dịch thời gian thực"
+      ],
+      "case_study": null,
+      "related_concepts": ["c6-big-o"]
+    }
+  ],
+  "tests": {
+    "level_1": {
+      "name": "🎯 Level 1: Nhận diện Big-O",
+      "description": "Kiểm tra khả năng phân loại độ phức tạp của các đoạn mã đơn giản.",
+      "bloom_level": "Remember / Understand",
+      "questions": [
+        { "id": "L1-q1", "type": "mc", "concept_ref": "c6-big-o", "question": "Độ phức tạp của một vòng lặp đơn duyệt qua n phần tử là bao nhiêu?", "options": ["A. O(1)", "B. O(n)", "C. O(n^2)", "D. O(log n)"], "correct": "B" },
+        { "id": "L1-q2", "type": "mc", "concept_ref": "c6-data-structures", "question": "Cấu trúc dữ liệu nào trong Python cung cấp tốc độ tìm kiếm nhanh nhất (O(1))?", "options": ["A. List", "B. Tuple", "C. Dictionary", "D. String"], "correct": "C" },
+        { "id": "L1-q3", "type": "mc", "concept_ref": "c6-big-o", "question": "Tại sao giải thuật O(n^2) lại được coi là 'nguy hiểm'?", "options": ["A. Vì nó chiếm quá nhiều dung lượng ổ cứng", "B. Vì khi dữ liệu tăng 10 lần, thời gian chạy tăng tới 100 lần", "C. Vì nó làm hỏng CPU", "D. Vì nó chỉ chạy được trên Python cũ"], "correct": "B" }
+      ]
+    },
+    "level_2": {
+      "name": "📝 Level 2: Phân tích hiệu suất",
+      "description": "Đánh giá và so sánh các cách giải quyết bài toán khác nhau.",
+      "bloom_level": "Understand / Analyze",
+      "questions": [
+        { "id": "L2-q1", "type": "essay", "concept_ref": "c6-data-structures", "question": "Trong trường hợp nào bạn sẽ chọn dùng List thay vì Dictionary?", "rubric": "Khi cần bảo toàn thứ tự dữ liệu, khi cần truy cập theo vị trí (index), hoặc khi dữ liệu rất nhỏ.", "max_words": 200 },
+        { "id": "L2-q2", "type": "essay", "concept_ref": "c6-big-o", "question": "Giải thích tại sao việc sắp xếp dữ liệu (Sorting) lại giúp việc tìm kiếm sau đó nhanh hơn.", "rubric": "Giúp sử dụng được các giải thuật như Binary Search (O(log n)) thay vì Linear Search (O(n)).", "max_words": 300 }
+      ]
+    },
+    "level_3": {
+      "name": "🚀 Level 3: Tối ưu bài toán Fintech",
+      "description": "Cải tiến một giải thuật chậm thành giải thuật nhanh.",
+      "bloom_level": "Apply / Create",
+      "questions": [
+        { "id": "L3-q1", "type": "essay", "question": "Hệ thống của bạn đang tìm kiếm khách hàng bằng cách duyệt qua một List các object khách hàng. Mỗi lần tìm mất 2 giây. Với 1 triệu khách, hệ thống bị treo. Hãy đề xuất cách thay đổi cấu trúc dữ liệu và giải thích tại sao cách đó lại giải quyết được vấn đề.", "rubric": "Chuyển List sang Dictionary với khóa là số CMND/ID. Giải thích: Tốc độ tìm kiếm giảm từ O(n) xuống O(1).", "max_words": 500 }
+      ]
+    }
+  }
+}

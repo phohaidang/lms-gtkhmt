@@ -1,0 +1,88 @@
+{
+  "chapter": 3,
+  "title": "Hàm, Phân rã & Trừu tượng",
+  "sessions": [3],
+  "scqa": {
+    "situation": "Khi chương trình lớn lên, mã nguồn bắt đầu trở nên dài dòng và khó kiểm soát. Chúng ta thấy mình đang sao chép cùng một đoạn mã tính lãi suất ở nhiều nơi khác nhau.",
+    "complication": "Nếu ngân hàng thay đổi công thức tính phí dịch vụ, bạn sẽ phải đi tìm và sửa hàng chục nơi trong mã nguồn. Chỉ cần quên một chỗ, hệ thống sẽ tính sai cho khách hàng.",
+    "question": "Làm thế nào để 'đóng gói' một chức năng và đặt cho nó một cái tên, để sau này chỉ cần gọi tên đó là xong? Làm sao để chia một bài toán khổng lồ thành nhiều phần nhỏ dễ quản lý?",
+    "answer": "Chúng ta sử dụng Hàm (Functions). Hàm giúp chúng ta thực hiện 'Phân rã' (chia nhỏ vấn đề) và 'Trừu tượng hóa' (ẩn đi sự phức tạp bên trong để tập trung vào kết quả)."
+  },
+  "concepts": [
+    {
+      "id": "c3-functions",
+      "term": "Hàm (Functions)",
+      "definition": "Một khối mã lệnh có tên, có thể nhận đầu vào (parameters) và trả về kết quả (return value), dùng để tái sử dụng nhiều lần.",
+      "key_points": [
+        "Định nghĩa bằng từ khóa def",
+        "Giúp tránh lặp lại mã nguồn (DRY - Don't Repeat Yourself)",
+        "Dễ dàng kiểm tra và bảo trì"
+      ],
+      "case_study": {
+        "title": "Module tính thuế thu nhập",
+        "context": "Mọi bộ phận trong ngân hàng (lương, đầu tư, tín dụng) đều cần tính thuế cho khách.",
+        "analysis": "Thay vì mỗi bộ phận tự viết code tính thuế, ta viết một hàm tinh_thue() chuẩn và mọi người cùng gọi dùng.",
+        "lesson_learned": "Hàm là đơn vị cơ bản để xây dựng các hệ thống lớn và ổn định."
+      },
+      "related_concepts": ["c3-abstraction"]
+    },
+    {
+      "id": "c3-scope",
+      "term": "Phạm vi biến (Scope)",
+      "definition": "Vùng không gian trong mã nguồn mà một biến có hiệu lực. Gồm biến cục bộ (Local) bên trong hàm và biến toàn cục (Global) bên ngoài hàm.",
+      "key_points": [
+        "Biến bên trong hàm sẽ biến mất khi hàm kết thúc",
+        "Giúp tránh xung đột tên biến giữa các phần khác nhau của chương trình",
+        "Nên hạn chế dùng biến Global để tránh lỗi khó tìm"
+      ],
+      "case_study": null,
+      "related_concepts": ["c3-functions"]
+    },
+    {
+      "id": "c3-abstraction",
+      "term": "Tính trừu tượng (Abstraction)",
+      "definition": "Khả năng sử dụng một công cụ mà không cần hiểu chi tiết cơ chế bên trong nó. Bạn chỉ cần biết 'đưa gì vào' và 'nhận gì ra'.",
+      "key_points": [
+        "Giống như việc dùng lò vi sóng: chỉ cần bấm nút, không cần biết sóng điện từ hoạt động thế nào",
+        "Giúp lập trình viên tập trung vào logic cấp cao",
+        "Giảm tải bộ não khi làm việc với hệ thống phức tạp"
+      ],
+      "case_study": {
+        "title": "Giao diện API ngân hàng",
+        "context": "Khi bạn dùng app đặt vé máy bay, app gọi một hàm của ngân hàng để thanh toán.",
+        "analysis": "App vé máy bay không cần biết ngân hàng lưu database gì, chỉ cần gọi hàm thanh_toan(so_tien) và nhận kết quả thành công/thất bại.",
+        "lesson_learned": "Trừu tượng hóa là chìa khóa để các hệ thống khác nhau có thể kết nối với nhau."
+      },
+      "related_concepts": ["c3-functions"]
+    }
+  ],
+  "tests": {
+    "level_1": {
+      "name": "🎯 Level 1: Cú pháp hàm",
+      "description": "Nhận diện cách khai báo và gọi hàm đúng cách.",
+      "bloom_level": "Remember / Understand",
+      "questions": [
+        { "id": "L1-q1", "type": "mc", "concept_ref": "c3-functions", "question": "Từ khóa nào dùng để định nghĩa một hàm trong Python?", "options": ["A. function", "B. define", "C. def", "D. func"], "correct": "C" },
+        { "id": "L1-q2", "type": "mc", "concept_ref": "c3-functions", "question": "Từ khóa nào dùng để gửi kết quả từ hàm về nơi gọi nó?", "options": ["A. give", "B. send", "C. return", "D. output"], "correct": "C" },
+        { "id": "L1-q3", "type": "mc", "concept_ref": "c3-scope", "question": "Biến được tạo ra bên trong một hàm được gọi là gì?", "options": ["A. Biến toàn cục (Global)", "B. Biến cục bộ (Local)", "C. Biến hằng", "D. Biến ảo"], "correct": "B" }
+      ]
+    },
+    "level_2": {
+      "name": "📝 Level 2: Phân tích Scope",
+      "description": "Hiểu về vòng đời và phạm vi hoạt động của dữ liệu.",
+      "bloom_level": "Understand / Analyze",
+      "questions": [
+        { "id": "L2-q1", "type": "essay", "concept_ref": "c3-scope", "question": "Tại sao chúng ta nên tránh sử dụng biến toàn cục (Global) quá nhiều trong chương trình?", "rubric": "Cần nêu: Khó kiểm soát thay đổi, dễ gây lỗi 'Side effect', khó bảo trì.", "max_words": 200 },
+        { "id": "L2-q2", "type": "essay", "concept_ref": "c3-abstraction", "question": "Hãy nêu một ví dụ về tính Trừu tượng trong đời sống hàng ngày của sinh viên.", "rubric": "Ví dụ như đi xe máy (chỉ cần vặn ga, không cần biết piston hoạt động thế nào) hoặc dùng smartphone.", "max_words": 200 }
+      ]
+    },
+    "level_3": {
+      "name": "🚀 Level 3: Thiết kế Module",
+      "description": "Chia nhỏ bài toán tài chính thành các hàm chức năng.",
+      "bloom_level": "Apply / Create",
+      "questions": [
+        { "id": "L3-q1", "type": "essay", "question": "Giả sử bạn xây dựng hệ thống tính lương cho ngân hàng. Hãy thiết kế (không cần viết code chi tiết) các hàm cần thiết để tính: lương cơ bản, thưởng doanh số, và thuế. Tại sao cách chia này lại tốt hơn viết tất cả trong một khối mã?", "rubric": "Cần liệt kê 3 hàm: tinh_luong_cb(), tinh_thuong(), tinh_thue(). Giải thích: Dễ sửa đổi công thức thuế mà không ảnh hưởng lương cb.", "max_words": 500 }
+      ]
+    }
+  }
+}

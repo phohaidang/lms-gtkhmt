@@ -1,0 +1,87 @@
+{
+  "session": 6,
+  "chapter": "Ch.6",
+  "title": "Độ hiệu quả của chương trình (Big-O)",
+  "time_limit_minutes": 15,
+  "questions": [
+    {
+      "id": "s6-mc1",
+      "type": "mc",
+      "question": "Ký hiệu Big-O trong lập trình dùng để đo lường điều gì?",
+      "options": [
+        "A. Đo lường số dòng code của một chương trình",
+        "B. Đo lường tốc độ tăng trưởng của thời gian chạy (số phép tính) theo kích thước dữ liệu đầu vào",
+        "C. Đo lường dung lượng ổ cứng mà chương trình chiếm dụng",
+        "D. Đo lường độ khó của ngôn ngữ lập trình"
+      ],
+      "correct": "B",
+      "explanation": "Big-O không đo bằng giây (vì tùy máy mạnh yếu) mà đo bằng số phép tính cơ bản. Nó giúp ta dự đoán chương trình sẽ chậm đi bao nhiêu lần khi dữ liệu tăng lên gấp 10, gấp 100 lần."
+    },
+    {
+      "id": "s6-mc2",
+      "type": "mc",
+      "question": "Độ phức tạp Big-O của đoạn mã sau là bao nhiêu?\nfor i in range(n):\n    for j in range(n):\n        print(i + j)",
+      "options": [
+        "A. O(n)",
+        "B. O(2n)",
+        "C. O(n²)",
+        "D. O(log n)"
+      ],
+      "correct": "C",
+      "explanation": "Theo quy tắc đếm Big-O: Hai vòng lặp lồng nhau (vòng lặp n lần bên trong vòng lặp n lần) sẽ thực hiện n * n phép tính. Do đó độ phức tạp là O(n²). Với n=1,000,000, thuật toán này sẽ cực kỳ chậm."
+    },
+    {
+      "id": "s6-mc3",
+      "type": "mc",
+      "question": "Giả sử bạn có 1 triệu phần tử. Thuật toán nào sau đây sẽ cho kết quả nhanh nhất?",
+      "options": [
+        "A. O(n) - Tuyến tính",
+        "B. O(n²) - Bình phương",
+        "C. O(log n) - Logarit",
+        "D. O(n log n) - Tuyến-log"
+      ],
+      "correct": "C",
+      "explanation": "O(log n) là cực kỳ nhanh. Với 1 triệu phần tử, O(n) cần 1 triệu phép tính, nhưng O(log n) chỉ cần khoảng 20 phép tính (ví dụ trong tìm kiếm nhị phân)."
+    },
+    {
+      "id": "s6-mc4",
+      "type": "mc",
+      "question": "Tại sao việc kiểm tra `x in ds_set` (set) lại nhanh hơn nhiều so với `x in ds_list` (list) khi dữ liệu lớn?",
+      "options": [
+        "A. Vì set tự động sắp xếp các phần tử",
+        "B. Vì list tốn nhiều bộ nhớ hơn",
+        "C. Vì set sử dụng bảng băm (hash table) cho phép tìm kiếm với độ phức tạp O(1)",
+        "D. Vì Python ưu tiên xử lý set trước list"
+      ],
+      "correct": "C",
+      "explanation": "Tìm kiếm trong list là O(n) (phải duyệt từ đầu đến cuối), còn tìm kiếm trong set/dict là O(1) (tìm thấy ngay lập tức nhờ bảng băm). Đây là 'tuyệt chiêu' để tối ưu hóa các chương trình xử lý dữ liệu lớn."
+    },
+    {
+      "id": "s6-tf1",
+      "type": "tf",
+      "question": "Khi tính Big-O, chúng ta luôn giữ lại các hằng số. Ví dụ: O(3n + 5) sẽ được viết giữ nguyên là O(3n + 5).",
+      "correct": "B",
+      "explanation": "Sai. Quy tắc Big-O là bỏ qua hằng số và chỉ giữ lại bậc cao nhất của n. O(3n + 5) sẽ được viết gọn thành O(n). Vì khi n tiến tới vô cùng, con số 3 và 5 không còn ý nghĩa đáng kể."
+    },
+    {
+      "id": "s6-tf2",
+      "type": "tf",
+      "question": "Thuật toán tìm kiếm nhị phân (Binary Search) chỉ hoạt động chính xác nếu danh sách đầu vào đã được sắp xếp.",
+      "correct": "A",
+      "explanation": "Đúng. Tìm kiếm nhị phân dựa trên việc 'cắt nửa' khoảng tìm kiếm. Nếu danh sách lộn xộn, chúng ta không thể biết nên bỏ nửa trái hay nửa phải, do đó thuật toán sẽ thất bại."
+    }
+  ],
+  "discussion_questions": [
+    {
+      "id": "s6-essay1",
+      "type": "essay",
+      "question": "Trong Buổi 4, chúng ta thấy hàm tính số Fibonacci bằng đệ quy `fib(40)` chạy rất chậm (mất vài giây), nhưng Buổi 6 chúng ta viết bằng vòng lặp `for` thì chạy tức thì. Hãy giải thích dựa trên kiến thức về Big-O: (1) Độ phức tạp của 2 cách này là gì? (2) Tại sao lại có sự chênh lệch lớn như vậy về thời gian chạy?",
+      "sample_answer": "(1) Đệ quy ngây thơ có độ phức tạp O(2ⁿ) - lũy thừa, còn vòng lặp có độ phức tạp O(n) - tuyến tính. (2) Với n=40, đệ quy phải thực hiện khoảng 2⁴⁰ ≈ 10¹² (1 ngàn tỷ) phép tính vì tính lặp đi lặp lại các giá trị cũ. Trong khi đó, vòng lặp chỉ tốn 40 phép cộng đơn giản. Đây là minh chứng cho việc chọn sai thuật toán có thể làm chương trình chậm đi hàng tỷ lần.",
+      "rubric": {
+        "excellent": "Chỉ ra đúng Big-O của cả 2 cách (O(2ⁿ) và O(n)) và giải thích được việc đệ quy bị 'tính toán lặp lại' quá nhiều.",
+        "acceptable": "Biết được đệ quy là hàm mũ (chậm) và vòng lặp là tuyến tính (nhanh).",
+        "insufficient": "Chỉ nói do đệ quy 'phức tạp' mà không nêu được con số hoặc ký hiệu Big-O để so sánh."
+      }
+    }
+  ]
+}
