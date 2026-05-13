@@ -17,6 +17,8 @@ export async function renderDashboard(app) {
         <div class="stat-card"><div class="spinner"></div></div>
       </div>
 
+      <div id="goals-section" style="margin-top: 2rem"></div>
+
       <div style="margin-top: 2rem">
         <h2 style="margin-bottom: 1rem">🚀 Truy cập nhanh</h2>
         <div class="grid grid-3">
@@ -43,7 +45,9 @@ export async function renderDashboard(app) {
     </div>
   `;
 
-  // Load stats
+  // Load stats and goals
+  renderGoals(document.getElementById('goals-section'));
+
   try {
     const [quizzes, grades] = await Promise.all([
       api.get('/quizzes/my/attempts'),
@@ -81,5 +85,79 @@ export async function renderDashboard(app) {
         Chưa có dữ liệu. Hãy bắt đầu làm quiz!
       </div>
     `;
+  }
+}
+
+async function renderGoals(container) {
+  container.innerHTML = `<div class="card"><div class="spinner"></div></div>`;
+  try {
+    const goal = await api.get('/goals/my');
+    
+    if (!goal.id) {
+      container.innerHTML = `
+        <div class="card" style="background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white;">
+          <h2 style="margin-bottom: 1rem">🎯 Xác lập mục tiêu học tập</h2>
+          <p style="margin-bottom: 1.5rem; opacity: 0.9">Bạn mong muốn đạt được điều gì sau môn học này? Hãy viết ra bản cam kết của chính mình.</p>
+          <div style="display: flex; gap: 1rem">
+            <textarea id="goal-input" placeholder="Ví dụ: Nắm vững các khái niệm cơ bản về CNTT, đạt điểm A, hoặc có thể tự build được một ứng dụng nhỏ..." 
+                      style="flex: 1; padding: 1rem; border-radius: 8px; border: none; color: #333; font-family: inherit; height: 80px"></textarea>
+            <button id="save-goal-btn" class="btn btn-secondary" style="align-self: flex-end">Lưu mục tiêu</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('save-goal-btn').addEventListener('click', async () => {
+        const goalStatement = document.getElementById('goal-input').value;
+        if (!goalStatement || goalStatement.trim().length < 10) {
+            alert('Vui lòng viết mục tiêu rõ ràng hơn một chút (ít nhất 10 ký tự)');
+            return;
+        }
+        try {
+          await api.post('/goals', { goal_statement: goalStatement });
+          renderGoals(container);
+        } catch (err) {
+          alert(err.error || 'Lỗi khi lưu mục tiêu');
+        }
+      });
+    } else {
+      container.innerHTML = `
+        <div class="card" style="border-left: 4px solid var(--primary)">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem">
+            <h2 style="color: var(--primary)">🎯 Mục tiêu môn học của tôi</h2>
+            <span class="badge badge-success" style="font-size: 1rem">${goal.achievement_percent}% Hoàn thành</span>
+          </div>
+          <blockquote style="font-style: italic; border-left: none; padding: 0; color: var(--text-primary); font-size: 1.1rem; margin-bottom: 1.5rem">
+            "${goal.goal_statement}"
+          </blockquote>
+          
+          <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem">
+              <label style="font-weight: bold">Tự đánh giá mức độ đạt được:</label>
+              <span id="percent-display" style="font-weight: bold; color: var(--primary)">${goal.achievement_percent}%</span>
+            </div>
+            <input type="range" id="achievement-range" min="0" max="100" value="${goal.achievement_percent}" style="width: 100%; margin-bottom: 1rem">
+            <button id="update-assess-btn" class="btn btn-primary btn-sm" style="display: block; margin-left: auto">Cập nhật đánh giá</button>
+          </div>
+        </div>
+      `;
+
+      const range = document.getElementById('achievement-range');
+      const display = document.getElementById('percent-display');
+      range.addEventListener('input', () => {
+        display.innerText = range.value + '%';
+      });
+
+      document.getElementById('update-assess-btn').addEventListener('click', async () => {
+        try {
+          await api.post('/goals/assess', { percent: range.value });
+          alert('Đã cập nhật mức độ hoàn thành!');
+          renderGoals(container);
+        } catch (err) {
+          alert('Lỗi cập nhật');
+        }
+      });
+    }
+  } catch (err) {
+    container.innerHTML = '';
   }
 }

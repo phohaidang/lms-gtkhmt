@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.js';
 import courseRoutes from './routes/courses.js';
 import quizRoutes from './routes/quizzes.js';
 import ebookRoutes from './routes/ebook.js';
+import goalsRoutes from './routes/goals.js';
 import examRoutes from './routes/exams.js';
 import gradeRoutes from './routes/grades.js';
 import evidenceRoutes from './routes/evidence.js';
@@ -38,6 +39,7 @@ app.use('/api/exams', examRoutes);
 app.use('/api/grades', gradeRoutes);
 app.use('/api/evidence', evidenceRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/goals', goalsRoutes);
 
 // Root route
 app.get('/', (req, res) => {
