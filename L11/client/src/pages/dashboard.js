@@ -17,7 +17,9 @@ export async function renderDashboard(app) {
         <div class="stat-card"><div class="spinner"></div></div>
       </div>
 
-      <div id="goals-section" style="margin-top: 2rem"></div>
+      <div id="goals-section" style="margin-top: 2rem">
+         <div class="card"><div class="spinner"></div> Đang tải mục tiêu học tập...</div>
+      </div>
 
       <div style="margin-top: 2rem">
         <h2 style="margin-bottom: 1rem">🚀 Truy cập nhanh</h2>
@@ -45,9 +47,13 @@ export async function renderDashboard(app) {
     </div>
   `;
 
-  // Load stats and goals
-  renderGoals(document.getElementById('goals-section'));
+  // Gọi hàm renderGoals
+  const goalsContainer = document.getElementById('goals-section');
+  if (goalsContainer) {
+    renderGoals(goalsContainer);
+  }
 
+  // Load stats
   try {
     const [quizzes, grades] = await Promise.all([
       api.get('/quizzes/my/attempts'),
@@ -82,14 +88,13 @@ export async function renderDashboard(app) {
   } catch (err) {
     document.getElementById('stats').innerHTML = `
       <div class="alert alert-warning" style="grid-column: 1/-1">
-        Chưa có dữ liệu. Hãy bắt đầu làm quiz!
+        Tạm thời không thể tải thống kê. Hãy bắt đầu làm quiz!
       </div>
     `;
   }
 }
 
 async function renderGoals(container) {
-  container.innerHTML = `<div class="card"><div class="spinner"></div></div>`;
   try {
     const goal = await api.get('/goals/my');
     
@@ -98,10 +103,10 @@ async function renderGoals(container) {
         <div class="card" style="background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white;">
           <h2 style="margin-bottom: 1rem">🎯 Xác lập mục tiêu học tập</h2>
           <p style="margin-bottom: 1.5rem; opacity: 0.9">Bạn mong muốn đạt được điều gì sau môn học này? Hãy viết ra bản cam kết của chính mình.</p>
-          <div style="display: flex; gap: 1rem">
+          <div style="display: flex; flex-direction: column; gap: 1rem">
             <textarea id="goal-input" placeholder="Ví dụ: Nắm vững các khái niệm cơ bản về CNTT, đạt điểm A, hoặc có thể tự build được một ứng dụng nhỏ..." 
-                      style="flex: 1; padding: 1rem; border-radius: 8px; border: none; color: #333; font-family: inherit; height: 80px"></textarea>
-            <button id="save-goal-btn" class="btn btn-secondary" style="align-self: flex-end">Lưu mục tiêu</button>
+                      style="width: 100%; padding: 1rem; border-radius: 8px; border: none; color: #333; font-family: inherit; height: 80px"></textarea>
+            <button id="save-goal-btn" class="btn btn-secondary" style="align-self: flex-end">Lưu mục tiêu học tập</button>
           </div>
         </div>
       `;
@@ -116,7 +121,7 @@ async function renderGoals(container) {
           await api.post('/goals', { goal_statement: goalStatement });
           renderGoals(container);
         } catch (err) {
-          alert(err.error || 'Lỗi khi lưu mục tiêu');
+          alert(err.message || 'Lỗi khi lưu mục tiêu');
         }
       });
     } else {
@@ -153,11 +158,17 @@ async function renderGoals(container) {
           alert('Đã cập nhật mức độ hoàn thành!');
           renderGoals(container);
         } catch (err) {
-          alert('Lỗi cập nhật');
+          alert(err.message || 'Lỗi cập nhật');
         }
       });
     }
   } catch (err) {
-    container.innerHTML = '';
+    console.error('Goals error:', err);
+    container.innerHTML = `
+      <div class="alert alert-warning">
+        ⚠️ Không thể tải mục tiêu học tập (Lỗi: ${err.message}). <br>
+        Có thể Server đang cập nhật, vui lòng F5 lại trang sau 1 phút.
+      </div>
+    `;
   }
 }
