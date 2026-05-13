@@ -128,6 +128,16 @@ export async function append(sheetName, data) {
     ? Object.keys(all[0])
     : Object.keys(data);
   
+  // If sheet is totally empty (no headers), write headers first
+  if (all.length === 0) {
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${sheetName}!A1`,
+      valueInputOption: 'RAW',
+      requestBody: { values: [headers] }
+    });
+  }
+  
   const row = headers.map(h => {
     const val = data[h];
     return typeof val === 'object' ? JSON.stringify(val) : String(val ?? '');
