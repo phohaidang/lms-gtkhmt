@@ -78,22 +78,31 @@ export async function getAll(sheetName) {
     return mockData[sheetName] || [];
   }
   
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId: SPREADSHEET_ID,
-    range: `${sheetName}!A:Z`
-  });
-  
-  const rows = res.data.values;
-  if (!rows || rows.length < 2) return [];
-  
-  const headers = rows[0].map(h => String(h || '').trim().toLowerCase());
-  return rows.slice(1).map(row => {
-    const obj = {};
-    headers.forEach((h, i) => { 
-      if (h) obj[h] = row[i] || ''; 
+  try {
+    const res = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${sheetName}!A:Z`
     });
-    return obj;
-  });
+    
+    const rows = res.data.values;
+    if (!rows || rows.length < 2) return [];
+    
+    const headers = rows[0].map(h => String(h || '').trim().toLowerCase());
+    return rows.slice(1).map(row => {
+      const obj = {};
+      headers.forEach((h, i) => { 
+        if (h) obj[h] = row[i] || ''; 
+      });
+      return obj;
+    });
+  } catch (err) {
+    // If sheet not found (400) or other sheet errors, return empty array
+    if (err.response && (err.response.status === 400 || err.response.status === 404)) {
+      console.warn(`Sheet "${sheetName}" not found or empty. Returning [].`);
+      return [];
+    }
+    throw err;
+  }
 }
 
 /**
