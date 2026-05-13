@@ -105,7 +105,8 @@ router.get('/admin/summary', authenticate, adminOnly, async (req, res) => {
     // Group by session
     const grouped = {};
     allFeedback.forEach(f => {
-      const sid = f.session_id;
+      const sid = parseInt(f.session_id);
+      if (isNaN(sid)) return;
       if (!grouped[sid]) {
         grouped[sid] = { session_id: sid, responses: [], comments: [] };
       }
@@ -154,7 +155,8 @@ router.get('/admin/attendance', authenticate, adminOnly, async (req, res) => {
     // Group by session
     const grouped = {};
     allAttendance.forEach(a => {
-      const sid = a.session_id;
+      const sid = parseInt(a.session_id);
+      if (isNaN(sid)) return;
       if (!grouped[sid]) {
         grouped[sid] = { session_id: sid, students: [] };
       }
