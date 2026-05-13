@@ -105,7 +105,10 @@ router.get('/admin/summary', authenticate, adminOnly, async (req, res) => {
     // Group by session
     const grouped = {};
     allFeedback.forEach(f => {
-      const sid = f.session_id;
+      const sidStr = String(f.session_id || '');
+      const match = sidStr.match(/\d+/);
+      const sid = match ? parseInt(match[0]) : NaN;
+      if (isNaN(sid)) return;
       if (!grouped[sid]) {
         grouped[sid] = { session_id: sid, responses: [], comments: [] };
       }
@@ -154,7 +157,8 @@ router.get('/admin/attendance', authenticate, adminOnly, async (req, res) => {
     // Group by session
     const grouped = {};
     allAttendance.forEach(a => {
-      const sid = a.session_id;
+      const sid = String(a.session_id || '').match(/\d+/) ? parseInt(String(a.session_id).match(/\d+/)[0]) : NaN;
+      if (isNaN(sid)) return;
       if (!grouped[sid]) {
         grouped[sid] = { session_id: sid, students: [] };
       }
@@ -189,7 +193,10 @@ router.get('/admin/analysis/:sessionId', authenticate, adminOnly, async (req, re
   try {
     const sessionId = parseInt(req.params.sessionId);
     const allFeedback = await db.getAll('session_feedback');
-    const sessionFeedback = allFeedback.filter(f => parseInt(f.session_id) === sessionId);
+    const sessionFeedback = allFeedback.filter(f => {
+      const match = String(f.session_id || '').match(/\d+/);
+      return match && parseInt(match[0]) === sessionId;
+    });
 
     if (sessionFeedback.length === 0) {
       return res.json({ session_id: sessionId, has_data: false });

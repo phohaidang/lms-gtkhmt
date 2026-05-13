@@ -86,10 +86,12 @@ export async function getAll(sheetName) {
   const rows = res.data.values;
   if (!rows || rows.length < 2) return [];
   
-  const headers = rows[0];
+  const headers = rows[0].map(h => String(h || '').trim().toLowerCase());
   return rows.slice(1).map(row => {
     const obj = {};
-    headers.forEach((h, i) => { obj[h] = row[i] || ''; });
+    headers.forEach((h, i) => { 
+      if (h) obj[h] = row[i] || ''; 
+    });
     return obj;
   });
 }
@@ -125,6 +127,16 @@ export async function append(sheetName, data) {
   const headers = all.length > 0
     ? Object.keys(all[0])
     : Object.keys(data);
+  
+  // If sheet is totally empty (no headers), write headers first
+  if (all.length === 0) {
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${sheetName}!A1`,
+      valueInputOption: 'RAW',
+      requestBody: { values: [headers] }
+    });
+  }
   
   const row = headers.map(h => {
     const val = data[h];
